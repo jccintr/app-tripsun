@@ -4,13 +4,34 @@ import { Entypo } from '@expo/vector-icons';
 import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Header from '../components/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Api from '../Api';
+
+
 
 
 const Home = () => {
-  const [isLoggedUser,setisLoggedUser] = useState(false);
+  const [nomeCidade,setNomeCidade] = useState('');
+
+  useEffect(()=>{
+    const getCityId = async () => {
+        const id = await AsyncStorage.getItem('@cityId');
+        console.log(id);
+        if(id) {
+          let json = await Api.getCidade(id);
+           setNomeCidade(json.nome + ","+json.estado);
+          
+        }
+    }
+    getCityId();
+  }, []);
+
+
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header/>
+      <Header nomeCidade={nomeCidade}/>
        
        <View style={styles.helloArea}>
           <Text style={styles.helloAreaText}>Olá Visitante</Text> 

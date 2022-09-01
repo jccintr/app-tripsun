@@ -6,11 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/tripsun-splash2.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#EB0303"
-    },
+    
     "updates": {
       "fallbackToCacheTimeout": 0
     },

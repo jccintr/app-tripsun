@@ -4,13 +4,13 @@ import { cores } from '../style/globalStyle';
 import logo from '../assets/logo-tripsun.png';
 import { Ionicons } from '@expo/vector-icons';
 
-const Header = () => {
+const Header = ({nomeCidade}) => {
   return (
     <View style={styles.container}>
      <Image source={logo} style={styles.logo}></Image>
      <View style={{flexDirection:'row', justifyContent:'flex-start',alignItems:'center'}}>
           
-            <Text style={styles.headerCityName}>Campos do Jordão, SP</Text>
+            <Text style={styles.headerCityName}>{nomeCidade}</Text>
             <Ionicons name="location" size={18} color={cores.amarelo} />
            
          </View>
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection:'row',
       paddingLeft:10,
+      paddingRight:5,
       
     },
     logo: {

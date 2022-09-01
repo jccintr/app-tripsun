@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 const MainStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false}} initialRouteName="SignIn2">
+    <Stack.Navigator screenOptions={{ headerShown: false}} initialRouteName="Preload">
         <Stack.Screen  name="Preload" component={Preload}/>
         <Stack.Screen name="SignIn2" component={SignIn2}/>
         <Stack.Screen name="SignUp2" component={SignUp2}/>

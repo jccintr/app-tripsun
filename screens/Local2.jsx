@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View} from 'react-native';
+import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View,ActivityIndicator} from 'react-native';
 import * as Location from 'expo-location';
 import { cores } from '../style/globalStyle';
 import logo from '../assets/logo_tripsun-transparente.png'
@@ -20,17 +20,29 @@ const Local2 = () => {
 
 
   const getCidades = async () => {
-    
-    SetCidades([]);
-
    
     let res = await Api.getCidades();
-    SetCidades(res);
+    if (res) {
+        SetCidades(res);
+        for(var i=0; i<cidades.length; i++){
+         
+          if (cidades[i].nome === cidadeAtual){
+              setCityfound(true);
+          }
+        }
+        if (cityFound){
+          navigation.navigate('MainTab');
+        }else {
+          navigation.navigate('SelectCity'); 
+        }
+    }
 }
 
 useEffect(()=>{
   getCidades();
-}, []);
+ 
+}, [cidadeAtual]);
+
 
 
 
@@ -50,20 +62,13 @@ useEffect(()=>{
             const { latitude, longitude } = location.coords;
             let response = await Location.reverseGeocodeAsync({latitude: latitude,longitude: longitude});
             //console.log(response);
-            for (let item of response) {
-              // let address = `${item.street},${item.name}, ${item.postalCode}, ${item.district}`;
-              let address = `${item.district}`;
+           
+              
+              let address = response[0].district //`${item.district}`;
+              console.log(address);
+              getCidades();
               setCidadeAtual(address);
-              for(var i=0; i<cidades.length; i++){
-                if (cidades[i].nome === address){
-                    setCityfound(true);
-                    navigation.navigate('MainTab');
-                }
-                }
-              }
-              if (!cityFound){
-              navigation.navigate('SelectCity');
-              } 
+         
           }
        
         })();
@@ -89,7 +94,7 @@ useEffect(()=>{
          <Text style={{color: '#fff'}}>{cidadeAtual}</Text>
        </View>
        }
-       
+       <ActivityIndicator />
        
 
     </SafeAreaView>
