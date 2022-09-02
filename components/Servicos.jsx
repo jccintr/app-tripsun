@@ -4,7 +4,7 @@ import Api from '../Api';
 
 const Servicos = () => {
   return (
-    <Text>serviços</Text>
+    <Text>Serviços da Cidade</Text>
   )
 }
 
@@ -16,9 +16,7 @@ export default Servicos
 const styles = StyleSheet.create({
    
     container: {
-
-     
-      
+    
     
 
     },

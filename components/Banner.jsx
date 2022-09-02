@@ -18,13 +18,13 @@ export default Banner
 const styles = StyleSheet.create({
    
     container: {
-     
+     width: 350,
      alignItems: 'center',
      
 
     },
     banner:{
-        width: '95%',
+        width: '100%',
         height:100,
         borderRadius:10,
     }

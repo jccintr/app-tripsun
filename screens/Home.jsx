@@ -20,6 +20,8 @@ const Home = () => {
   const [nomeCidade,setNomeCidade] = useState('');
   const [city,setCity] = useState('');
   const [categorias,setCategorias] = useState([]);
+  
+  const [servicos,setServicos] = useState([]);
 
   useEffect(()=>{
     const getCityId = async () => {
@@ -30,6 +32,7 @@ const Home = () => {
            setNomeCidade(json.nome + ","+json.estado);
            setCity(json);
            setCategorias(json.categorias);
+           setServicos(json.servicos);
            
         }
     }
@@ -44,10 +47,12 @@ const Home = () => {
       <Header nomeCidade={nomeCidade}/>
       <View style={styles.body}>
          <CategoryList categorias={categorias} />
-         <Destaques/>
+         <Text style={styles.sectionTitle}>Destaques da Cidade</Text>
+         <Destaques servicos={servicos}/>
          <Banner/>
          <Top10/>
          <Servicos/>
+       
       </View>
       
       
@@ -60,17 +65,23 @@ export default Home
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#f2f2f2',
+      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'flex-start',
-      
+     
    
       
     },
     body:{
-   
+      flex:1,
+      alignItems:'center',
+      justifyContent: 'flex-start',
    
     },
+    sectionTitle:{
+      fontWeight:'bold',
+      fontSize: 26,
+    }
    
    
     

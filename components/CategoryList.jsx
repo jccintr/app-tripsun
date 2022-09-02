@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+
 import { StyleSheet, Text,Image,TouchableOpacity,View} from 'react-native';
 import Api from '../Api';
+import { cores } from '../style/globalStyle';
 
 const CategoryList = ({categorias}) => {
   
@@ -23,34 +24,34 @@ export default CategoryList
 
 
 const styles = StyleSheet.create({
-    wrapper:{
-     
-    },
+    
     container: {
-
-     
-      width: 360,
+      backgroundColor: cores.cinzaClaro,
+      width: 350,
       flexDirection: "row",
       flexWrap: "wrap",
-      
-    
-
-    },
+      borderRadius:15,
+      marginTop:10,
+      marginBottom:10,
+     
+        },
     categoryCard:{
      
      
       height: 100,
-      width:80,
+      minWidth: 75,
+      maxWidth: 75,
+      
       flexDirection: 'column',
       alignItems:'center',
       justifyContent:'center',
-      margin: 5,
+      margin: 6,
       
 
     },
     categoryImage:{
-       width: 80,
-       height: 80,
+       width: 75,
+       height: 75,
     },
     categoryText:{
       fontSize: 12,

@@ -4,7 +4,7 @@ import Api from '../Api';
 
 const Top10 = () => {
   return (
-    <Text>top 10 da cidade</Text>
+    <Text>Top 10 Serviços da Cidade</Text>
   )
 }
 
