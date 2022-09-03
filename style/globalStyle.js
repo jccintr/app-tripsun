@@ -5,4 +5,5 @@ export const cores = {
    menuItem: '#d1d1d1',
    laranja:'#FF6600',
    cinzaClaro: '#EFEFEF',
+   branco: '#fff',
 };
