@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     container: {
      width: 350,
      alignItems: 'center',
-     
+     marginTop: 5,
+     marginBottom:5,
 
     },
     banner:{

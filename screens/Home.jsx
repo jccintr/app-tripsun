@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { Entypo } from '@expo/vector-icons';
-import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View} from 'react-native';
+import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,16 +45,18 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header nomeCidade={nomeCidade}/>
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.body}>
          <CategoryList categorias={categorias} />
          <Text style={styles.sectionTitle}>Destaques da Cidade</Text>
          <Destaques servicos={servicos}/>
          <Banner/>
-         <Top10/>
+         <Text style={styles.sectionTitle}>Top 10</Text>
+         <Top10 servicos={servicos}/>
          <Servicos/>
        
       </View>
-      
+      </ScrollView>
       
     </SafeAreaView>
   )
