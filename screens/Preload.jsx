@@ -49,7 +49,10 @@ useEffect(()=>{
             for(var i=0; i<cityList.length; i++){
               if (cityList[i].nome === address){
                  setCityfound(true);
-                 AsyncStorage.setItem('@cityId', cityList[i].id.toString())
+                 AsyncStorage.setItem('@cityId', cityList[i].id.toString());
+                 AsyncStorage.setItem('@userLat', latitude.toString());
+                 AsyncStorage.setItem('@userLng', latitude.toString());
+                 console.log("latitude="+latitude);
               }
             }
          }

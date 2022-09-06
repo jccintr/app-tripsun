@@ -26,9 +26,10 @@ const Home = () => {
   useEffect(()=>{
     const getCityId = async () => {
         const id = await AsyncStorage.getItem('@cityId');
-       
+        const lat = await AsyncStorage.getItem('@userLat');
+        const lng  = await AsyncStorage.getItem('@userLng');
         if(id) {
-          let json = await Api.getCidade(id);
+          let json = await Api.getCidade(id,lat,lng);
            setNomeCidade(json.nome + ","+json.estado);
            setCity(json);
            setCategorias(json.categorias);
@@ -53,7 +54,8 @@ const Home = () => {
          <Banner/>
          <Text style={styles.sectionTitle}>Top 10</Text>
          <Top10 servicos={servicos}/>
-         <Servicos/>
+         <Text style={styles.sectionTitle}>Serviços Pŕoximos a Você!</Text>
+         <Servicos servicos={servicos}/>
        
       </View>
       </ScrollView>
