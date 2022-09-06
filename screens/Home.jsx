@@ -28,6 +28,7 @@ const Home = () => {
         const id = await AsyncStorage.getItem('@cityId');
         const lat = await AsyncStorage.getItem('@userLat');
         const lng  = await AsyncStorage.getItem('@userLng');
+       
         if(id) {
           let json = await Api.getCidade(id,lat,lng);
            setNomeCidade(json.nome + ","+json.estado);
@@ -54,10 +55,9 @@ const Home = () => {
          <Banner/>
          <Text style={styles.sectionTitle}>Top 10</Text>
          <Top10 servicos={servicos}/>
-         <Text style={styles.sectionTitle}>Serviços Pŕoximos a Você!</Text>
+         <Text style={styles.sectionTitle}>Serviços Próximos a Você!</Text>
          <Servicos servicos={servicos}/>
-       
-      </View>
+       </View>
       </ScrollView>
       
     </SafeAreaView>
