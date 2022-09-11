@@ -52,7 +52,7 @@ useEffect(()=>{
                  AsyncStorage.setItem('@cityId', cityList[i].id.toString());
                  AsyncStorage.setItem('@userLat', latitude.toString());
                  AsyncStorage.setItem('@userLng', longitude.toString());
-                 console.log("latitude="+latitude);
+                 
               }
             }
          }

@@ -15,7 +15,7 @@ const Servicos = ({servicos}) => {
                  <Text style={styles.serviceName}>{servico.nome}</Text>
                  <View style={styles.secondLine}>
                       <FontAwesome name="star" size={16} color={cores.amarelo} />
-                      <Text style={styles.serviceStarText}>{servico.stars}</Text>
+                      <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
                       <Entypo name="dot-single" size={14} color="black" />
                       <Text style={styles.serviceCategory}>{servico.categoria}</Text>
                       <Entypo name="dot-single" size={14} color="black" />
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
      },
   servicePrice:{
     fontSize: 12,
-    fontWeight: 'bold',
+   
   },
  
   

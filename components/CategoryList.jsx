@@ -2,14 +2,15 @@
 import { StyleSheet, Text,Image,TouchableOpacity,View} from 'react-native';
 import Api from '../Api';
 import { cores } from '../style/globalStyle';
+import { useNavigation } from '@react-navigation/native';
 
-const CategoryList = ({categorias}) => {
+const CategoryList = ({categorias,onPress}) => {
   
   return (
   
     <View style={styles.container}>
        {categorias.map((categoria) => (
-        <TouchableOpacity style={styles.categoryCard} key={categoria.id}>
+        <TouchableOpacity style={styles.categoryCard} key={categoria.id} onPress={()=>onPress(categoria)}>
           
                 <Image style={styles.categoryImage} source={{uri:`${Api.base_storage}/${categoria.imagem}`,}}/>
                 <Text style={styles.categoryText}>{categoria.nome}</Text>

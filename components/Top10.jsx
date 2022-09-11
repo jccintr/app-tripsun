@@ -17,7 +17,7 @@ const Top10 = ({servicos}) => {
                 <Text style={styles.serviceText}>{servico.nome}</Text>
                 <View style={styles.starArea}>
                   <FontAwesome name="star" size={16} color={cores.amarelo} />
-                  <Text style={styles.starText}>{servico.stars}</Text>
+                  <Text style={styles.starText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
                 </View>
             </TouchableOpacity>
 
