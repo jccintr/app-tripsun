@@ -9,21 +9,33 @@ import Api from '../Api';
 import SubcategoryList from '../components/SubcategoryList';
 import DestaquesCategory from '../components/DestaquesCategory';
 import ServicosCategory from '../components/ServicosCategory';
+import Titulo from '../components/Titulo';
 
 
 const Categoria = ({route}) => {
   const {cidade,servicos,subCategorias,categoria} = route.params;  
+  const [idSubcategoriaSelecionada,setIdSubcategoriaSelecionada] = useState(null);
+
+  const handleSubcategoriaSelect = (id) => {
+    setIdSubcategoriaSelecionada(id);
+  }
   
   return (
     <SafeAreaView style={styles.container}>
         <Header2 nomeCidade={cidade} title={categoria.nome}/>
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
-            <SubcategoryList subCategorias={subCategorias} categoria={categoria}/>
-            <Text style={styles.sectionTitle}>Destaques em {categoria.nome}</Text>
+           <Titulo titleText={`Subcategorias em ${categoria.nome}`}/>
+            <SubcategoryList 
+               subCategorias={subCategorias} 
+               categoria={categoria} 
+               handleSubcategoriaSelect={handleSubcategoriaSelect} 
+               idSubcategoriaSelecionada={idSubcategoriaSelecionada}
+            />
+            <Titulo titleText={`Destaques em ${categoria.nome}`}/>
             <DestaquesCategory servicos={servicos} categoria={categoria}/>
             <Banner/>
-            <Text style={styles.sectionTitle}>Serviços desta Categoria</Text>
+            <Titulo titleText="Serviços desta Categoria"/>
             <ServicosCategory servicos={servicos} categoria={categoria}/>
             </View>
         </ScrollView>

@@ -12,6 +12,7 @@ import Destaques from '../components/Destaques';
 import Banner from '../components/Banner';
 import Top10 from '../components/Top10';
 import Servicos from '../components/Servicos';
+import Titulo from '../components/Titulo';
 
 
 
@@ -54,12 +55,12 @@ const Home = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.body}>
          <CategoryList categorias={categorias} onPress={handleCategoryPress}/>
-         <Text style={styles.sectionTitle}>Destaques da Cidade</Text>
+         <Titulo titleText="Destaques da Cidade"/>
          <Destaques servicos={servicos}/>
          <Banner/>
-         <Text style={styles.sectionTitle}>Top 10</Text>
+         <Titulo titleText="Top 10"/>
          <Top10 servicos={servicos}/>
-         <Text style={styles.sectionTitle}>Serviços Próximos a Você!</Text>
+         <Titulo titleText="Serviços Próximos a Você!"/>
          <Servicos servicos={servicos}/>
        </View>
       </ScrollView>

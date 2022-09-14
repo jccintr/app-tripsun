@@ -8,7 +8,7 @@ import { cores } from '../style/globalStyle';
 const ServicosCategory = ({servicos,categoria}) => {
     return (
         <View style={styles.container}>
-           {servicos.sort((a,b)=>{return a.distancia - b.distancia}).slice(0,15).map((servico) => (
+           {servicos.filter(servico=>servico.categoria_id===categoria.id).sort((a,b)=>{return a.distancia - b.distancia}).map((servico) => (
             <TouchableOpacity style={styles.serviceCard} key={servico.id}>
                   <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
                   <View style={styles.serviceDetailsArea}>
@@ -17,7 +17,7 @@ const ServicosCategory = ({servicos,categoria}) => {
                           <FontAwesome name="star" size={16} color={cores.amarelo} />
                           <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
                           <Entypo name="dot-single" size={14} color="black" />
-                          <Text style={styles.serviceCategory}>{servico.categoria}</Text>
+                          <Text style={styles.serviceCategory}>{servico.subcategoria}</Text>
                           <Entypo name="dot-single" size={14} color="black" />
                           <Text style={styles.serviceDistance}>{servico.distancia} km</Text>
                       </View>

@@ -3,15 +3,15 @@ import Api from '../Api';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 
-const SubcategoryList = ({subCategorias,categoria}) => {
+const SubcategoryList = ({subCategorias,categoria,handleSubcategoriaSelect,idSubcategoriaSelecionada}) => {
     return (
   
         <View style={styles.container}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
            {subCategorias.filter(subCategoria=>subCategoria.categoria_id===categoria.id).map((subCategoria) => (
-            <TouchableOpacity style={styles.SubCategoryCard} key={subCategoria.id}>
-                    <Image style={styles.SubCategoryImage} source={{uri:`${Api.base_storage}/${subCategoria.imagem}`,}}/>
-                    <Text style={styles.SubCategoryText}>{subCategoria.nome}</Text>
+            <TouchableOpacity style={styles.SubCategoryCard} key={subCategoria.id} onPress={()=>handleSubcategoriaSelect(subCategoria.id)}>
+                    <Image style={styles.SubCategoryImage} source={{uri:`${Api.base_storage}/${subCategoria.imagem}`}}/>
+                    <Text style={subCategoria.id===idSubcategoriaSelecionada?styles.SubCategoryTextSelected:styles.SubCategoryText}>{subCategoria.nome}</Text>
              </TouchableOpacity>
                   ))}
           </ScrollView>
@@ -47,6 +47,11 @@ const styles = StyleSheet.create({
     SubCategoryText:{
       fontSize: 12,
       fontWeight: 'bold',
+    },
+    SubCategoryTextSelected:{
+      fontSize: 12,
+      fontWeight: 'bold',
+      color: '#f00',
     },
    
     
