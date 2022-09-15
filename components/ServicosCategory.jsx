@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text,Image,TouchableOpacity,View} from 'react-native';
 import Api from '../Api';
 import { FontAwesome } from '@expo/vector-icons';
@@ -8,15 +8,17 @@ import { cores } from '../style/globalStyle';
 
 
 
-const SortSelect = () => {
+
+const SortSelect = ({sortField,setSortField}) => {
+  console.log('sortfield==='+sortField);
   return (
     <View style={styles.SortSelectContainer}>
-      <FontAwesome name="sort-amount-asc" size={18} color="black" />
-       <TouchableOpacity style={styles.SortSelectItem}>
-         <Text style={styles.SortSelectItemText}>Distância</Text>
+      <FontAwesome style={{marginRight:5}} name="sort-amount-asc" size={14} color="black" />
+       <TouchableOpacity style={styles.SortSelectItem} onPress={()=>setSortField(0)}>
+         <Text style={sortField===0?styles.SortSelectItemTextSelected:styles.SortSelectItemText}>Distância</Text>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.SortSelectItem}>
-         <Text style={styles.SortSelectItemText}>Preço</Text>
+       <TouchableOpacity style={styles.SortSelectItem} onPress={()=>setSortField(1)}>
+         <Text style={sortField===1?styles.SortSelectItemTextSelected:styles.SortSelectItemText}>Preço</Text>
        </TouchableOpacity>
     </View>
   );
@@ -26,6 +28,7 @@ const SortSelect = () => {
 
 
 const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
+  const [sortField,setSortField] = useState(0);
   
   const filtraServicos = (servico) =>{
       if (idSubcategoriaSelecionada)
@@ -34,15 +37,23 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
            return servico.categoria_id===categoria.id
   }
 
+  const sortService = (a,b,sortField) =>{
+
+    if (sortField===0)
+       return a.distancia - b.distancia;
+    else
+       return parseFloat(a.preco) - parseFloat(b.preco);   
+  }
+
  
 
 
     return (
       <>
-      <SortSelect/>
+      <SortSelect sortField={sortField} setSortField={setSortField}/>
         <View style={styles.container}>
            
-           {servicos.filter(servico=>filtraServicos(servico)).sort((a,b)=>{return a.distancia - b.distancia}).map((servico) => (
+           {servicos.filter(servico=>filtraServicos(servico)).sort((a,b)=>sortService(a,b,sortField)).map((servico) => (
           
               <TouchableOpacity style={styles.serviceCard} key={servico.id}>
                       <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
@@ -137,9 +148,12 @@ const styles = StyleSheet.create({
      
     },
     SortSelectContainer:{
+     width:'90%',
+      marginTop:10,
+      
       flexDirection: 'row',
       alignItems:'center',
-      justifyContent:'center',
+      justifyContent:'flex-end',
     },
     SortSelectItem:{
       height:20,
@@ -152,6 +166,9 @@ const styles = StyleSheet.create({
     },
     SortSelectItemTextSelected:{
        fontSize: 12,
+       margin: 2,
+       color: cores.vermelho,
+       fontWeight: 'bold',
     },
    
     
