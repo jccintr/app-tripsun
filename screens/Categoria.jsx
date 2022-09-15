@@ -24,19 +24,22 @@ const Categoria = ({route}) => {
     <SafeAreaView style={styles.container}>
         <Header2 nomeCidade={cidade} title={categoria.nome}/>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.body}>
-           <Titulo titleText={`Subcategorias em ${categoria.nome}`}/>
-            <SubcategoryList 
-               subCategorias={subCategorias} 
-               categoria={categoria} 
-               handleSubcategoriaSelect={handleSubcategoriaSelect} 
-               idSubcategoriaSelecionada={idSubcategoriaSelecionada}
-            />
-            <Titulo titleText={`Destaques em ${categoria.nome}`}/>
-            <DestaquesCategory servicos={servicos} categoria={categoria}/>
-            <Banner/>
-            <Titulo titleText="Serviços desta Categoria"/>
-            <ServicosCategory servicos={servicos} categoria={categoria}/>
+            <View style={styles.body}>
+                <SubcategoryList 
+                  subCategorias={subCategorias} 
+                  categoria={categoria} 
+                  handleSubcategoriaSelect={handleSubcategoriaSelect} 
+                  idSubcategoriaSelecionada={idSubcategoriaSelecionada}
+                />
+                <Titulo titleText={`Destaques em ${categoria.nome}`}/>
+                <DestaquesCategory servicos={servicos} categoria={categoria}/>
+                <Banner/>
+                <Titulo titleText="Serviços desta Categoria"/>
+                <ServicosCategory 
+                    servicos={servicos} 
+                    categoria={categoria}  
+                    idSubcategoriaSelecionada={idSubcategoriaSelecionada}
+                />
             </View>
         </ScrollView>
     </SafeAreaView>
