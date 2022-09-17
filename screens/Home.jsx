@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { Entypo } from '@expo/vector-icons';
-import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View,ScrollView} from 'react-native';
+import { StyleSheet, SafeAreaView,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
@@ -77,21 +77,15 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'flex-start',
-     
-   
-      
-    },
+     },
     body:{
       flex:1,
       alignItems:'center',
       justifyContent: 'flex-start',
-   
     },
     sectionTitle:{
       fontWeight:'bold',
       fontSize: 26,
     }
-   
-   
-    
-  });
+  
+  }); 
