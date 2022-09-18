@@ -23,12 +23,12 @@ const Search = () => {
         const lng  = await AsyncStorage.getItem('@userLng');
         setLatitude(parseFloat(lat));
         setLongitude(parseFloat(lng));
-        console.log(parseFloat(lng));
+       
         if(id) {
           let json = await Api.getCidade(id,lat,lng);
            setNomeCidade(json.nome + ","+json.estado);
-        
            setServicos(json.servicos);
+          
            
         }
     }
@@ -43,21 +43,26 @@ const Search = () => {
     <SafeAreaView style={styles.container}>
        <Header nomeCidade={nomeCidade}/>
         <View style={styles.body}>
+          <View style={styles.searchInputArea}></View>
            <MapView
              style={styles.map}
              showsUserLocation={true}
              showsMyLocationButton={false}
-           
              region={{
               latitude: latitude,
               longitude: longitude,
               latitudeDelta: 0.009,
               longitudeDelta: 0.009*Dimensions.get('window').width/Dimensions.get('window').height,
              }}
-
            >
-
-           </MapView>
+           {servicos.slice(0,20).map((servico) => ( 
+              <Marker key={servico.id} title={servico.nome} coordinate={{latitude: parseFloat(servico.latitude), longitude: parseFloat(servico.longitude)}}>
+                <View key={servico.id} style={styles.markerView}>
+                   <Image key={servico.id} style={styles.markerImage} source={{uri:`${Api.base_storage}/${servico.marcador}`,}} />
+                </View>
+              </Marker>
+            ))} 
+             </MapView>
         </View>
     </SafeAreaView>
   )
@@ -71,9 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-   
- 
-    
+  
   },
   body:{
     flex:1,
@@ -84,6 +87,27 @@ const styles = StyleSheet.create({
  map:{
    width: Dimensions.get('window').width,
    height: Dimensions.get('window').height,
+ },
+ markerView:{
+   width: 100,
+   height:100,
+   flexDirection:'column',
+   alignItems: 'center',
+ },
+ markerImage:{
+   width:60,
+   height:60,
+ },
+ searchInputArea:{
+    width: '90%',
+    height: 50,
+    backgroundColor: '#0FF',
+    position: 'absolute',
+    top: 5,
+    zIndex:1,
+    borderRadius: 25,
+
+
  },
  
  

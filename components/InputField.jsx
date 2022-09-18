@@ -49,15 +49,14 @@ const styles = StyleSheet.create({
 
         width: '100%',
         height: 50,
-      
         flexDirection: 'row',
-       borderColor: '#c1c1c1',
+        borderColor: '#c1c1c1',
         borderWidth: 1,
         paddingLeft: 15,
         alignItems: 'center',
         marginBottom: 15,
         borderRadius: 15,
-        
+      
     },
     
     input: {
