@@ -32,8 +32,8 @@ const SignUp2 = () => {
            password={false}
        />
        <InputField 
-            iconProvider="FontAwesome"
-            iconName="whatsapp"
+           iconProvider="FontAwesome"
+           iconName="whatsapp"
            placeholder="Digite o seu telefone"
            value={telefone}
            onChangeText={t=>setTelefone(t)}

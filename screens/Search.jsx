@@ -6,6 +6,8 @@ import MapView, {Marker} from 'react-native-maps';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
+import InputField from '../components/InputField';
+import { cores } from '../style/globalStyle';
 
 
 const Search = () => {
@@ -14,6 +16,7 @@ const Search = () => {
   const [servicos,setServicos] = useState([]);
   const [latitude,setLatitude] = useState(0);
   const [longitude,setLongitude] = useState(0);
+  const [searchText,setSearchText] = useState('');
   
 
   useEffect(()=>{
@@ -43,7 +46,16 @@ const Search = () => {
     <SafeAreaView style={styles.container}>
        <Header nomeCidade={nomeCidade}/>
         <View style={styles.body}>
-          <View style={styles.searchInputArea}></View>
+          <View style={styles.searchInputArea}>
+            <InputField 
+              iconProvider="FontAwesome"
+              iconName="search"
+              placeholder="Buscar atividades"
+              value={searchText}
+              onChangeText={t=>setSearchText(t)}
+              password={false}
+            />
+          </View>
            <MapView
              style={styles.map}
              showsUserLocation={true}
@@ -101,11 +113,12 @@ const styles = StyleSheet.create({
  searchInputArea:{
     width: '90%',
     height: 50,
-    backgroundColor: '#0FF',
+    backgroundColor: cores.cinzaClaro,
     position: 'absolute',
-    top: 5,
+    top: 10,
     zIndex:1,
-    borderRadius: 25,
+    borderRadius: 15,
+    opacity: .8,
 
 
  },
