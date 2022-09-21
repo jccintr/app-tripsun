@@ -19,6 +19,7 @@ const Search = () => {
   const [longitude,setLongitude] = useState(0);
   const [searchText,setSearchText] = useState('');
   const [modalVisible,setModalVisible] = useState(false);
+  const [servicoSelecionado,setServicoSelecionado] = useState(null);
   
 
   useEffect(()=>{
@@ -40,10 +41,13 @@ const Search = () => {
     getCityId();
   }, []);
 
-  const OnPressMarker = (e,index) => {
-    console.log(`marker pressed ${index}`);
+  const OnPressMarker = (e,servico) => {
+    console.log(`marker pressed ${servico.id}`);
+    setServicoSelecionado(servico);
+    setLatitude(parseFloat(servico.latitude)),
+    setLongitude(parseFloat(servico.longitude)),
     setModalVisible(true);
-
+    
   }
 
 
@@ -65,6 +69,7 @@ const Search = () => {
              style={styles.map}
              showsUserLocation={true}
              showsMyLocationButton={false}
+             
              region={{
               latitude: latitude,
               longitude: longitude,
@@ -73,7 +78,7 @@ const Search = () => {
              }}
            >
            {servicos.slice(0,20).map((servico) => ( 
-              <Marker  onPress={e=>OnPressMarker(e,servico.id)} title={servico.nome} key={servico.id} coordinate={{latitude: parseFloat(servico.latitude), longitude: parseFloat(servico.longitude)}}>
+              <Marker  onPress={e=>OnPressMarker(e,servico)} title={servico.nome} key={servico.id} coordinate={{latitude: parseFloat(servico.latitude), longitude: parseFloat(servico.longitude)}}>
                 <View key={servico.id} style={styles.markerView}>
                    <Image key={servico.id} style={styles.markerImage} source={{uri:`${Api.base_storage}/${servico.marcador}`,}} />
                 </View>
@@ -81,7 +86,7 @@ const Search = () => {
             ))} 
              </MapView>
         </View>
-        <ModalServicos modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+        <ModalServicos modalVisible={modalVisible} servico={servicoSelecionado} setModalVisible={setModalVisible}/>
     </SafeAreaView>
   )
 }
