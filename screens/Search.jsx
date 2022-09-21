@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text,Image, SafeAreaView,Dimensions,View} from 'react-native';
+import { StyleSheet, TouchableOpacity,Image, SafeAreaView,Dimensions,View} from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
 import InputField from '../components/InputField';
 import { cores } from '../style/globalStyle';
+import ModalServicos from '../components/ModalServicos';
 
 
 const Search = () => {
@@ -17,6 +18,7 @@ const Search = () => {
   const [latitude,setLatitude] = useState(0);
   const [longitude,setLongitude] = useState(0);
   const [searchText,setSearchText] = useState('');
+  const [modalVisible,setModalVisible] = useState(false);
   
 
   useEffect(()=>{
@@ -38,8 +40,11 @@ const Search = () => {
     getCityId();
   }, []);
 
-  
+  const OnPressMarker = (e,index) => {
+    console.log(`marker pressed ${index}`);
+    setModalVisible(true);
 
+  }
 
 
   return (
@@ -56,7 +61,7 @@ const Search = () => {
               password={false}
             />
           </View>
-           <MapView
+           <MapView 
              style={styles.map}
              showsUserLocation={true}
              showsMyLocationButton={false}
@@ -68,7 +73,7 @@ const Search = () => {
              }}
            >
            {servicos.slice(0,20).map((servico) => ( 
-              <Marker key={servico.id} title={servico.nome} coordinate={{latitude: parseFloat(servico.latitude), longitude: parseFloat(servico.longitude)}}>
+              <Marker  onPress={e=>OnPressMarker(e,servico.id)} title={servico.nome} key={servico.id} coordinate={{latitude: parseFloat(servico.latitude), longitude: parseFloat(servico.longitude)}}>
                 <View key={servico.id} style={styles.markerView}>
                    <Image key={servico.id} style={styles.markerImage} source={{uri:`${Api.base_storage}/${servico.marcador}`,}} />
                 </View>
@@ -76,6 +81,7 @@ const Search = () => {
             ))} 
              </MapView>
         </View>
+        <ModalServicos modalVisible={modalVisible} setModalVisible={setModalVisible}/>
     </SafeAreaView>
   )
 }
