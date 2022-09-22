@@ -40,8 +40,9 @@ useEffect(()=>{
       setLocation(location);
       if (location) {
         const { latitude, longitude } = location.coords;
-        let response = await Location.reverseGeocodeAsync({latitude: latitude,longitude: longitude});
-        let address = response[0].district;
+        //let response = await Location.reverseGeocodeAsync({latitude: latitude,longitude: longitude});
+       // console.log(response);
+        let address = 'Brazópolis'; //response[0].district;
         setCidadeAtual(address);
         let cityList = await Api.getCidades();
         if (cityList) {

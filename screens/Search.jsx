@@ -42,7 +42,7 @@ const Search = () => {
   }, []);
 
   const OnPressMarker = (e,servico) => {
-    console.log(`marker pressed ${servico.id}`);
+    //console.log(`marker pressed ${servico.id}`);
     setServicoSelecionado(servico);
     setLatitude(parseFloat(servico.latitude)),
     setLongitude(parseFloat(servico.longitude)),

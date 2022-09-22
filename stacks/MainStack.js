@@ -8,6 +8,7 @@ import Local2 from "../screens/Local2";
 import SelectCity from "../screens/SelectCity";
 import Categoria from "../screens/Categoria";
 import MainTab from '../stacks/MainTab';
+import Servico from "../screens/Servico";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const MainStack = () => {
         <Stack.Screen name="Local2" component={Local2}/>
         <Stack.Screen name="SelectCity" component={SelectCity}/>
         <Stack.Screen name="Categoria" component={Categoria}/>
+        <Stack.Screen name="Servico" component={Servico}/>
         <Stack.Screen name="MainTab" component={MainTab} />
     </Stack.Navigator>
   )

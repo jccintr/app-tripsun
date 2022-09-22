@@ -4,12 +4,28 @@ import Api from '../Api';
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
+import { useNavigation } from '@react-navigation/native';
 
 const Servicos = ({servicos}) => {
+  const navigation = useNavigation();
+
+
+  const handleServicePress  = (servico) =>{
+  
+    navigation.navigate('Servico',{
+      
+      cidade: "Teste",
+      servico: servico
+
+    })
+ }
+
+
+
   return (
     <View style={styles.container}>
        {servicos.sort((a,b)=>{return a.distancia - b.distancia}).slice(0,15).map((servico) => (
-        <TouchableOpacity style={styles.serviceCard} key={servico.id}>
+        <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
               <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
               <View style={styles.serviceDetailsArea}>
                  <Text style={styles.serviceName}>{servico.nome}</Text>
@@ -28,7 +44,7 @@ const Servicos = ({servicos}) => {
               ))}
     </View>
   )
-}
+} 
 
 export default Servicos
 
