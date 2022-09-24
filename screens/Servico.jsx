@@ -1,15 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Header3 from '../components/Header3';
 import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
 import imagem from '../assets/atividade.jpeg';
-import { FontAwesome } from '@expo/vector-icons';
+import imagem2 from '../assets/atividade2.jpeg';
+import imagem3 from '../assets/atividade3.jpeg';
+import imagem4 from '../assets/atividade4.jpeg';
+import imagem5 from '../assets/atividade5.jpeg';
 import { Ionicons } from '@expo/vector-icons';
 import Stars from '../components/Stars';
+import Swiper from 'react-native-swiper';
 
 
+
+const SwipeDot = () =>{
+    return (
+       <View style={styles.swipeDot}></View>
+    )
+}
+
+const SwipeDotActive = () =>{
+    return (
+        <View style={styles.swipeDotActive}></View>
+    )
+}
 
 const NomeAtividade = ({servico}) => {
     return (
@@ -89,10 +104,23 @@ const Servico = ({route}) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header3  title="Atividade"/>
+             
             <ScrollView showsVerticalScrollIndicator={false}>
-           
+            <Swiper
+                style={{height: 200}}
+                dot={<SwipeDot />}
+                activeDot={<SwipeDotActive />}
+                paginationStyle={{top: 15, right: 15, bottom: null, left: null}}
+                autoplay={true}
+             >
+             <Image source={imagem} style={styles.imagem}/> 
+             <Image source={imagem2} style={styles.imagem}/> 
+             <Image source={imagem3} style={styles.imagem}/>  
+             <Image source={imagem4} style={styles.imagem}/> 
+             <Image source={imagem5} style={styles.imagem}/>  
+            </Swiper>        
             <View style={styles.body}>
-               <Image source={imagem} style={styles.imagem}/>
+             
                <NomeAtividade servico={servico}/>
                <ReviewArea servico={servico}/>
                <DescricaoArea servico={servico}/>
@@ -236,6 +264,21 @@ const styles = StyleSheet.create({
        fontSize: 12,
        fontWeight: 'bold',
     },
+    swipeDot:{
+        width: 10,
+        height: 10,
+        backgroundColor: '#fff',
+        borderRadius:5,
+        margin:3,
+       
+    },
+    swipeDotActive:{
+        width: 10,
+        height: 10,
+        backgroundColor: cores.vermelho,
+        borderRadius:5,
+        margin:3,
+    }
    
    
     
