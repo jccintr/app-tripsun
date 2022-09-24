@@ -7,6 +7,7 @@ import Api from '../Api';
 import imagem from '../assets/atividade.jpeg';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import Stars from '../components/Stars';
 
 
 
@@ -22,8 +23,7 @@ const ReviewArea = ({servico}) => {
      return (
         <View style={styles.reviewContainer}>
             <View style={styles.starContainer}>
-                <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
-                <FontAwesome name="star" size={16} color={cores.amarelo} />
+              <Stars stars={servico.stars}/>
             </View>
             <View style={styles.avaliacoesContainer}>
                 <Text>25 avaliações</Text>
