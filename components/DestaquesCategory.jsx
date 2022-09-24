@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text,Image,TouchableOpacity,View,ScrollView} from 'react-native';
 import Api from '../Api';
-import { cores } from '../style/globalStyle';
+import { useNavigation } from '@react-navigation/native';
+
 
 const DestaquesCategory = ({servicos,categoria}) => {
+
+  const navigation = useNavigation();
+
+
+  const handleServicePress  = (servico) =>{
+  
+    navigation.navigate('Servico',{
+      
+      cidade: "Teste",
+      servico: servico
+
+    })
+ } 
+
+
+
   return (
     <View style={styles.container}>
 
@@ -11,7 +28,7 @@ const DestaquesCategory = ({servicos,categoria}) => {
      
        {servicos.filter(servico=>servico.destaque===true&servico.categoria_id===categoria.id).map((servico) => (
       
-              <TouchableOpacity style={styles.serviceCard} key={servico.id}>
+              <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
                       <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
                       <Text style={styles.serviceText}>{servico.nome}</Text>
               </TouchableOpacity>

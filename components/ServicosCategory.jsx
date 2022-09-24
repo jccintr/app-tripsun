@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const SortSelect = ({sortField,setSortField}) => {
-  console.log('sortfield==='+sortField);
+  //console.log('sortfield==='+sortField);
   return (
     <View style={styles.SortSelectContainer}>
       <FontAwesome style={{marginRight:5}} name="sort-amount-asc" size={14} color="black" />

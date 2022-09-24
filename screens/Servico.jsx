@@ -74,7 +74,7 @@ const PrestadorArea = ({prestador}) => {
            <Text style={styles.titleText}>Fornecido por</Text>
            <View style={styles.prestadorDetailArea}>
              <Image style={styles.prestadorLogo} source={{uri:`${Api.base_storage}/${prestador.logotipo}`,}}/>
-             <Text style={styles.prestadorNameText}>Braztur Ltda.</Text>
+             <Text style={styles.prestadorNameText}>{prestador.nome}</Text>
            </View>
         </View>
      )

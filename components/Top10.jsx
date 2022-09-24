@@ -3,8 +3,23 @@ import { StyleSheet, Text,Image,TouchableOpacity,View,ScrollView} from 'react-na
 import Api from '../Api';
 import { cores } from '../style/globalStyle';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Top10 = ({servicos}) => {
+
+  const navigation = useNavigation();
+
+
+  const handleServicePress  = (servico) =>{
+  
+    navigation.navigate('Servico',{
+      
+      cidade: "Teste",
+      servico: servico
+
+    })
+ } 
+
   return (
     <View style={styles.container}>
 
@@ -12,7 +27,7 @@ const Top10 = ({servicos}) => {
         
         {
           servicos.sort((a,b)=>{return b.stars - a.stars}).slice(0,10).map((servico)=>(
-            <TouchableOpacity style={styles.serviceCard} key={servico.id}>
+            <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
                 <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
                 <Text style={styles.serviceText}>{servico.nome}</Text>
                 <View style={styles.starArea}>
