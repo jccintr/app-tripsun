@@ -4,6 +4,7 @@ import Api from '../Api';
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -28,6 +29,7 @@ const SortSelect = ({sortField,setSortField}) => {
 
 
 const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
+  const navigation = useNavigation();
   const [sortField,setSortField] = useState(0);
   
   const filtraServicos = (servico) =>{
@@ -45,6 +47,16 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
        return parseFloat(a.preco) - parseFloat(b.preco);   
   }
 
+  const handleServicePress  = (servico) =>{
+  
+    navigation.navigate('Servico',{
+      
+      cidade: "Teste",
+      servico: servico
+
+    })
+ } 
+
  
 
 
@@ -55,7 +67,7 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
            
            {servicos.filter(servico=>filtraServicos(servico)).sort((a,b)=>sortService(a,b,sortField)).map((servico) => (
           
-              <TouchableOpacity style={styles.serviceCard} key={servico.id}>
+              <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
                       <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
                       <View style={styles.serviceDetailsArea}>
                         <Text style={styles.serviceName}>{servico.nome}</Text>

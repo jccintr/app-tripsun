@@ -5,8 +5,25 @@ import imagem from '../assets/atividade.jpeg';
 import { FontAwesome } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
+
+  const navigation = useNavigation();
+
+
+  const handleServicePress  = (servico) =>{
+    setModalVisible(false);
+    navigation.navigate('Servico',{
+      
+      cidade: "Teste",
+      servico: servico
+
+    })
+ } 
+
+
+
   return (
   
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
@@ -29,7 +46,7 @@ const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
                             <Text style={styles.servicePriceText}>Paladino - Brasópolis,MG</Text>    
                             <Text style={styles.servicePriceText}>A partir de R$ {servico.preco}</Text>
                         </View>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={()=>handleServicePress(servico)}>
                              <Text style={styles.buttonText}>Ver mais</Text>
                         </TouchableOpacity>
                       </View>

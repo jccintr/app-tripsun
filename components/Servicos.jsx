@@ -18,7 +18,7 @@ const Servicos = ({servicos}) => {
       servico: servico
 
     })
- }
+ } 
 
 
 

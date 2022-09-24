@@ -40,9 +40,12 @@ useEffect(()=>{
       setLocation(location);
       if (location) {
         const { latitude, longitude } = location.coords;
-        //let response = await Location.reverseGeocodeAsync({latitude: latitude,longitude: longitude});
-       // console.log(response);
-        let address = 'Brazópolis'; //response[0].district;
+       // let response = await Location.reverseGeocodeAsync({latitude: latitude,longitude: longitude});
+        console.log('lat='+ latitude);
+        console.log('lng='+ longitude);
+       // console.log('response='+ response);
+        //let address = response[0].district;
+        let address = 'Brazópolis';
         setCidadeAtual(address);
         let cityList = await Api.getCidades();
         if (cityList) {
@@ -50,6 +53,7 @@ useEffect(()=>{
             for(var i=0; i<cityList.length; i++){
               if (cityList[i].nome === address){
                  setCityfound(true);
+                 console.log('cityId='+cityList[i].id.toString());
                  AsyncStorage.setItem('@cityId', cityList[i].id.toString());
                  AsyncStorage.setItem('@userLat', latitude.toString());
                  AsyncStorage.setItem('@userLng', longitude.toString());

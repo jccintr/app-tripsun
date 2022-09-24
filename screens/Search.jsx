@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, TouchableOpacity,Image, SafeAreaView,Dimensions,View} from 'react-native';
+import { StyleSheet,Image, SafeAreaView,Dimensions,View} from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
@@ -27,6 +27,7 @@ const Search = () => {
         const id = await AsyncStorage.getItem('@cityId');
         const lat = await AsyncStorage.getItem('@userLat');
         const lng  = await AsyncStorage.getItem('@userLng');
+        console.log("id="+id+" lat="+lat+" lng="+lng);
         setLatitude(parseFloat(lat));
         setLongitude(parseFloat(lng));
        
@@ -42,7 +43,7 @@ const Search = () => {
   }, []);
 
   const OnPressMarker = (e,servico) => {
-    //console.log(`marker pressed ${servico.id}`);
+    
     setServicoSelecionado(servico);
     setLatitude(parseFloat(servico.latitude)),
     setLongitude(parseFloat(servico.longitude)),
@@ -86,7 +87,7 @@ const Search = () => {
             ))} 
              </MapView>
         </View>
-        <ModalServicos modalVisible={modalVisible} servico={servicoSelecionado} setModalVisible={setModalVisible}/>
+        {servicoSelecionado?<ModalServicos modalVisible={modalVisible} servico={servicoSelecionado} setModalVisible={setModalVisible}/>:''}
     </SafeAreaView>
   )
 }
