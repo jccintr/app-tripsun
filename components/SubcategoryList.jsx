@@ -10,7 +10,7 @@ const SubcategoryList = ({subCategorias,categoria,handleSubcategoriaSelect,idSub
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
            {subCategorias.filter(subCategoria=>subCategoria.categoria_id===categoria.id).map((subCategoria) => (
             <TouchableOpacity style={styles.SubCategoryCard} key={subCategoria.id} onPress={()=>handleSubcategoriaSelect(subCategoria.id)}>
-                    <Image style={styles.SubCategoryImage} source={{uri:`${Api.base_storage}/${subCategoria.imagem}`}}/>
+                    <Image style={subCategoria.id===idSubcategoriaSelecionada?styles.SubCategoryImageSelected:styles.SubCategoryImage} source={{uri:`${Api.base_storage}/${subCategoria.imagem}`}}/>
                     <Text style={subCategoria.id===idSubcategoriaSelecionada?styles.SubCategoryTextSelected:styles.SubCategoryText}>{subCategoria.nome}</Text>
              </TouchableOpacity>
                   ))}
@@ -43,15 +43,20 @@ const styles = StyleSheet.create({
     SubCategoryImage:{
        width: 75,
        height: 75,
+       opacity: .3,
     },
+    SubCategoryImageSelected:{
+      width: 75,
+      height: 75,
+   },
     SubCategoryText:{
       fontSize: 12,
-      fontWeight: 'bold',
+      fontWeight: 'normal',
     },
     SubCategoryTextSelected:{
       fontSize: 12,
       fontWeight: 'bold',
-      color: '#f00',
+      
     },
    
     

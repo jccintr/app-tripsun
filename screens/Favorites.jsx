@@ -4,7 +4,8 @@ import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View} fr
 const Favorites = () => {
   return (
     <SafeAreaView style={styles.container}>
-       <Text>Tela Favorites</Text>
+       <Text>Tela Favoritos</Text>
+      
     </SafeAreaView>
   )
 }

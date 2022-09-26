@@ -47,6 +47,8 @@ useEffect(()=>{
         //let address = response[0].district;
         let address = 'Brazópolis';
         setCidadeAtual(address);
+       
+        try {
         let cityList = await Api.getCidades();
         if (cityList) {
             SetCidades(cityList);
@@ -61,6 +63,11 @@ useEffect(()=>{
               }
             }
          }
+        } catch (e){
+          console.log(e)
+          alert("Falha ao obter dados.");
+        }
+
       }
       })();
 

@@ -4,7 +4,7 @@ import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View} fr
 const Profile = () => {
   return (
     <SafeAreaView style={styles.container}>
-    <Text>Tela Profile</Text>
+    <Text>Tela Perfil</Text>
  </SafeAreaView>
   )
 }

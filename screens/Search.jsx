@@ -51,6 +51,12 @@ const Search = () => {
     
   }
 
+  const onSearchHandle = (t) => {
+     setSearchText(t);
+   //  alert(t);
+
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,7 +68,7 @@ const Search = () => {
               iconName="search"
               placeholder="Buscar atividades"
               value={searchText}
-              onChangeText={t=>setSearchText(t)}
+              onChangeText={t=>onSearchHandle(t)}
               password={false}
             />
           </View>
@@ -78,7 +84,7 @@ const Search = () => {
               longitudeDelta: 0.009*Dimensions.get('window').width/Dimensions.get('window').height,
              }}
            >
-           {servicos.slice(0,20).map((servico) => ( 
+           {servicos.filter((servico)=>servico.nome.toUpperCase().includes(searchText.toUpperCase())).slice(0,20).map((servico) => ( 
               <Marker  onPress={e=>OnPressMarker(e,servico)} title={servico.nome} key={servico.id} coordinate={{latitude: parseFloat(servico.latitude), longitude: parseFloat(servico.longitude)}}>
                 <View key={servico.id} style={styles.markerView}>
                    <Image key={servico.id} style={styles.markerImage} source={{uri:`${Api.base_storage}/${servico.marcador}`,}} />
