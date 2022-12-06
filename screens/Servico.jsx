@@ -1,6 +1,6 @@
 import React from 'react'
 import Header3 from '../components/Header3';
-import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
+import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import imagem from '../assets/atividade.jpeg';
@@ -56,15 +56,24 @@ const DescricaoArea = ({servico}) => {
            <Text style={styles.titleText}>Descrição da Atividade</Text>
            <View style={{backgroundColor: cores.cinzaClaro,width:'100%',borderRadius:15,padding:10}}>
                 <Text style={styles.descriptionText}>{servico.descricao_curta}</Text>
-                <Text style={styles.descriptionText}>{servico.descricao_curta}</Text>
-               
            </View>
+
+           <Text style={styles.titleText}>Atrativos</Text>
+           <View style={{backgroundColor: cores.cinzaClaro,width:'100%',borderRadius:15,padding:10}}>
+                <Text style={styles.descriptionText}>{servico.atrativos}</Text>
+           </View>
+
            <Text style={styles.titleText}>Tempo de Duração</Text>
            <View style={{backgroundColor: cores.cinzaClaro,width:'100%',borderRadius:15,padding:10}}>
-           <Text style={styles.descriptionText}>1h30min</Text>
+                <Text style={styles.descriptionText}>{servico.duracao}</Text>
            </View>
+          
         </View>
      )
+
+}
+
+const AtrativosArea = ({servico}) => {
 
 }
 
@@ -86,7 +95,7 @@ const PriceArea = ({servico}) => {
         <View style={styles.priceContainer}>
            <Text style={styles.titleText}>Preço</Text>
            <View style={styles.priceDetailArea}>
-           <Text style={styles.descriptionText}>A partir de R$ {servico.preco}</Text>
+           <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
                <TouchableOpacity style={styles.botaoContratar}>
                    <Text style={styles.buttonText}>CONTRATAR</Text>
                </TouchableOpacity>
@@ -100,33 +109,31 @@ const PriceArea = ({servico}) => {
 
 const Servico = ({route}) => {
     const {cidade,servico} = route.params; 
-    console.log(servico.nome);
+    
     return (
         <SafeAreaView style={styles.container}>
+            
             <Header3  title="Atividade"/>
              
             <ScrollView showsVerticalScrollIndicator={false}>
-            <Swiper
-                style={{height: 200}}
-                dot={<SwipeDot />}
-                activeDot={<SwipeDotActive />}
-                paginationStyle={{top: 15, right: 15, bottom: null, left: null}}
-                autoplay={true}
-             >
-             <Image source={imagem} style={styles.imagem}/> 
-             <Image source={imagem2} style={styles.imagem}/> 
-             <Image source={imagem3} style={styles.imagem}/>  
-             <Image source={imagem4} style={styles.imagem}/> 
-             <Image source={imagem5} style={styles.imagem}/>  
-            </Swiper>        
-            <View style={styles.body}>
-             
-               <NomeAtividade servico={servico}/>
-               <ReviewArea servico={servico}/>
-               <DescricaoArea servico={servico}/>
-               <PrestadorArea prestador={servico.prestador}/>
-               <PriceArea servico={servico}/>
-            </View>
+                {servico.imagens.length > 0 ? 
+                <Swiper
+                    style={{height: 200}}
+                    dot={<SwipeDot />}
+                    activeDot={<SwipeDotActive />}
+                    paginationStyle={{top: 15, right: 15, bottom: null, left: null}}
+                    autoplay={true}
+                >
+                {servico.imagens.map((imagem) => (<Image key={imagem.id} source={{uri:`${Api.base_storage}/${imagem.imagem}`,}} style={styles.imagem}/>  ))}
+                
+                </Swiper> : '' }       
+                <View style={styles.body}>
+                    <NomeAtividade servico={servico}/>
+                    <ReviewArea servico={servico}/>
+                    <DescricaoArea servico={servico}/>
+                    <PrestadorArea prestador={servico.prestador}/>
+                    <PriceArea servico={servico}/>
+                </View>
            </ScrollView>
          
         </SafeAreaView>

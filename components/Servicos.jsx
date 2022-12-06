@@ -37,7 +37,7 @@ const Servicos = ({servicos}) => {
                       <Entypo name="dot-single" size={14} color="black" />
                       <Text style={styles.serviceDistance}>{servico.distancia} km</Text>
                   </View>
-                  <Text style={styles.servicePrice}>A partir de R$ {servico.preco}</Text>
+                  <Text style={styles.servicePrice}>A partir de R$ {servico.valor}</Text>
               </View>
                 
          </TouchableOpacity>

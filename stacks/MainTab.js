@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 
 export default () => (
     <Tab.Navigator screenOptions={{ headerShown: false}} tabBar={props=><Menu {...props} />}>
-        <Tab.Screen name="Homee" component={Home} />
+        <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Search" component={Search} />
        
         <Tab.Screen name="Favorites" component={Favorites} />
