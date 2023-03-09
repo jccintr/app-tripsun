@@ -20,9 +20,9 @@ const Stars = ({stars}) => {
          <Text style={styles.starText}>{stars.length === 1 ? stars+'.0':stars}</Text>
         {s.map((i, k)=>(
             <View key={k}>
-                {i === 0 && <FontAwesome name="star-o" size={16} color={cores.amarelo} />}
-                {i === 1 && <FontAwesome name="star-half-o" size={16} color={cores.amarelo} />}
-                {i === 2 && <FontAwesome name="star" size={16} color={cores.amarelo} />}
+                {i === 0 && <FontAwesome name="star-o" size={16} color={cores.dourado} />}
+                {i === 1 && <FontAwesome name="star-half-o" size={16} color={cores.dourado} />}
+                {i === 2 && <FontAwesome name="star" size={16} color={cores.dourado} />}
             </View>
         ))}
         

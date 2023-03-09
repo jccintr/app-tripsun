@@ -6,4 +6,5 @@ export const cores = {
    laranja:'#FF6600',
    cinzaClaro: '#fafafa',
    branco: '#fff',
+   dourado: '#FDCC0D',
 };

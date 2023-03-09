@@ -3,11 +3,13 @@ import Header3 from '../components/Header3';
 import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
+/*
 import imagem from '../assets/atividade.jpeg';
 import imagem2 from '../assets/atividade2.jpeg';
 import imagem3 from '../assets/atividade3.jpeg';
 import imagem4 from '../assets/atividade4.jpeg';
 import imagem5 from '../assets/atividade5.jpeg';
+*/
 import { Ionicons } from '@expo/vector-icons';
 import Stars from '../components/Stars';
 import Swiper from 'react-native-swiper';
@@ -42,7 +44,7 @@ const ReviewArea = ({servico}) => {
             </View>
             <View style={styles.avaliacoesContainer}>
                 <Text>25 avaliações</Text>
-             
+
                 <Ionicons name="chevron-forward" size={20} color="black" />
             </View>
         </View>
@@ -63,19 +65,27 @@ const DescricaoArea = ({servico}) => {
                 <Text style={styles.descriptionText}>{servico.atrativos}</Text>
            </View>
 
-           <Text style={styles.titleText}>Tempo de Duração</Text>
+           <Text style={styles.titleText}>Duração da Atividade</Text>
            <View style={{backgroundColor: cores.cinzaClaro,width:'100%',borderRadius:15,padding:10}}>
                 <Text style={styles.descriptionText}>{servico.duracao}</Text>
            </View>
-          
+
+           <Text style={styles.titleText}>Itens Obrigatórios</Text>
+           <View style={{backgroundColor: cores.cinzaClaro,width:'100%',borderRadius:15,padding:10}}>
+                <Text style={styles.descriptionText}>{servico.itens_obrigatorios}</Text>
+           </View>
+
+           <Text style={styles.titleText}>Ponto de Encontro da Atividade</Text>
+           <View style={{backgroundColor: cores.cinzaClaro,width:'100%',borderRadius:15,padding:10}}>
+                <Text style={styles.descriptionText}>{servico.ponto_encontro}</Text>
+           </View>
+
         </View>
      )
 
 }
 
-const AtrativosArea = ({servico}) => {
 
-}
 
 const PrestadorArea = ({prestador}) => {
     return (
@@ -87,7 +97,7 @@ const PrestadorArea = ({prestador}) => {
            </View>
         </View>
      )
-        
+
 }
 
 const PriceArea = ({servico}) => {
@@ -97,7 +107,7 @@ const PriceArea = ({servico}) => {
            <View style={styles.priceDetailArea}>
            <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
                <TouchableOpacity style={styles.botaoContratar}>
-                   <Text style={styles.buttonText}>CONTRATAR</Text>
+                   <Text style={styles.buttonText}>AGENDAR</Text>
                </TouchableOpacity>
            </View>
 
@@ -108,15 +118,15 @@ const PriceArea = ({servico}) => {
 
 
 const Servico = ({route}) => {
-    const {cidade,servico} = route.params; 
-    
+    const {cidade,servico} = route.params;
+
     return (
         <SafeAreaView style={styles.container}>
-            
+
             <Header3  title="Atividade"/>
-             
+
             <ScrollView showsVerticalScrollIndicator={false}>
-                {servico.imagens.length > 0 ? 
+                {servico.imagens.length > 0 ?
                 <Swiper
                     style={{height: 200}}
                     dot={<SwipeDot />}
@@ -125,8 +135,8 @@ const Servico = ({route}) => {
                     autoplay={true}
                 >
                 {servico.imagens.map((imagem) => (<Image key={imagem.id} source={{uri:`${Api.base_storage}/${imagem.imagem}`,}} style={styles.imagem}/>  ))}
-                
-                </Swiper> : '' }       
+
+                </Swiper> : '' }
                 <View style={styles.body}>
                     <NomeAtividade servico={servico}/>
                     <ReviewArea servico={servico}/>
@@ -135,7 +145,7 @@ const Servico = ({route}) => {
                     <PriceArea servico={servico}/>
                 </View>
            </ScrollView>
-         
+
         </SafeAreaView>
   )
 }
@@ -204,7 +214,7 @@ const styles = StyleSheet.create({
     titleText:{
       fontWeight: 'bold',
       fontSize: 18,
-    }, 
+    },
     descriptionText:{
         fontSize: 14,
     } ,
@@ -238,7 +248,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
        fontSize: 14,
        fontWeight: 'bold',
-       
+
     },
     priceContainer:{
         marginTop:10,
@@ -277,7 +287,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius:5,
         margin:3,
-       
+
     },
     swipeDotActive:{
         width: 10,
@@ -286,7 +296,7 @@ const styles = StyleSheet.create({
         borderRadius:5,
         margin:3,
     }
-   
-   
-    
+
+
+
   });

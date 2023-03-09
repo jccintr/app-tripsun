@@ -53,8 +53,6 @@ const Search = () => {
 
   const onSearchHandle = (t) => {
      setSearchText(t);
-   //  alert(t);
-
   }
 
 
@@ -137,10 +135,6 @@ const styles = StyleSheet.create({
     zIndex:1,
     borderRadius: 15,
     opacity: .8,
-
-
  },
- 
- 
   
 }); 

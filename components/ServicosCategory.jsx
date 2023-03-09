@@ -6,10 +6,6 @@ import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 
-
-
-
-
 const SortSelect = ({sortField,setSortField}) => {
   //console.log('sortfield==='+sortField);
   return (
@@ -57,10 +53,7 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
     })
  } 
 
- 
-
-
-    return (
+     return (
       <>
       <SortSelect sortField={sortField} setSortField={setSortField}/>
         <View style={styles.container}>
@@ -72,7 +65,7 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
                       <View style={styles.serviceDetailsArea}>
                         <Text style={styles.serviceName}>{servico.nome}</Text>
                         <View style={styles.secondLine}>
-                              <FontAwesome name="star" size={16} color={cores.amarelo} />
+                              <FontAwesome name="star" size={16} color={cores.dourado} />
                               <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
                               <Entypo name="dot-single" size={14} color="black" />
                               <Text style={styles.serviceCategory}>{servico.subcategoria}</Text>
@@ -105,17 +98,14 @@ const styles = StyleSheet.create({
       marginTop:10,
       marginBottom:10,
       paddingTop:5,
-    
-        },
+     },
     serviceCard:{
-     marginHorizontal:10,
+      marginHorizontal:10,
       flexDirection: 'row',
       alignItems:'center',
       justifyContent:'flex-start',
       width: 320,
       height: 65,
-     
-     
     },
     serviceImage:{
        width: 60,
@@ -126,8 +116,6 @@ const styles = StyleSheet.create({
       paddingLeft:10,
       height: 65,
       justifyContent:'space-around',
-     
-  
     },
     serviceName:{
       fontSize: 14,
@@ -141,28 +129,23 @@ const styles = StyleSheet.create({
     serviceStarText:{
       fontSize: 12,
       marginHorizontal:5,
-     
     },
     serviceCategory:{
       fontSize: 12,
       marginRight:5,
-     
     },
     categoryText:{
       fontSize: 12,
-     
     },
     serviceDistance:{
       fontSize: 12,
-       },
+    },
     servicePrice:{
       fontSize: 12,
-     
     },
     SortSelectContainer:{
      width:'90%',
       marginTop:10,
-      
       flexDirection: 'row',
       alignItems:'center',
       justifyContent:'flex-end',
@@ -182,6 +165,5 @@ const styles = StyleSheet.create({
        color: cores.vermelho,
        fontWeight: 'bold',
     },
-   
-    
+  
   });

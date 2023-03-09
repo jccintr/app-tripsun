@@ -12,11 +12,11 @@ const Preload = () => {
   const [latitude,setLatitude] = useState(0);
   const [longitude,setLongitude] = useState(0);
   const [cidadeAtual,setCidadeAtual] = useState(null);
- 
+
   const [cityFound,setCityfound] = useState(null);
   const [cidades,SetCidades] = useState([]);
 
-  
+
 
 useEffect(()=>{
   if (cityFound){
@@ -25,7 +25,7 @@ useEffect(()=>{
     if(cidades.length)
        navigation.navigate('SelectCity');
   }
- 
+
 }, [cityFound,cidades]);
 
 
@@ -45,9 +45,9 @@ useEffect(()=>{
        // console.log('lng='+ longitude);
        // console.log('response='+ response);
         //let address = response[0].district;
-        let address = 'Brazópolis';
+        let address = 'Brasópolis';
         setCidadeAtual(address);
-       
+
         try {
         let cityList = await Api.getCidades();
         if (cityList) {
@@ -59,7 +59,7 @@ useEffect(()=>{
                  AsyncStorage.setItem('@cityId', cityList[i].id.toString());
                  AsyncStorage.setItem('@userLat', latitude.toString());
                  AsyncStorage.setItem('@userLng', longitude.toString());
-                 
+
               }
             }
          }
@@ -88,7 +88,7 @@ export default Preload
 const styles = StyleSheet.create({
     container: {
         flex:1,
-      
+
     },
     image:{
         flex: 1,
@@ -104,4 +104,3 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
     }
   });
-  

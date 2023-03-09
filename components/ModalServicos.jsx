@@ -1,28 +1,23 @@
 import { requestBackgroundPermissionsAsync, stopLocationUpdatesAsync } from 'expo-location';
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { StyleSheet, Text,Image,TouchableOpacity, Modal,View} from 'react-native';
-import imagem from '../assets/atividade.jpeg';
 import { FontAwesome } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Api from '../Api';
 
 const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
-
   const navigation = useNavigation();
-
 
   const handleServicePress  = (servico) =>{
     setModalVisible(false);
     navigation.navigate('Servico',{
-      
       cidade: "Teste",
       servico: servico
 
     })
  } 
-
-
 
   return (
   
@@ -33,12 +28,12 @@ const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
                     <TouchableOpacity onPress={()=>setModalVisible(false)}>
                        <View style={styles.closeButton}></View>
                     </TouchableOpacity>
-                    <Image source={imagem} style={styles.imagem}/>
+                    <Image source={{uri:`${Api.base_storage}/${servico.imagens[0].imagem}`,}} style={styles.imagem}/>
                     <View style={styles.detailArea}>
                       <View style={styles.nameLine}>  
                             <Text style={styles.serviceName}>{servico.nome}</Text>
                             <Entypo name="dot-single" size={14} color="black" />
-                            <FontAwesome name="star" size={16} color={cores.amarelo} />
+                            <FontAwesome name="star" size={16} color={cores.dourado} />
                             <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
                       </View>
                       <View style={styles.bottomArea}>
@@ -47,7 +42,7 @@ const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
                             <Text style={styles.servicePriceText}>A partir de R$ {servico.preco}</Text>
                         </View>
                         <TouchableOpacity style={styles.button} onPress={()=>handleServicePress(servico)}>
-                             <Text style={styles.buttonText}>Ver mais</Text>
+                             <Text style={styles.buttonText}>Mais Detalhes</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -67,7 +62,6 @@ const styles = StyleSheet.create({
     Box:{
         width: '100%',
         height: '100%',
-      
         justifyContent:'flex-end',
         alignItems: 'center',
     },
@@ -82,7 +76,6 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         alignItems: 'center',    
     },
-  
     closeButton:{
         width: 100,
         height: 3,
@@ -125,13 +118,11 @@ const styles = StyleSheet.create({
     },
     button:{
         backgroundColor: cores.vermelho,
-       
         paddingRight: 15,
         paddingLeft: 15,
         paddingTop: 10,
         paddingBottom: 10,
         borderRadius: 15,
-        
     },
     buttonText:{
        color: '#fff',
@@ -139,8 +130,5 @@ const styles = StyleSheet.create({
        fontSize: 14,
     },
 
-    
- 
-   
-    
+  
   }); 

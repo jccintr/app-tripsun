@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { StyleSheet, Text,Image,TouchableOpacity,View} from 'react-native';
 import Api from '../Api';
 import { FontAwesome } from '@expo/vector-icons';
@@ -30,7 +30,7 @@ const Servicos = ({servicos}) => {
               <View style={styles.serviceDetailsArea}>
                  <Text style={styles.serviceName}>{servico.nome}</Text>
                  <View style={styles.secondLine}>
-                      <FontAwesome name="star" size={16} color={cores.amarelo} />
+                      <FontAwesome name="star" size={16} color={cores.dourado} />
                       <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
                       <Entypo name="dot-single" size={14} color="black" />
                       <Text style={styles.serviceCategory}>{servico.categoria}</Text>
@@ -63,8 +63,7 @@ const styles = StyleSheet.create({
     marginTop:10,
     marginBottom:10,
     paddingTop:5,
-  
-      },
+    },
   serviceCard:{
    marginHorizontal:10,
     flexDirection: 'row',
@@ -72,8 +71,6 @@ const styles = StyleSheet.create({
     justifyContent:'flex-start',
     width: 320,
     height: 65,
-   
-   
   },
   serviceImage:{
      width: 60,
@@ -84,8 +81,6 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     height: 65,
     justifyContent:'space-around',
-   
-
   },
   serviceName:{
     fontSize: 14,
@@ -99,23 +94,19 @@ const styles = StyleSheet.create({
   serviceStarText:{
     fontSize: 12,
     marginHorizontal:5,
-   
-  },
+ },
   serviceCategory:{
     fontSize: 12,
     marginRight:5,
-   
   },
   categoryText:{
     fontSize: 12,
-   
-  },
+ },
   serviceDistance:{
     fontSize: 12,
-     },
+  },
   servicePrice:{
     fontSize: 12,
-   
   },
  
   

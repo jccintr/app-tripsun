@@ -55,7 +55,7 @@ alert('tocou no tenho cadastro');
        </TouchableOpacity>
        <TouchableOpacity onPress={() => navigation.navigate('SignUp2')} style={styles.signUpMessage}>
           <Text style={styles.signUpMessageText}>Não tem uma conta?</Text>
-          <Text style={styles.signUpMessageTextBold} > Cadastre-se!</Text>
+          <Text style={styles.signUpMessageTextBold} >Cadastre-se!</Text>
         </TouchableOpacity>
         
           <Text style={{textAlign: 'center',marginTop:20}}>ou</Text>
