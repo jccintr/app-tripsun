@@ -1,18 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Header3 from '../components/Header3';
 import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
-/*
-import imagem from '../assets/atividade.jpeg';
-import imagem2 from '../assets/atividade2.jpeg';
-import imagem3 from '../assets/atividade3.jpeg';
-import imagem4 from '../assets/atividade4.jpeg';
-import imagem5 from '../assets/atividade5.jpeg';
-*/
 import { Ionicons } from '@expo/vector-icons';
 import Stars from '../components/Stars';
 import Swiper from 'react-native-swiper';
+import ModalAgendamento from '../components/ModalAgendamento';
 
 
 
@@ -100,13 +94,13 @@ const PrestadorArea = ({prestador}) => {
 
 }
 
-const PriceArea = ({servico}) => {
+const PriceArea = ({servico,setModalVisible}) => {
     return (
         <View style={styles.priceContainer}>
            <Text style={styles.titleText}>Preço</Text>
            <View style={styles.priceDetailArea}>
            <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
-               <TouchableOpacity style={styles.botaoContratar}>
+               <TouchableOpacity onPress={()=>setModalVisible(true)} style={styles.botaoContratar}>
                    <Text style={styles.buttonText}>AGENDAR</Text>
                </TouchableOpacity>
            </View>
@@ -119,6 +113,7 @@ const PriceArea = ({servico}) => {
 
 const Servico = ({route}) => {
     const {cidade,servico} = route.params;
+    const [modalVisible,setModalVisible] = useState(false);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -142,10 +137,10 @@ const Servico = ({route}) => {
                     <ReviewArea servico={servico}/>
                     <DescricaoArea servico={servico}/>
                     <PrestadorArea prestador={servico.prestador}/>
-                    <PriceArea servico={servico}/>
+                    <PriceArea servico={servico} setModalVisible={setModalVisible}/>
                 </View>
            </ScrollView>
-
+        <ModalAgendamento modalVisible={modalVisible} setModalVisible={setModalVisible}/>
         </SafeAreaView>
   )
 }
@@ -163,6 +158,7 @@ const styles = StyleSheet.create({
       flex:1,
       alignItems:'center',
       justifyContent: 'flex-start',
+      marginBottom: 20,
     },
     imagem:{
         width: Dimensions.get('window').width,
@@ -252,6 +248,7 @@ const styles = StyleSheet.create({
     },
     priceContainer:{
         marginTop:10,
+        
         flexDirection: 'column',
         alignItems:'flex-start',
         justifyContent:'space-between',

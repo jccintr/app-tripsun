@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 250,
         backgroundColor: '#fff',
-        borderTopLeftRadius:15,
-        borderTopRightRadius: 15,
+        borderTopLeftRadius:30,
+        borderTopRightRadius: 30,
         paddingTop: 5,
         paddingLeft: 10,
         paddingRight: 10,
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 10,
     },
+   
     imagem:{
       width: '100%',
       height: 150,
