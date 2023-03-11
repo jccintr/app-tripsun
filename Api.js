@@ -63,8 +63,6 @@ export default {
         return json;
     },
     getCidade: async (id,lat,lng) => {
-
-       
         const req = await fetch(`${BASE_API}/cidade`, {
             method: 'POST',
             headers: {
@@ -76,9 +74,12 @@ export default {
         const json = await req.json();        
         return json;
 
-       
-       
     },
+    getHorariosDisponiveis: async (idServico) => {
+        const req = await fetch(`${BASE_API}/horarios/disponiveis/${idServico}`);
+        const json = await req.json();
+        return json;
+      },
   
    
 };

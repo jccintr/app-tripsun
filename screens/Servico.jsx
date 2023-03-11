@@ -94,17 +94,30 @@ const PrestadorArea = ({prestador}) => {
 
 }
 
-const PriceArea = ({servico,setModalVisible}) => {
+
+
+const PriceArea = ({servico,setModalVisible,setHorarios}) => {
+
+
+    const onAgendarPress = async (idServico) =>{
+      let jsonHorarios = await Api.getHorariosDisponiveis(idServico);
+     
+      setHorarios(jsonHorarios);
+      setModalVisible(true);
+    
+    }
+
+
+
     return (
         <View style={styles.priceContainer}>
            <Text style={styles.titleText}>Preço</Text>
            <View style={styles.priceDetailArea}>
            <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
-               <TouchableOpacity onPress={()=>setModalVisible(true)} style={styles.botaoContratar}>
+               <TouchableOpacity onPress={()=>onAgendarPress(servico.id)} style={styles.botaoContratar}>
                    <Text style={styles.buttonText}>AGENDAR</Text>
                </TouchableOpacity>
            </View>
-
         </View>
      )
 }
@@ -114,6 +127,10 @@ const PriceArea = ({servico,setModalVisible}) => {
 const Servico = ({route}) => {
     const {cidade,servico} = route.params;
     const [modalVisible,setModalVisible] = useState(false);
+    const [horarios,setHorarios] = useState([]);
+
+
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -137,10 +154,12 @@ const Servico = ({route}) => {
                     <ReviewArea servico={servico}/>
                     <DescricaoArea servico={servico}/>
                     <PrestadorArea prestador={servico.prestador}/>
-                    <PriceArea servico={servico} setModalVisible={setModalVisible}/>
+                    <PriceArea servico={servico} setModalVisible={setModalVisible} setHorarios={setHorarios}/>
+
+
                 </View>
            </ScrollView>
-        <ModalAgendamento modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+         <ModalAgendamento modalVisible={modalVisible} setModalVisible={setModalVisible} horarios={horarios}/>
         </SafeAreaView>
   )
 }
