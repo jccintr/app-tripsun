@@ -96,13 +96,13 @@ const PrestadorArea = ({prestador}) => {
 
 
 
-const PriceArea = ({servico,setModalVisible,setHorarios}) => {
+const PriceArea = ({servico,setModalVisible}) => {
 
 
     const onAgendarPress = async (idServico) =>{
-      let jsonHorarios = await Api.getHorariosDisponiveis(idServico);
+     // let jsonHorarios = await Api.getHorariosDisponiveis(idServico);
      
-      setHorarios(jsonHorarios);
+    //  setHorarios(jsonHorarios);
       setModalVisible(true);
     
     }
@@ -114,7 +114,7 @@ const PriceArea = ({servico,setModalVisible,setHorarios}) => {
            <Text style={styles.titleText}>Preço</Text>
            <View style={styles.priceDetailArea}>
            <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
-               <TouchableOpacity onPress={()=>onAgendarPress(servico.id)} style={styles.botaoContratar}>
+               <TouchableOpacity onPress={()=>setModalVisible(true)} style={styles.botaoContratar}>
                    <Text style={styles.buttonText}>AGENDAR</Text>
                </TouchableOpacity>
            </View>
@@ -127,7 +127,7 @@ const PriceArea = ({servico,setModalVisible,setHorarios}) => {
 const Servico = ({route}) => {
     const {cidade,servico} = route.params;
     const [modalVisible,setModalVisible] = useState(false);
-    const [horarios,setHorarios] = useState([]);
+   // const [horarios,setHorarios] = useState([]);
 
 
 
@@ -154,12 +154,12 @@ const Servico = ({route}) => {
                     <ReviewArea servico={servico}/>
                     <DescricaoArea servico={servico}/>
                     <PrestadorArea prestador={servico.prestador}/>
-                    <PriceArea servico={servico} setModalVisible={setModalVisible} setHorarios={setHorarios}/>
+                    <PriceArea servico={servico} setModalVisible={setModalVisible} />
 
 
                 </View>
            </ScrollView>
-         <ModalAgendamento modalVisible={modalVisible} setModalVisible={setModalVisible} horarios={horarios}/>
+         <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} />
         </SafeAreaView>
   )
 }
