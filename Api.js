@@ -80,6 +80,17 @@ export default {
         const json = await req.json();
         return json;
       },
-  
+    addAgendamento: async (usuario_id,servico_id,data_agendamento,quantidade,total) => {
+        const response = await fetch(`${BASE_API}/agendamentos`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({usuario_id,servico_id,data_agendamento,quantidade,total})
+        });
+        //const json = await req.json();        
+        return response;
+    },
    
 };

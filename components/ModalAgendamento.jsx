@@ -12,7 +12,7 @@ const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
 
 const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
     const [selectedYear, setSelectedYear] = useState(0);
-    const [selectedMonth, setSelectedMonth] = useState(2);
+    const [selectedMonth, setSelectedMonth] = useState(0);
     const [selectedDay, setSelectedDay] = useState(0);
     const [selectedHour, setSelectedHour] = useState(null);
     const [listDays, setListDays] = useState([]);
@@ -123,6 +123,20 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
         setSelectedDay(0);
     }
 
+    const onSetAgendamento = async () => {
+        if (selectedHour!=null) {
+            let month = selectedMonth + 1;
+            month = month < 10 ? '0'+month: month;
+            let day = selectedDay < 10 ? '0'+selectedDay : selectedDay;
+            let dataAgendamento = selectedYear+'-'+month+'-'+day+' '+selectedHour+':00';
+            let response = await Api.addAgendamento(3,servico.id,dataAgendamento,quantidade,total);
+            alert(response.status);
+        } else {
+          alert('selecione a hora');
+        }
+        
+    }
+
   return (
     <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
         <View style={styles.modalArea}>
@@ -179,7 +193,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
                     </ScrollView>
             </View>
 }
-            <TouchableOpacity style={styles.botaoFinalizar}>
+            <TouchableOpacity onPress={onSetAgendamento} style={styles.botaoFinalizar}>
                 <Text style={styles.botaoFinalizarText}>Finalizar Agendamento</Text>
             </TouchableOpacity>
             </View>
