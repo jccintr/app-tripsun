@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Header3 from '../components/Header3';
 import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Stars from '../components/Stars';
 import Swiper from 'react-native-swiper';
 import ModalAgendamento from '../components/ModalAgendamento';
+import ModalReviews from '../components/ModalReviews';
 
 
 
@@ -30,18 +31,17 @@ const NomeAtividade = ({servico}) => {
     )
 }
 
-const ReviewArea = ({servico}) => {
+const ReviewArea = ({servico,setModalReviewsVisible}) => {
      return (
-        <View style={styles.reviewContainer}>
+        <TouchableOpacity onPress={()=>setModalReviewsVisible(true)}style={styles.reviewContainer}>
             <View style={styles.starContainer}>
               <Stars stars={servico.stars}/>
             </View>
             <View style={styles.avaliacoesContainer}>
                 <Text>25 avaliações</Text>
-
                 <Ionicons name="chevron-forward" size={20} color="black" />
             </View>
-        </View>
+        </TouchableOpacity>
      )
 }
 
@@ -127,9 +127,21 @@ const PriceArea = ({servico,setModalVisible}) => {
 const Servico = ({route}) => {
     const {cidade,servico} = route.params;
     const [modalVisible,setModalVisible] = useState(false);
+    const [modalReviewsVisible,setModalReviewsVisible] = useState(false);
+    const [reviews,setReviews] = useState([]);
    // const [horarios,setHorarios] = useState([]);
 
 
+useEffect(()=>{
+    const getReviews = async (idServico) => {
+     
+       let jsonReviews = await Api.getReviewsByServico(idServico);
+     
+       setReviews(jsonReviews);
+      
+    }
+    getReviews(servico.id);
+},[]);
 
 
     return (
@@ -151,15 +163,14 @@ const Servico = ({route}) => {
                 </Swiper> : '' }
                 <View style={styles.body}>
                     <NomeAtividade servico={servico}/>
-                    <ReviewArea servico={servico}/>
+                    <ReviewArea servico={servico} setModalReviewsVisible={setModalReviewsVisible}/>
                     <DescricaoArea servico={servico}/>
                     <PrestadorArea prestador={servico.prestador}/>
                     <PriceArea servico={servico} setModalVisible={setModalVisible} />
-
-
                 </View>
            </ScrollView>
          <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+         {reviews.length>0&&<ModalReviews reviews={reviews} modalVisible={modalReviewsVisible} setModalVisible={setModalReviewsVisible} />}
         </SafeAreaView>
   )
 }

@@ -1,15 +1,28 @@
-import { StyleSheet, Text, View,Modal} from 'react-native'
+import { StyleSheet, Text, View,Modal,TouchableOpacity, ScrollView} from 'react-native'
 import React, {useState,useEffect} from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
+import ReviewCard from './ReviewCard';
 
 
-const ModalReviews = ({servico,modalVisible,setModalVisible}) => {
+
+const ModalReviews = ({reviews,modalVisible,setModalVisible}) => {
   return (
-    <View>
-      <Text>ModalReviews</Text>
-    </View>
+    <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
+      <View style={styles.modalArea}>
+        <View style={styles.modalBody}>
+               <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
+                  <Entypo name="chevron-down" size={34} color="black" />
+                  <Text style={styles.modalTitleText}>Avaliações desta Atividade</Text>
+                </TouchableOpacity>
+                <ScrollView>
+                  {reviews.map((review)=>(<ReviewCard key={review.id} review={review}/>))}
+                </ScrollView>
+                
+        </View>
+      </View>
+    </Modal>
   )
 }
 
@@ -36,12 +49,15 @@ modalBody:{
     
 },
 headerArea:{
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginBottom: 10,
-    },    
-
+  width: '100%',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  marginBottom: 10,
+},
+modalTitleText:{
+    fontWeight: 'bold',
+    fontSize: 18,
+},
 
 })

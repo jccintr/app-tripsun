@@ -103,5 +103,10 @@ export default {
         //const json = await req.json();        
         return response;
     },
+    getReviewsByServico: async (idServico) => {
+        const req = await fetch(`${BASE_API}/reviews/${idServico}`);
+        const json = await req.json();
+        return json;
+      },
    
 };
