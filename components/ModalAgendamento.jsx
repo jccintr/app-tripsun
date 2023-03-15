@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View,Modal,TouchableOpacity,ScrollView } from 'react-native'
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useContext} from 'react';
+import DataContext from '../context/DataContext';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
@@ -11,6 +12,7 @@ const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
 
 
 const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
+    const {loggedUser} = useContext(DataContext);
     const [selectedYear, setSelectedYear] = useState(0);
     const [selectedMonth, setSelectedMonth] = useState(0);
     const [selectedDay, setSelectedDay] = useState(0);
@@ -123,16 +125,26 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
         setSelectedDay(0);
     }
 
-    const onSetAgendamento = async () => {
+    const onFinalizarAgendamento = async () => {
+        if(loggedUser===null){
+            alert('usuario não logado');
+            return
+        }
         if (selectedHour!=null) {
             let month = selectedMonth + 1;
             month = month < 10 ? '0'+month: month;
             let day = selectedDay < 10 ? '0'+selectedDay : selectedDay;
             let dataAgendamento = selectedYear+'-'+month+'-'+day+' '+selectedHour+':00';
-            let response = await Api.addAgendamento(3,servico.id,dataAgendamento,quantidade,total);
-            alert(response.status);
+            let response = await Api.addAgendamento(loggedUser.id,servico.id,dataAgendamento,quantidade,total);
+            
+            if (response.status===201){
+                alert("Agendamento efetuado com sucesso !");
+            } else {
+                let json = await response.json();
+                alert(json.erro);
+            }
         } else {
-          alert('selecione a hora');
+          alert('Selecione o horário por favor.');
         }
         
     }
@@ -193,7 +205,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
                     </ScrollView>
             </View>
 }
-            <TouchableOpacity onPress={onSetAgendamento} style={styles.botaoFinalizar}>
+            <TouchableOpacity onPress={onFinalizarAgendamento} style={styles.botaoFinalizar}>
                 <Text style={styles.botaoFinalizarText}>Finalizar Agendamento</Text>
             </TouchableOpacity>
             </View>

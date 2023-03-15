@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState,useContext} from 'react';
+import DataContext from '../context/DataContext';
 import Header3 from '../components/Header3';
 import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
@@ -8,6 +9,7 @@ import Stars from '../components/Stars';
 import Swiper from 'react-native-swiper';
 import ModalAgendamento from '../components/ModalAgendamento';
 import ModalReviews from '../components/ModalReviews';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -31,14 +33,14 @@ const NomeAtividade = ({servico}) => {
     )
 }
 
-const ReviewArea = ({servico,setModalReviewsVisible}) => {
+const ReviewArea = ({servico,reviews,setModalReviewsVisible}) => {
      return (
         <TouchableOpacity onPress={()=>setModalReviewsVisible(true)}style={styles.reviewContainer}>
             <View style={styles.starContainer}>
               <Stars stars={servico.stars}/>
             </View>
             <View style={styles.avaliacoesContainer}>
-                <Text>25 avaliações</Text>
+                <Text>{reviews.length} {reviews.length>1?'avaliações':'avaliação'}</Text>
                 <Ionicons name="chevron-forward" size={20} color="black" />
             </View>
         </TouchableOpacity>
@@ -96,30 +98,20 @@ const PrestadorArea = ({prestador}) => {
 
 
 
-const PriceArea = ({servico,setModalVisible}) => {
-
-
-    const onAgendarPress = async (idServico) =>{
-     // let jsonHorarios = await Api.getHorariosDisponiveis(idServico);
-     
-    //  setHorarios(jsonHorarios);
-      setModalVisible(true);
-    
-    }
-
-
+const PriceArea = ({servico,setModalVisible,loggedUser}) => {
+    const navigation = useNavigation();
 
     return (
         <View style={styles.priceContainer}>
-           <Text style={styles.titleText}>Preço</Text>
-           <View style={styles.priceDetailArea}>
-           <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
-               <TouchableOpacity onPress={()=>setModalVisible(true)} style={styles.botaoContratar}>
-                   <Text style={styles.buttonText}>AGENDAR</Text>
-               </TouchableOpacity>
-           </View>
+            <Text style={styles.titleText}>Preço</Text>
+            <View style={styles.priceDetailArea}>
+            <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
+                <TouchableOpacity onPress={()=>{loggedUser===null?navigation.reset({routes:[{name:'SignIn2'}]}):setModalVisible(true)}} style={styles.botaoContratar}>
+                    <Text style={styles.buttonText}>{loggedUser===null?'ENTRE PARA AGENDAR':'AGENDAR'}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-     )
+        )
 }
 
 
@@ -129,7 +121,9 @@ const Servico = ({route}) => {
     const [modalVisible,setModalVisible] = useState(false);
     const [modalReviewsVisible,setModalReviewsVisible] = useState(false);
     const [reviews,setReviews] = useState([]);
-   // const [horarios,setHorarios] = useState([]);
+    const {loggedUser} = useContext(DataContext);
+    
+  
 
 
 useEffect(()=>{
@@ -163,10 +157,10 @@ useEffect(()=>{
                 </Swiper> : '' }
                 <View style={styles.body}>
                     <NomeAtividade servico={servico}/>
-                    <ReviewArea servico={servico} setModalReviewsVisible={setModalReviewsVisible}/>
+                    <ReviewArea reviews={reviews} servico={servico} setModalReviewsVisible={setModalReviewsVisible}/>
                     <DescricaoArea servico={servico}/>
                     <PrestadorArea prestador={servico.prestador}/>
-                    <PriceArea servico={servico} setModalVisible={setModalVisible} />
+                    <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} />
                 </View>
            </ScrollView>
          <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} />
@@ -307,6 +301,7 @@ const styles = StyleSheet.create({
        color: cores.branco,
        fontSize: 12,
        fontWeight: 'bold',
+       textAlign: 'center',
     },
     swipeDot:{
         width: 10,
