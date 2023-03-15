@@ -5,28 +5,40 @@ import splash from '../assets/tripsun-splash2.png';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
+import { useContext } from "react";
+import DataContext from '../context/DataContext';
+
 
 const Preload = () => {
   const navigation = useNavigation();
+  const {loggedUser,setLoggedUser} = useContext(DataContext);
   const [location,setLocation] = useState(null);
   const [latitude,setLatitude] = useState(0);
   const [longitude,setLongitude] = useState(0);
   const [cidadeAtual,setCidadeAtual] = useState(null);
 
   const [cityFound,setCityfound] = useState(null);
-  const [cidades,SetCidades] = useState([]);
+  const [cidades,setCidades] = useState([]);
 
 
 
 useEffect(()=>{
   if (cityFound){
-    navigation.navigate('MainTab');
+   
+    if(loggedUser!=null){
+      
+      navigation.navigate('MainTab');
+    }else {
+      navigation.navigate('SignIn2');
+    }
+    
   }else {
-    if(cidades.length)
-       navigation.navigate('SelectCity');
+    //if(cidades.length)
+     //  navigation.navigate('SelectCity');
   }
 
 }, [cityFound,cidades]);
+
 
 
   useEffect(() => {
@@ -40,38 +52,53 @@ useEffect(()=>{
       setLocation(location);
       if (location) {
         const { latitude, longitude } = location.coords;
-       // let response = await Location.reverseGeocodeAsync({latitude: latitude,longitude: longitude});
-       // console.log('lat='+ latitude);
-       // console.log('lng='+ longitude);
-       // console.log('response='+ response);
-        //let address = response[0].district;
+      
+        //let address = 'Guarujá';
         let address = 'Brasópolis';
         setCidadeAtual(address);
 
         try {
         let cityList = await Api.getCidades();
         if (cityList) {
-            SetCidades(cityList);
+            setCidades(cityList);
             for(var i=0; i<cityList.length; i++){
               if (cityList[i].nome === address){
-                 setCityfound(true);
-                 //console.log('cityId='+cityList[i].id.toString());
                  AsyncStorage.setItem('@cityId', cityList[i].id.toString());
                  AsyncStorage.setItem('@userLat', latitude.toString());
                  AsyncStorage.setItem('@userLng', longitude.toString());
-
+                 await getUser();
+                 setCityfound(true);
               }
             }
          }
         } catch (e){
-          console.log(e)
-          alert("Falha ao obter dados.");
+          //console.log(e)
+          alert("Falha ao obter dados. Encerre o aplicativo e tente novamente mais tarde.");
         }
 
       }
       })();
 
   }, []);
+
+  const getUser = async () =>{
+    const token = await AsyncStorage.getItem('token');
+    
+    if(token!=null){
+      let response = await Api.getUser(token);
+      
+      if(response.status===200){
+         let jsonUser = await response.json();
+         setLoggedUser(jsonUser);
+         return true;
+      } else {
+        setLoggedUser(null);
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 
 
   return (

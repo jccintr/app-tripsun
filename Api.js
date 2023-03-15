@@ -7,6 +7,17 @@ const BASE_API = 'http://192.168.0.107:8000/api';
 export default {
     base_storage: 'http://192.168.0.107:8000/storage',
   //  base_storage: 'http://177.104.209.216:8000/storage',
+  getUser: async (token)=> {
+    const response = await fetch(`${BASE_API}/user/${token}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        
+    });
+   return response;
+},
     checkToken: async (token) => {
         const req = await fetch(`${BASE_API}/auth/refresh`, {
             method: 'POST',
@@ -20,7 +31,7 @@ export default {
         return json;
     },
     signIn: async (email, password) => {
-        const req = await fetch(`${BASE_API}/login`, {
+        const response = await fetch(`${BASE_API}/login`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -28,20 +39,20 @@ export default {
             },
             body: JSON.stringify({email, password})
         });
-        const json = await req.json();        
-        return json;
+       // const json = await req.json();        
+        return response;
     },
-    signUp: async (name, email, password) => {
-        const req = await fetch(`${BASE_API}/register`, {
+    signUp: async (name, email,telefone,password) => {
+        const response = await fetch(`${BASE_API}/signup`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name, email, password})
+            body: JSON.stringify({name, email,telefone, password})
         });
-        const json = await req.json();        
-        return json;
+       // const json = await req.json();        
+        return response;
     },
     logout: async () => {
         const token = await AsyncStorage.getItem('token');

@@ -1,37 +1,55 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text,Image,TextInput, SafeAreaView,View,TouchableOpacity} from 'react-native';
+import React, { useState,useContext } from 'react'
+import { StyleSheet,Text,Image, SafeAreaView,View,TouchableOpacity,ActivityIndicator} from 'react-native';
 import { cores } from '../style/globalStyle';
-import logo from '../assets/logo-tripsun.png'
-
+import logo from '../assets/logo-tripsun.png';
+import Api from '../Api';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DataContext from '../context/DataContext';
 
 
 const SignIn2 = () => {
+  const {setLoggedUser} = useContext(DataContext);
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const [isLoading,setIsLoading] = useState(false);
   const navigation = useNavigation();
 
- const onSingUp = () => {
+ 
+
+const onSignIn = async () => {
+  setIsLoading(true);
+  if(email != '' && password != ''){
+      
+      let response = await Api.signIn(email, password);
+      
+      if(response.status===200){
+        const json = await response.json();
+        
+        await AsyncStorage.setItem('token', json.token);
+        setLoggedUser(json);
+        navigation.reset({routes:[{name:'MainTab'}]});
+      } else {
+        setEmail('');
+        setPassword('');  
+        alert("Email e ou senha inválidos.");
+      }
+
+    } else {
+      alert("Por favor, informe o seu email e a sua senha.");
+    }
+setIsLoading(false);
+
+}
 
 
-alert('tocou no tenho cadastro');
-
-
- }
-
- const onGuest = () => {
-
-  alert('tocou no entrar como convidado');
-
- }
 
   return (
     <SafeAreaView style={styles.container}>
      <View style={styles.header}>   
         <Image source={logo} style={styles.logo}/>
-        <Text style={styles.headerText}>Bem-vindo ao TripSun!</Text>
+        <Text style={styles.headerText}>Login</Text>
      </View>
      <View style={styles.inputArea}>
         <InputField 
@@ -50,18 +68,19 @@ alert('tocou no tenho cadastro');
             onChangeText={t=>setPassword(t)}
             password={true}
         />
-        <TouchableOpacity style={styles.button}>
-         <Text style={styles.buttonText}>ENTRAR</Text>
+        <TouchableOpacity onPress={onSignIn} style={styles.button}>
+         {!isLoading?<Text style={styles.buttonText}>ENTRAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
+       
        </TouchableOpacity>
        <TouchableOpacity onPress={() => navigation.navigate('SignUp2')} style={styles.signUpMessage}>
           <Text style={styles.signUpMessageText}>Não tem uma conta?</Text>
-          <Text style={styles.signUpMessageTextBold} >Cadastre-se!</Text>
+          <Text style={styles.signUpMessageTextBold}> Cadastre-se!</Text>
         </TouchableOpacity>
         
           <Text style={{textAlign: 'center',marginTop:20}}>ou</Text>
          
         
-        <TouchableOpacity onPress={() => navigation.navigate('Local2')} style={styles.signUpMessage}>
+        <TouchableOpacity onPress={() => navigation.navigate('MainTab')} style={styles.signUpMessage}>
           
           <Text style={styles.signUpMessageTextBold} >Entre como convidado</Text>
         </TouchableOpacity>

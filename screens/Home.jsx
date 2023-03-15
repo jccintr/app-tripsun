@@ -13,12 +13,15 @@ import Banner from '../components/Banner';
 import Top10 from '../components/Top10';
 import Servicos from '../components/Servicos';
 import Titulo from '../components/Titulo';
+import { useContext } from "react";
+import DataContext from '../context/DataContext';
 
 
 
 const Home = () => {
   const navigation = useNavigation();
-  const [nomeCidade,setNomeCidade] = useState('');
+  const {loggedUser,setLoggedUser,nomeCidade,setNomeCidade} = useContext(DataContext);
+  //const [nomeCidade,setNomeCidade] = useState('');
   const [city,setCity] = useState('');
   const [categorias,setCategorias] = useState([]);
   const [servicos,setServicos] = useState([]);
@@ -26,6 +29,8 @@ const Home = () => {
 
   useEffect(()=>{
     const getCityId = async () => {
+      const token = await AsyncStorage.getItem('token');
+      
         const id = await AsyncStorage.getItem('@cityId');
         const lat = await AsyncStorage.getItem('@userLat');
         const lng  = await AsyncStorage.getItem('@userLng');

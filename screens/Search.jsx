@@ -9,11 +9,13 @@ import Api from '../Api';
 import InputField from '../components/InputField';
 import { cores } from '../style/globalStyle';
 import ModalServicos from '../components/ModalServicos';
-
+import { useContext } from "react";
+import DataContext from '../context/DataContext';
 
 const Search = () => {
   const navigation = useNavigation();
-  const [nomeCidade,setNomeCidade] = useState('');
+  const {nomeCidade,setNomeCidade} = useContext(DataContext);
+  //const [nomeCidade,setNomeCidade] = useState('');
   const [servicos,setServicos] = useState([]);
   const [latitude,setLatitude] = useState(0);
   const [longitude,setLongitude] = useState(0);
@@ -33,7 +35,7 @@ const Search = () => {
        
         if(id) {
           let json = await Api.getCidade(id,lat,lng);
-           setNomeCidade(json.nome + ","+json.estado);
+          // setNomeCidade(json.nome + ","+json.estado);
            setServicos(json.servicos);
           
            

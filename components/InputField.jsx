@@ -11,10 +11,10 @@ const Icone = ({iconName,iconProvider}) => {
 
     switch (iconProvider) {
         case 'AntDesign':
-            return <AntDesign name={iconName} size={22} color="#c1c1c1" />;
+            return <AntDesign name={iconName} size={22} color="#000" />;
             break;
         case 'FontAwesome':
-            return <FontAwesome name={iconName} size={22} color="#c1c1c1" />;
+            return <FontAwesome name={iconName} size={22} color="#000" />;
              break;
        
         default:
@@ -36,6 +36,7 @@ const InputField = ( {iconProvider,iconName,placeholder, value, onChangeText, pa
          value={value}
          onChangeText={onChangeText}
          secureTextEntry={password}
+         placeholderTextColor="#c1c1c1" 
        />
     </View>
   )
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         flexDirection: 'row',
-        borderColor: '#c1c1c1',
+        borderColor: '#000',
         borderWidth: 1,
         paddingLeft: 15,
         alignItems: 'center',
@@ -63,8 +64,9 @@ const styles = StyleSheet.create({
       flex: 1,
       fontSize: 16,
       paddingHorizontal: 4,
-      color: '#c1c1c1',
+      color: '#000',
       marginLeft: 10,
+      
     },
    
   });

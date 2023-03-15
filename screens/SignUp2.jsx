@@ -1,19 +1,55 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text,Image,TextInput, SafeAreaView,View,TouchableOpacity} from 'react-native';
+import React, { useState,useContext } from 'react'
+import { StyleSheet, Text,Image,TextInput, SafeAreaView,View,TouchableOpacity,ActivityIndicator} from 'react-native';
 import { cores } from '../style/globalStyle';
-import logo from '../assets/logo-tripsun.png'
+import logo from '../assets/logo-tripsun.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DataContext from '../context/DataContext';
+import Api from '../Api';
 
 
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 
 const SignUp2 = () => {
-    const [nome,setNome] = useState('');
+
+    const [name,setName] = useState('');
     const [telefone,setTelefone] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [passwordConfirm,setPasswordConfirm] = useState('');
     const navigation = useNavigation();
+    const [isLoading,setIsLoading] = useState(false);
+    const {setLoggedUser} = useContext(DataContext);
+
+    
+
+    const onSignUp = async () => {
+
+      setIsLoading(true);
+      if(email != '' && password != '' && name != '' && telefone != '' && passwordConfirm != ''){
+         if(password != passwordConfirm){
+            alert('As senhas informadas são diferentes.');
+            return
+         }
+         let response = await Api.signUp(name, email,telefone,password);
+         if (response.status===201){
+            const jsonUser = await response.json();
+            await AsyncStorage.setItem('token', jsonUser.token);
+            setLoggedUser(jsonUser);
+            navigation.reset({routes:[{name:'MainTab'}]});
+         } else {
+            alert('Falha ao cadastrar usuário.');
+         }
+      } else {
+        alert ('Informe todos os campos por favor.');
+      }
+
+      setIsLoading(false);
+
+
+    }
+
+
 
   return (
     
@@ -27,8 +63,8 @@ const SignUp2 = () => {
            iconProvider="AntDesign"
            iconName="user"
            placeholder="Digite o seu nome"
-           value={nome}
-           onChangeText={t=>setNome(t)}
+           value={name}
+           onChangeText={t=>setName(t)}
            password={false}
        />
        <InputField 
@@ -63,8 +99,8 @@ const SignUp2 = () => {
            onChangeText={t=>setPasswordConfirm(t)}
            password={true}
        />
-       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>CADASTRAR</Text>
+       <TouchableOpacity onPress={onSignUp} style={styles.button}>
+          {!isLoading?<Text style={styles.buttonText}>CADASTRAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('SignIn2')} style={styles.signUpMessage}>
          <Text style={styles.signUpMessageText}>Já tem uma conta?</Text>
