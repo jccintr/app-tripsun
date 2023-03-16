@@ -5,7 +5,7 @@ import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 
 
-const ModalFalhaAgendamento = ({modalVisible,setModalVisible,error}) => {
+const ModalFalhaAgendamento = ({modalVisible,setModalVisible,erroAgendamento}) => {
     const navigation = useNavigation();
     return (
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
@@ -13,9 +13,9 @@ const ModalFalhaAgendamento = ({modalVisible,setModalVisible,error}) => {
             <View style={styles.modalBody}>
                <MaterialCommunityIcons name="emoticon-sad-outline" size={80} color={cores.vermelho} />
                <Text style={styles.agendamentoText}>Tivemos um problema !</Text>
-               <Text style={styles.text}>{error}</Text>
-               <Text style={styles.text}>Desejamos a você uma ótima experiência !</Text>
-               <TouchableOpacity onPress={()=>navigation.navigate('MainTab')}style={styles.button}>
+               <Text style={styles.text}>{erroAgendamento}</Text>
+               
+               <TouchableOpacity onPress={()=>setModalVisible(false)}style={styles.button}>
                   <Text style={styles.buttonText}>Tentar novamente</Text>
                 </TouchableOpacity>
             </View>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         },
     modalBody:{
         width: '100%',
-        height: '50%',
+        height: '40%',
         backgroundColor: '#fff',
         borderTopLeftRadius:30,
         borderTopRightRadius: 30,

@@ -123,9 +123,10 @@ const Servico = ({route}) => {
     const [modalVisible,setModalVisible] = useState(false);
     const [modalReviewsVisible,setModalReviewsVisible] = useState(false);
     const [modalSucessoVisible,setModalSucessoVisible] = useState(false);
-    const [modalFalhaAgendamentoVisible,setModalFalhaAgendamento] = useState(true);
+    const [modalFalhaAgendamentoVisible,setModalFalhaAgendamentoVisible] = useState(false);
     const [reviews,setReviews] = useState([]);
     const {loggedUser} = useContext(DataContext);
+    const [erroAgendamento,setErroAgendamento] = useState('');
     
   
 
@@ -134,9 +135,8 @@ useEffect(()=>{
     const getReviews = async (idServico) => {
      
        let jsonReviews = await Api.getReviewsByServico(idServico);
-     
-       setReviews(jsonReviews);
-      
+        setReviews(jsonReviews);
+    
     }
     getReviews(servico.id);
 },[]);
@@ -167,10 +167,10 @@ useEffect(()=>{
                     <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} />
                 </View>
            </ScrollView>
-         <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} setModalSucessoVisible={setModalSucessoVisible}/>
+         <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} setModalSucessoVisible={setModalSucessoVisible} setModalFalhaAgendamentoVisible={setModalFalhaAgendamentoVisible} setErroAgendamento={setErroAgendamento}/>
          {reviews.length>0&&<ModalReviews reviews={reviews} modalVisible={modalReviewsVisible} setModalVisible={setModalReviewsVisible} />}
          <ModalSucesso modalVisible={modalSucessoVisible} setModalVisible={setModalSucessoVisible}/>
-         <ModalFalhaAgendamento modalVisible={modalFalhaAgendamentoVisible} setModalVisible={setModalFalhaAgendamento} error="dkdkd"/>
+         <ModalFalhaAgendamento modalVisible={modalFalhaAgendamentoVisible} setModalVisible={setModalFalhaAgendamentoVisible} erroAgendamento={erroAgendamento}/>
         </SafeAreaView>
   )
 }

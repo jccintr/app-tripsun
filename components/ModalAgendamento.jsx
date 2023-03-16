@@ -11,7 +11,7 @@ const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
 
 
 
-const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoVisible}) => {
+const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoVisible,setModalFalhaAgendamentoVisible,setErroAgendamento}) => {
     const {loggedUser} = useContext(DataContext);
     const [selectedYear, setSelectedYear] = useState(0);
     const [selectedMonth, setSelectedMonth] = useState(0);
@@ -143,7 +143,10 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
                 setModalSucessoVisible(true);
             } else {
                 let json = await response.json();
-                alert(json.erro);
+                setModalVisible(false);
+                setErroAgendamento(json.erro);
+                setModalFalhaAgendamentoVisible(true);
+              
             }
         } else {
           alert('Selecione o horário por favor.');
