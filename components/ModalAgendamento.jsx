@@ -11,7 +11,7 @@ const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
 
 
 
-const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
+const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoVisible}) => {
     const {loggedUser} = useContext(DataContext);
     const [selectedYear, setSelectedYear] = useState(0);
     const [selectedMonth, setSelectedMonth] = useState(0);
@@ -138,7 +138,9 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible}) => {
             let response = await Api.addAgendamento(loggedUser.id,servico.id,dataAgendamento,quantidade,total);
             
             if (response.status===201){
-                alert("Agendamento efetuado com sucesso !");
+               // alert("Agendamento efetuado com sucesso !");
+                setModalVisible(false);
+                setModalSucessoVisible(true);
             } else {
                 let json = await response.json();
                 alert(json.erro);

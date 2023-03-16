@@ -9,6 +9,8 @@ import Stars from '../components/Stars';
 import Swiper from 'react-native-swiper';
 import ModalAgendamento from '../components/ModalAgendamento';
 import ModalReviews from '../components/ModalReviews';
+import ModalSucesso from '../components/ModalSucesso';
+import ModalFalhaAgendamento from '../components/ModalFalhaAgendamento';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -120,6 +122,8 @@ const Servico = ({route}) => {
     const {cidade,servico} = route.params;
     const [modalVisible,setModalVisible] = useState(false);
     const [modalReviewsVisible,setModalReviewsVisible] = useState(false);
+    const [modalSucessoVisible,setModalSucessoVisible] = useState(false);
+    const [modalFalhaAgendamentoVisible,setModalFalhaAgendamento] = useState(true);
     const [reviews,setReviews] = useState([]);
     const {loggedUser} = useContext(DataContext);
     
@@ -163,8 +167,10 @@ useEffect(()=>{
                     <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} />
                 </View>
            </ScrollView>
-         <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+         <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} setModalSucessoVisible={setModalSucessoVisible}/>
          {reviews.length>0&&<ModalReviews reviews={reviews} modalVisible={modalReviewsVisible} setModalVisible={setModalReviewsVisible} />}
+         <ModalSucesso modalVisible={modalSucessoVisible} setModalVisible={setModalSucessoVisible}/>
+         <ModalFalhaAgendamento modalVisible={modalFalhaAgendamentoVisible} setModalVisible={setModalFalhaAgendamento} error="dkdkd"/>
         </SafeAreaView>
   )
 }
@@ -201,6 +207,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         paddingRight: 10,
         paddingLeft: 10,
+       
     },
     starContainer:{
         flexDirection: 'row',
@@ -214,7 +221,8 @@ const styles = StyleSheet.create({
     avaliacoesContainer:{
         flexDirection: 'row',
         alignItems:'center',
-        justifyContent:'flex-end',
+        justifyContent:'center',
+        
      },
     serviceName:{
         fontSize:20,
