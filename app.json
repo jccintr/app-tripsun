@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "tripsun",
+    "name": "Tripsun",
     "slug": "tripsun",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,19 +16,24 @@
       "supportsTablet": true
     },
     "android": {
-      "config":{
-        "googleMaps":{
+      "config": {
+        "googleMaps": {
           "apiKey": "AIzaSyDZpBS3cpJ90E7s_KlW_UvvA4wWPO6rN1c"
         }
       },
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.jccintr.tripsun"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1e2ee14c-904d-468c-9523-2f778afbbc5f"
+      }
     }
   }
 }

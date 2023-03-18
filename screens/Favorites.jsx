@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View} from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, SafeAreaView,StatusBar} from 'react-native';
+import { cores } from '../style/globalStyle';
+
 
 const Favorites = () => {
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+                animated={true}
+                backgroundColor={cores.vermelho}
+                barStyle="dark-content"
+      />
        <Text>Tela Favoritos</Text>
-      
+       <Text>Ainda não disponível</Text>
     </SafeAreaView>
   )
 }

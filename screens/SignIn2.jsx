@@ -1,5 +1,5 @@
 import React, { useState,useContext } from 'react'
-import { StyleSheet,Text,Image, SafeAreaView,View,TouchableOpacity,ActivityIndicator} from 'react-native';
+import { StyleSheet,Text,Image, SafeAreaView,View,TouchableOpacity,ActivityIndicator,StatusBar} from 'react-native';
 import { cores } from '../style/globalStyle';
 import logo from '../assets/logo-tripsun.png';
 import Api from '../Api';
@@ -47,6 +47,11 @@ setIsLoading(false);
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+                animated={true}
+                backgroundColor={cores.vermelho}
+                barStyle="dark-content"
+      />
      <View style={styles.header}>   
         <Image source={logo} style={styles.logo}/>
         <Text style={styles.headerText}>Login</Text>

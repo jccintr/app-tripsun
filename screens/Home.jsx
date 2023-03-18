@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
-import { Entypo } from '@expo/vector-icons';
-import { StyleSheet, SafeAreaView,View,ScrollView} from 'react-native';
-import { cores } from '../style/globalStyle';
+import { StyleSheet, SafeAreaView,View,ScrollView,StatusBar} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,13 +12,13 @@ import Servicos from '../components/Servicos';
 import Titulo from '../components/Titulo';
 import { useContext } from "react";
 import DataContext from '../context/DataContext';
+import { cores } from '../style/globalStyle';
 
 
 
 const Home = () => {
   const navigation = useNavigation();
   const {loggedUser,setLoggedUser,nomeCidade,setNomeCidade} = useContext(DataContext);
-  //const [nomeCidade,setNomeCidade] = useState('');
   const [city,setCity] = useState('');
   const [categorias,setCategorias] = useState([]);
   const [servicos,setServicos] = useState([]);
@@ -56,6 +53,11 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+                animated={true}
+                backgroundColor={cores.vermelho}
+                barStyle="dark-content"
+      />
       <Header nomeCidade={nomeCidade}/>
       <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.body}>

@@ -16,7 +16,7 @@ const ModalReviews = ({reviews,modalVisible,setModalVisible}) => {
                   <Entypo name="chevron-down" size={34} color="black" />
                   <Text style={styles.modalTitleText}>Avaliações desta Atividade</Text>
                 </TouchableOpacity>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                   {reviews.map((review)=>(<ReviewCard key={review.id} review={review}/>))}
                 </ScrollView>
                 

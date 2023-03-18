@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, ImageBackground, SafeAreaView,ActivityIndicator } from 'react-native';
+import { StyleSheet, ImageBackground, SafeAreaView,ActivityIndicator,StatusBar } from 'react-native';
 import * as Location from 'expo-location';
 import splash from '../assets/tripsun-splash2.png';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
 import { useContext } from "react";
 import DataContext from '../context/DataContext';
+import { cores } from '../style/globalStyle';
 
 
 const Preload = () => {
@@ -26,7 +27,6 @@ useEffect(()=>{
   if (cityFound){
    
     if(loggedUser!=null){
-      
       navigation.navigate('MainTab');
     }else {
       navigation.navigate('SignIn2');
@@ -53,8 +53,8 @@ useEffect(()=>{
       if (location) {
         const { latitude, longitude } = location.coords;
       
-        //let address = 'Guarujá';
-        let address = 'Brasópolis';
+        let address = 'Guarujá';
+       // let address = 'Brasópolis';
         setCidadeAtual(address);
 
         try {
@@ -103,6 +103,11 @@ useEffect(()=>{
 
   return (
    <SafeAreaView style={styles.container}>
+    <StatusBar
+            animated={true}
+            backgroundColor={cores.laranja}
+            barStyle="dark-content"
+      />
     <ImageBackground source={splash} style={styles.image}/>
     <ActivityIndicator style={styles.loading} size="large" color="#fff"/>
    </SafeAreaView>

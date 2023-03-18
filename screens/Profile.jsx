@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet,Text,SafeAreaView,TouchableOpacity,View} from 'react-native';
+import { StyleSheet,Text,SafeAreaView,TouchableOpacity,View,StatusBar} from 'react-native';
 import Header from '../components/Header';
 import { useContext } from "react";
 import DataContext from '../context/DataContext';
@@ -20,8 +20,17 @@ const onLogout = async () => {
   navigation.reset({routes:[{name:'SignIn2'}]});
 }
 
+const onAgendamentos = () => {
+  navigation.navigate('Agendamentos');
+}
+
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+                animated={true}
+                backgroundColor={cores.vermelho}
+                barStyle="dark-content"
+      />
       <Header nomeCidade={nomeCidade}/>
       <View style={styles.body}>
           
@@ -38,7 +47,7 @@ const onLogout = async () => {
           {loggedUser!=null && <>
             <StringAvatar text={loggedUser.name}/>
             <Text style={styles.userNameText}>{loggedUser.name}</Text>
-           <MenuProfile iconName="calendar" iconProvider="AntDesign" label="Meus Agendamentos" onPress={()=>{}}/>
+           <MenuProfile iconName="calendar" iconProvider="AntDesign" label="Meus Agendamentos" onPress={onAgendamentos}/>
            <MenuProfile iconName="user-circle-o" iconProvider="FontAwesome" label="Meus Cadastro" onPress={()=>{}}/>
            <MenuProfile iconName="lock1" iconProvider="AntDesign" label="Alterar minha senha" onPress={()=>{}}/>
            <MenuProfile iconName="mail" iconProvider="AntDesign" label="Fale Conosco" onPress={()=>{}}/>

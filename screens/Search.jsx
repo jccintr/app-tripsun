@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet,Image, SafeAreaView,Dimensions,View} from 'react-native';
-
+import { StyleSheet,Image, SafeAreaView,Dimensions,View,StatusBar} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
 import Header from '../components/Header';
@@ -60,6 +59,11 @@ const Search = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+                animated={true}
+                backgroundColor={cores.vermelho}
+                barStyle="dark-content"
+      />
        <Header nomeCidade={nomeCidade}/>
         <View style={styles.body}>
           <View style={styles.searchInputArea}>
