@@ -4,7 +4,6 @@ import Header3 from '../components/Header3';
 import { StyleSheet,Text,SafeAreaView,Dimensions,View,ScrollView,ActivityIndicator} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
-import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AgendamentoCard from '../components/AgendamentoCard';
 
@@ -13,6 +12,7 @@ const Agendamentos = () => {
   const {loggedUser} = useContext(DataContext);
   const [agendamentos,setAgendamentos] = useState([]);
   const [isLoading,setIsLoading] = useState(false);
+  const navigation = useNavigation();
 
 
   useEffect(()=>{
@@ -30,7 +30,12 @@ const Agendamentos = () => {
 },[]);
 
 
+const onAgendamentoPress = (agendamento) => {
 
+  alert('tocou no agendamento '+ agendamento.id);
+//navigation.navigate('DetAgendamento',{agendamento});
+
+}
 
 
   return (
@@ -46,9 +51,9 @@ const Agendamentos = () => {
      
 
       {!isLoading&&<View style={styles.body}>
-         <Text style={styles.textMessage}>Encontrados {agendamentos.length} agendamentos</Text>
+         <Text style={styles.textMessage}>Você tem {agendamentos.length} {agendamentos.length>1?'atividades agendadas.':'atividade agendada.'}</Text>
          <ScrollView style={{width: screenWidth}} contentContainerStyle={{alignItems:'center'}} showsVerticalScrollIndicator={false}>
-           {agendamentos.map((agendamento)=><AgendamentoCard key={agendamento.id} agendamento={agendamento}/>)}
+           {agendamentos.map((agendamento)=><AgendamentoCard key={agendamento.id} agendamento={agendamento} onPress={onAgendamentoPress}/>)}
          </ScrollView>
       </View>}
       

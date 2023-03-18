@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import React from 'react';
 import { cores } from '../style/globalStyle';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,9 +15,9 @@ const formataData = (d) =>{
 
 
 
-const AgendamentoCard = ({agendamento}) => {
+const AgendamentoCard = ({agendamento,onPress}) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={()=>onPress(agendamento)} style={styles.container}>
            <View>
              <Text style={styles.dataText}>{formataData(agendamento.data_agendamento)} - {formataHorario(agendamento.data_agendamento)}</Text>
              <Text style={styles.nomeServicoText}>{agendamento.servico.nome}</Text>
@@ -28,7 +28,7 @@ const AgendamentoCard = ({agendamento}) => {
            </View>
            
           
-        </View>
+        </TouchableOpacity>
       )
 }
 
