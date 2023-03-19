@@ -4,7 +4,7 @@ import Header3 from '../components/Header3';
 import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView,StatusBar} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons,FontAwesome } from '@expo/vector-icons';
 import Stars from '../components/Stars';
 import Swiper from 'react-native-swiper';
 import ModalAgendamento from '../components/ModalAgendamento';
@@ -12,7 +12,10 @@ import ModalReviews from '../components/ModalReviews';
 import ModalSucesso from '../components/ModalSucesso';
 import ModalFalhaAgendamento from '../components/ModalFalhaAgendamento';
 import { useNavigation } from '@react-navigation/native';
-
+{/*]
+<FontAwesome name="heart" size={24} color="black" />
+<FontAwesome name="heart-o" size={24} color="black" />
+*/}
 
 
 const SwipeDot = () =>{
@@ -127,6 +130,7 @@ const Servico = ({route}) => {
     const [reviews,setReviews] = useState([]);
     const {loggedUser} = useContext(DataContext);
     const [erroAgendamento,setErroAgendamento] = useState('');
+    const [isFavorited,setIsFavorited] = useState(false);
     
   
 
@@ -150,7 +154,9 @@ useEffect(()=>{
                 barStyle="dark-content"
              />
             <Header3  title="Atividade"/>
-
+            <View style={styles.heartContainer}>
+               <FontAwesome name="heart-o" size={20} color={cores.vermelho} />
+            </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {servico.imagens.length > 0 ?
                 <Swiper
@@ -198,10 +204,23 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         height: 200,
     },
+    heartContainer:{
+        position: 'absolute',
+        top: 65,
+        left: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        backgroundColor: cores.branco,
+        zIndex: 10,
+        
+    },
     nomeAtividadeContainer:{
          alignItems:'center',
         justifyContent:'flex-start',
-        width:'100%'
+        width:'100%',
     },
     reviewContainer:{
         marginTop:10,
