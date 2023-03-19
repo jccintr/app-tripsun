@@ -1,7 +1,7 @@
 import React, {useEffect, useState,useContext} from 'react';
 import DataContext from '../context/DataContext';
 import Header3 from '../components/Header3';
-import { StyleSheet,Text,SafeAreaView,Dimensions,View,ScrollView,ActivityIndicator} from 'react-native';
+import { StyleSheet,Text,SafeAreaView,Dimensions,View,ScrollView,ActivityIndicator,StatusBar} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import { useNavigation } from '@react-navigation/native';
@@ -31,15 +31,19 @@ const Agendamentos = () => {
 
 
 const onAgendamentoPress = (agendamento) => {
-
-  alert('tocou no agendamento '+ agendamento.id);
-//navigation.navigate('DetAgendamento',{agendamento});
+  // alert('press');
+  navigation.navigate('DetAgendamento',{agendamento:agendamento});
 
 }
 
 
   return (
     <SafeAreaView style={styles.container}>
+       <StatusBar
+                animated={true}
+                backgroundColor={cores.vermelho}
+                barStyle="dark-content"
+      />
       <Header3  title="Meus Agendamentos"/>
       {isLoading &&
         <View style={styles.bodyLoading}>

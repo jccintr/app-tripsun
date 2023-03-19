@@ -33,11 +33,10 @@ const styles = StyleSheet.create({
    justifyContent: 'center',
    alignItems: 'center',
    marginBottom: 10,
-   borderWidth:2,
-   borderColor: '#000',
+   
  },
  Avatarstring:{
-    color: cores.amarelo,
+    color: cores.branco,
     fontSize: 30,
     fontWeight: 'bold',
  } 

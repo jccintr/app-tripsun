@@ -75,15 +75,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems:'center',
     justifyContent: 'center',
-   
-    
   },
   sectionTitle:{
     fontWeight:'bold',
     fontSize: 26,
   },
   userNameText:{
-    
+    fontWeight: 'bold',
     fontSize: 18,
     color: '#000',
     marginBottom: 40,

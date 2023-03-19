@@ -1,7 +1,7 @@
 import React, {useEffect, useState,useContext} from 'react';
 import DataContext from '../context/DataContext';
 import Header3 from '../components/Header3';
-import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView} from 'react-native';
+import { StyleSheet,Text,Image,SafeAreaView,TouchableOpacity,Dimensions,View,ScrollView,StatusBar} from 'react-native';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import { Ionicons } from '@expo/vector-icons';
@@ -144,7 +144,11 @@ useEffect(()=>{
 
     return (
         <SafeAreaView style={styles.container}>
-
+           <StatusBar
+                animated={true}
+                backgroundColor={cores.vermelho}
+                barStyle="dark-content"
+             />
             <Header3  title="Atividade"/>
 
             <ScrollView showsVerticalScrollIndicator={false}>
