@@ -12,10 +12,6 @@ import ModalReviews from '../components/ModalReviews';
 import ModalSucesso from '../components/ModalSucesso';
 import ModalFalhaAgendamento from '../components/ModalFalhaAgendamento';
 import { useNavigation } from '@react-navigation/native';
-{/*]
-<FontAwesome name="heart" size={24} color="black" />
-<FontAwesome name="heart-o" size={24} color="black" />
-*/}
 
 
 const SwipeDot = () =>{
@@ -128,7 +124,7 @@ const Servico = ({route}) => {
     const [modalSucessoVisible,setModalSucessoVisible] = useState(false);
     const [modalFalhaAgendamentoVisible,setModalFalhaAgendamentoVisible] = useState(false);
     const [reviews,setReviews] = useState([]);
-    const {loggedUser} = useContext(DataContext);
+    const {loggedUser,favoritos,setFavoritos} = useContext(DataContext);
     const [erroAgendamento,setErroAgendamento] = useState('');
     const [isFavorited,setIsFavorited] = useState(false);
     
@@ -137,13 +133,34 @@ const Servico = ({route}) => {
 
 useEffect(()=>{
     const getReviews = async (idServico) => {
-     
-       let jsonReviews = await Api.getReviewsByServico(idServico);
+        let jsonReviews = await Api.getReviewsByServico(idServico);
         setReviews(jsonReviews);
-    
     }
     getReviews(servico.id);
 },[]);
+
+useEffect(()=>{
+   setIsFavorited(checkFavorited());
+},[]);
+
+
+
+const checkFavorited = () => {
+    let found = false;
+    for (i=0;i<favoritos.length;i++){
+       if(servico.id===favoritos[i].id){
+         found = true
+       }
+    }
+    return found;
+}
+
+const toggleFavorito = async () =>{
+    let response = await Api.toggleFavorito(loggedUser.id,servico.id);
+    let jsonFavoritos = await Api.getFavoritos(loggedUser.id);
+    setFavoritos(jsonFavoritos);
+    setIsFavorited(!isFavorited);
+}
 
 
     return (
@@ -154,9 +171,7 @@ useEffect(()=>{
                 barStyle="dark-content"
              />
             <Header3  title="Atividade"/>
-            <View style={styles.heartContainer}>
-               <FontAwesome name="heart-o" size={20} color={cores.vermelho} />
-            </View>
+            
             <ScrollView showsVerticalScrollIndicator={false}>
                 {servico.imagens.length > 0 ?
                 <Swiper
@@ -169,6 +184,9 @@ useEffect(()=>{
                 {servico.imagens.map((imagem) => (<Image key={imagem.id} source={{uri:`${Api.base_storage}/${imagem.imagem}`,}} style={styles.imagem}/>  ))}
 
                 </Swiper> : '' }
+                {loggedUser!=null&&<TouchableOpacity onPress={toggleFavorito} style={styles.heartContainer}>
+               {isFavorited?<FontAwesome name="heart" size={20} color={cores.vermelho}/>:<FontAwesome name="heart-o" size={20} color={cores.vermelho} />}
+                 </TouchableOpacity>}
                 <View style={styles.body}>
                     <NomeAtividade servico={servico}/>
                     <ReviewArea reviews={reviews} servico={servico} setModalReviewsVisible={setModalReviewsVisible}/>
@@ -206,16 +224,16 @@ const styles = StyleSheet.create({
     },
     heartContainer:{
         position: 'absolute',
-        top: 65,
+        top: 5,
         left: 10,
         alignItems: 'center',
         justifyContent: 'center',
         width: 30,
         height: 30,
         borderRadius: 15,
-        backgroundColor: cores.branco,
         zIndex: 10,
-        
+        borderColor: cores.vermelho,
+        borderWidth:1,
     },
     nomeAtividadeContainer:{
          alignItems:'center',

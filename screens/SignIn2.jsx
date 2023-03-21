@@ -10,7 +10,7 @@ import DataContext from '../context/DataContext';
 
 
 const SignIn2 = () => {
-  const {setLoggedUser} = useContext(DataContext);
+  const {setLoggedUser,setFavoritos} = useContext(DataContext);
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [isLoading,setIsLoading] = useState(false);
@@ -29,6 +29,7 @@ const onSignIn = async () => {
         
         await AsyncStorage.setItem('token', json.token);
         setLoggedUser(json);
+        setFavoritos(json.favoritos);
         navigation.reset({routes:[{name:'MainTab'}]});
       } else {
         setEmail('');

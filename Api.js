@@ -1,13 +1,13 @@
 
 // --host=192.168.0.107
 //const BASE_API = 'localhost:8000/api';
-//const BASE_API = 'http://192.168.0.107:8000/api';
-const BASE_API = 'https://tripsun.tk/api';
+const BASE_API = 'http://192.168.0.107:8000/api';
+//const BASE_API = 'https://tripsun.tk/api';
 //const BASE_API = 'http://177.104.209.216:8000/api';
 
 export default {
-  //  base_storage: 'http://192.168.0.107:8000/storage',
-    base_storage: 'https://tripsun.tk/storage',
+    base_storage: 'http://192.168.0.107:8000/storage',
+  //  base_storage: 'https://tripsun.tk/storage',
   //  base_storage: 'http://177.104.209.216:8000/storage',
   getUser: async (token)=> {
     const response = await fetch(`${BASE_API}/user/${token}`, {
@@ -115,5 +115,22 @@ export default {
         //const json = await req.json();
         return response;
       },
+      toggleFavorito: async (usuario_id,servico_id,) => {
+        const response = await fetch(`${BASE_API}/favoritos`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({usuario_id,servico_id})
+        });
+        return response;
+    },
+    getFavoritos: async (idUsuario) => {
+        const req = await fetch(`${BASE_API}/favoritos/${idUsuario}`);
+        const json = await req.json();
+        return json;
+      },
+        
 
 };

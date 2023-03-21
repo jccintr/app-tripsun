@@ -1,13 +1,14 @@
-import { createContext,useState,useEffect } from "react";
+import { createContext,useState } from "react";
 
 const DataContext = createContext({});
 
 export const DataProvider = ({children}) => {
    const [loggedUser,setLoggedUser] = useState(null);
    const [nomeCidade,setNomeCidade] = useState('');
+   const [favoritos,setFavoritos] = useState([]);
 
    return (
-    <DataContext.Provider value={{loggedUser, setLoggedUser,nomeCidade,setNomeCidade}}>
+    <DataContext.Provider value={{loggedUser, setLoggedUser,favoritos,setFavoritos,nomeCidade,setNomeCidade}}>
       {children}
     </DataContext.Provider>
 )

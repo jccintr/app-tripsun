@@ -24,6 +24,10 @@ const onAgendamentos = () => {
   navigation.navigate('Agendamentos');
 }
 
+const onFavoritos = () => {
+  navigation.navigate('Favoritos');
+}
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -48,6 +52,7 @@ const onAgendamentos = () => {
             <StringAvatar text={loggedUser.name}/>
             <Text style={styles.userNameText}>{loggedUser.name}</Text>
            <MenuProfile iconName="calendar" iconProvider="AntDesign" label="Meus Agendamentos" onPress={onAgendamentos}/>
+           <MenuProfile iconName="heart-o" iconProvider="FontAwesome" label="Meus Favoritos" onPress={onFavoritos}/>
            <MenuProfile iconName="user-circle-o" iconProvider="FontAwesome" label="Meus Cadastro" onPress={()=>{}}/>
            <MenuProfile iconName="lock1" iconProvider="AntDesign" label="Alterar minha senha" onPress={()=>{}}/>
            <MenuProfile iconName="mail" iconProvider="AntDesign" label="Fale Conosco" onPress={()=>{}}/>

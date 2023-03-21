@@ -11,6 +11,7 @@ import MainTab from '../stacks/MainTab';
 import Servico from "../screens/Servico";
 import Agendamentos from "../screens/Agendamentos";
 import DetAgendamento from "../screens/DetAgendamento";
+import Favoritos from "../screens/Favoritos";
 import Ticket from "../screens/Ticket";
 
 
@@ -28,6 +29,7 @@ const MainStack = () => {
         <Stack.Screen name="Servico" component={Servico}/>
         <Stack.Screen name="Agendamentos" component={Agendamentos}/>
         <Stack.Screen name="DetAgendamento" component={DetAgendamento}/>
+        <Stack.Screen name="Favoritos" component={Favoritos}/>
         <Stack.Screen name="Ticket" component={Ticket}/>
         <Stack.Screen name="MainTab" component={MainTab} />
     </Stack.Navigator>

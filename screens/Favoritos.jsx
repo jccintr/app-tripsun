@@ -5,16 +5,16 @@ import { StyleSheet,Text,SafeAreaView,Dimensions,View,ScrollView,ActivityIndicat
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import { useNavigation } from '@react-navigation/native';
-import AgendamentoCard from '../components/AgendamentoCard';
 
-const Agendamentos = () => {
+
+const Favoritos = () => {
   const screenWidth = Dimensions.get('window').width;
-  const {loggedUser} = useContext(DataContext);
-  const [agendamentos,setAgendamentos] = useState([]);
+  const {loggedUser,favoritos} = useContext(DataContext);
+ 
   const [isLoading,setIsLoading] = useState(false);
   const navigation = useNavigation();
 
-
+/*
   useEffect(()=>{
      const getAgendamentos = async (idUsuario) => {
        setIsLoading(true);
@@ -28,13 +28,7 @@ const Agendamentos = () => {
     }
     getAgendamentos(loggedUser.id); 
 },[]);
-
-
-const onAgendamentoPress = (agendamento) => {
-  // alert('press');
-  navigation.navigate('DetAgendamento',{agendamento:agendamento});
-
-}
+*/
 
 
   return (
@@ -44,25 +38,12 @@ const onAgendamentoPress = (agendamento) => {
                 backgroundColor={cores.vermelho}
                 barStyle="dark-content"
       />
-      <Header3  title="Meus Agendamentos"/>
-      {isLoading &&
-        <View style={styles.bodyLoading}>
-           <Text style={styles.loadingMessage}>Aguarde por favor</Text>
-           <Text style={styles.loadingMessage}>Estamos recuperando os seus agendamentos</Text>
-           <ActivityIndicator  size="large" color={cores.vermelho}/>
-        </View>
-      }
-     
-      {!isLoading&&agendamentos.length>0&&<View style={styles.body}>
-         <Text style={styles.textMessage}>Você tem {agendamentos.length} {agendamentos.length>1?'atividades agendadas.':'atividade agendada.'}</Text>
-         <ScrollView style={{width: screenWidth}} contentContainerStyle={{alignItems:'center'}} showsVerticalScrollIndicator={false}>
-           {agendamentos.map((agendamento)=><AgendamentoCard key={agendamento.id} agendamento={agendamento} onPress={onAgendamentoPress}/>)}
-         </ScrollView>
-      </View>}
+      <Header3  title="Meus Favoritos"/>
+      
 
-      {!isLoading && agendamentos.length===0&&
+      {!isLoading && favoritos.length===0&&
         <View style={styles.bodyLoading}>
-           <Text style={styles.loadingMessage}>Você não possui agendamentos.</Text>
+           <Text style={styles.loadingMessage}>Você não possui favoritos.</Text>
          
         </View>
       }
@@ -71,7 +52,7 @@ const onAgendamentoPress = (agendamento) => {
   )
 }
 
-export default Agendamentos
+export default Favoritos
 
 const styles = StyleSheet.create({
 

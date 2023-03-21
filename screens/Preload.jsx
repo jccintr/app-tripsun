@@ -12,7 +12,7 @@ import { cores } from '../style/globalStyle';
 
 const Preload = () => {
   const navigation = useNavigation();
-  const {loggedUser,setLoggedUser} = useContext(DataContext);
+  const {loggedUser,setLoggedUser,setFavoritos} = useContext(DataContext);
   const [location,setLocation] = useState(null);
   const [latitude,setLatitude] = useState(0);
   const [longitude,setLongitude] = useState(0);
@@ -72,7 +72,7 @@ useEffect(()=>{
             }
          }
         } catch (e){
-          //console.log(e)
+          console.log(e);
           alert("Falha ao obter dados. Encerre o aplicativo e tente novamente mais tarde.");
         }
 
@@ -90,6 +90,7 @@ useEffect(()=>{
       if(response.status===200){
          let jsonUser = await response.json();
          setLoggedUser(jsonUser);
+         setFavoritos(jsonUser.favoritos);
          return true;
       } else {
         setLoggedUser(null);
