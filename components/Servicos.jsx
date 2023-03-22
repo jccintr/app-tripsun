@@ -1,13 +1,19 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { StyleSheet, Text,Image,TouchableOpacity,View} from 'react-native';
 import Api from '../Api';
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
+import DataContext from '../context/DataContext';
+
+{/* 
+{isFavorited?<FontAwesome name="heart" size={20} color={cores.vermelho}/>:<FontAwesome name="heart-o" size={20} color={cores.vermelho} />}  
+  */}
 
 const Servicos = ({servicos}) => {
   const navigation = useNavigation();
+  const {loggedUser,favoritos} = useContext(DataContext);
 
 
   const handleServicePress  = (servico) =>{
@@ -20,13 +26,25 @@ const Servicos = ({servicos}) => {
     })
  } 
 
+ const checkFavorited = (servico) => {
+  let found = false;
+  for (i=0;i<favoritos.length;i++){
+     if(servico.id===favoritos[i].id){
+       found = true
+     }
+  }
+  return found;
+}
+
 
 
   return (
     <View style={styles.container}>
        {servicos.sort((a,b)=>{return a.distancia - b.distancia}).slice(0,15).map((servico) => (
         <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
+              <View style={{flexDirection:'row'}}>
               <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
+
               <View style={styles.serviceDetailsArea}>
                  <Text style={styles.serviceName}>{servico.nome}</Text>
                  <View style={styles.secondLine}>
@@ -39,9 +57,11 @@ const Servicos = ({servicos}) => {
                   </View>
                   <Text style={styles.servicePrice}>A partir de R$ {servico.valor}</Text>
               </View>
-                
+              </View>
+              {checkFavorited(servico)&&loggedUser!=null&&<FontAwesome name="heart" size={20} color={cores.vermelho}/>}  
          </TouchableOpacity>
               ))}
+              
     </View>
   )
 } 
@@ -65,10 +85,10 @@ const styles = StyleSheet.create({
     paddingTop:5,
     },
   serviceCard:{
-   marginHorizontal:10,
+    marginHorizontal:10,
     flexDirection: 'row',
     alignItems:'center',
-    justifyContent:'flex-start',
+    justifyContent:'space-between',
     width: 320,
     height: 65,
   },

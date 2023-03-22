@@ -31,11 +31,8 @@ const Agendamentos = () => {
 
 
 const onAgendamentoPress = (agendamento) => {
-  // alert('press');
-  navigation.navigate('DetAgendamento',{agendamento:agendamento});
-
+   navigation.navigate('DetAgendamento',{agendamento:agendamento});
 }
-
 
   return (
     <SafeAreaView style={styles.container}>

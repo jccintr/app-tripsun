@@ -5,6 +5,7 @@ import { StyleSheet,Text,SafeAreaView,Dimensions,View,ScrollView,ActivityIndicat
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import { useNavigation } from '@react-navigation/native';
+import FavoritoCard from '../components/FavoritoCard';
 
 
 const Favoritos = () => {
@@ -30,6 +31,9 @@ const Favoritos = () => {
 },[]);
 */
 
+const onFavoritoPress = (favorito) => {
+  navigation.navigate('Servico',{servico:favorito});
+}
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,6 +44,14 @@ const Favoritos = () => {
       />
       <Header3  title="Meus Favoritos"/>
       
+      {!isLoading&&favoritos.length>0&&<View style={styles.body}>
+         
+         <ScrollView style={{width: screenWidth}} contentContainerStyle={{alignItems:'center'}} showsVerticalScrollIndicator={false}>
+           {favoritos.map((favorito)=><FavoritoCard key={favorito.id} favorito={favorito} onPress={onFavoritoPress}/>)}
+         </ScrollView>
+      </View>}
+
+
 
       {!isLoading && favoritos.length===0&&
         <View style={styles.bodyLoading}>

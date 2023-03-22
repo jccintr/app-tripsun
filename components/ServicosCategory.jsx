@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { StyleSheet, Text,Image,TouchableOpacity,View} from 'react-native';
 import Api from '../Api';
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
+import DataContext from '../context/DataContext';
 
 const SortSelect = ({sortField,setSortField}) => {
   //console.log('sortfield==='+sortField);
@@ -24,9 +25,12 @@ const SortSelect = ({sortField,setSortField}) => {
 
 
 
+
+
 const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
   const navigation = useNavigation();
   const [sortField,setSortField] = useState(0);
+  const {loggedUser,favoritos} = useContext(DataContext);
   
   const filtraServicos = (servico) =>{
       if (idSubcategoriaSelecionada)
@@ -53,6 +57,16 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
     })
  } 
 
+ const checkFavorited = (servico) => {
+  let found = false;
+  for (i=0;i<favoritos.length;i++){
+     if(servico.id===favoritos[i].id){
+       found = true
+     }
+  }
+  return found;
+}
+
      return (
       <>
       <SortSelect sortField={sortField} setSortField={setSortField}/>
@@ -61,20 +75,22 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
            {servicos.filter(servico=>filtraServicos(servico)).sort((a,b)=>sortService(a,b,sortField)).map((servico) => (
           
               <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
-                      <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
-                      <View style={styles.serviceDetailsArea}>
-                        <Text style={styles.serviceName}>{servico.nome}</Text>
-                        <View style={styles.secondLine}>
-                              <FontAwesome name="star" size={16} color={cores.dourado} />
-                              <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
-                              <Entypo name="dot-single" size={14} color="black" />
-                              <Text style={styles.serviceCategory}>{servico.subcategoria}</Text>
-                              <Entypo name="dot-single" size={14} color="black" />
-                              <Text style={styles.serviceDistance}>{servico.distancia} km</Text>
-                          </View>
-                          <Text style={styles.servicePrice}>A partir de R$ {servico.preco}</Text>
+                   <View style={{flexDirection:'row'}}>
+                  <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
+                  <View style={styles.serviceDetailsArea}>
+                    <Text style={styles.serviceName}>{servico.nome}</Text>
+                    <View style={styles.secondLine}>
+                          <FontAwesome name="star" size={16} color={cores.dourado} />
+                          <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
+                          <Entypo name="dot-single" size={14} color="black" />
+                          <Text style={styles.serviceCategory}>{servico.subcategoria}</Text>
+                          <Entypo name="dot-single" size={14} color="black" />
+                          <Text style={styles.serviceDistance}>{servico.distancia} km</Text>
                       </View>
-                        
+                      <Text style={styles.servicePrice}>A partir de R$ {servico.preco}</Text>
+                  </View>
+                  </View>
+                  {checkFavorited(servico)&&loggedUser!=null&&<FontAwesome name="heart" size={20} color={cores.vermelho}/>}     
                 </TouchableOpacity>
 
               ))} 
@@ -103,7 +119,7 @@ const styles = StyleSheet.create({
       marginHorizontal:10,
       flexDirection: 'row',
       alignItems:'center',
-      justifyContent:'flex-start',
+      justifyContent:'space-between',
       width: 320,
       height: 65,
     },
