@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet,Text,SafeAreaView,TouchableOpacity,View,StatusBar} from 'react-native';
 import Header from '../components/Header';
 import { useContext } from "react";
@@ -8,10 +8,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cores } from '../style/globalStyle';
 import MenuProfile from '../components/MenuProfile';
 import StringAvatar from '../components/StringAvatar';
+import ModalSenha from '../components/ModalSenha';
 
 const Profile = () => {
   const {loggedUser,setLoggedUser,nomeCidade} = useContext(DataContext);
   const navigation = useNavigation();
+  const [modalVisible,setModalVisible] = useState(false);
+  
 
 
 const onLogout = async () => {
@@ -26,6 +29,10 @@ const onAgendamentos = () => {
 
 const onFavoritos = () => {
   navigation.navigate('Favoritos');
+}
+
+const onSenha = () =>{
+   setModalVisible(true);
 }
 
   return (
@@ -53,15 +60,15 @@ const onFavoritos = () => {
             <Text style={styles.userNameText}>{loggedUser.name}</Text>
            <MenuProfile iconName="calendar" iconProvider="AntDesign" label="Meus Agendamentos" onPress={onAgendamentos}/>
            <MenuProfile iconName="heart-o" iconProvider="FontAwesome" label="Meus Favoritos" onPress={onFavoritos}/>
-           <MenuProfile iconName="user-circle-o" iconProvider="FontAwesome" label="Meus Cadastro" onPress={()=>{}}/>
-           <MenuProfile iconName="lock1" iconProvider="AntDesign" label="Alterar minha senha" onPress={()=>{}}/>
+           {/*<MenuProfile iconName="user-circle-o" iconProvider="FontAwesome" label="Meus Cadastro" onPress={()=>{}}/>*/}
+           <MenuProfile iconName="lock1" iconProvider="AntDesign" label="Alterar minha senha" onPress={()=>setModalVisible(true)}/>
            <MenuProfile iconName="mail" iconProvider="AntDesign" label="Fale Conosco" onPress={()=>{}}/>
            <MenuProfile iconName="checklist" iconProvider="Octicons" label="Termo de Uso" onPress={()=>{}}/>
            <MenuProfile iconName="policy" iconProvider="MaterialIcons" label="Política de Privacidade" onPress={()=>{}}/>
            <MenuProfile iconName="logout" iconProvider="MaterialIcons" label="Sair" onPress={onLogout}/> 
            </>
           }
-        
+         <ModalSenha modalVisible={modalVisible} setModalVisible={setModalVisible}/>
       </View>
     
  </SafeAreaView>

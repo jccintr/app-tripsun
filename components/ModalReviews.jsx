@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View,Modal,TouchableOpacity, ScrollView} from 'react-native'
-import React, {useState,useEffect} from 'react'
+import React from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
