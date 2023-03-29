@@ -26,11 +26,11 @@ const Destaques = ({servicos}) => {
 
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
      
-       {servicos.filter(servico=>servico.destaque===true).map((servico) => (
+       {servicos.filter(servico=>servico.destaque===1).map((servico) => (
       
               <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
                       <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
-                      <Text style={styles.serviceText}>{servico.nome}</Text>
+                      <Text style={styles.serviceText}>{servico.nome.length>20 ? servico.nome.substring(0,20)+'...':servico.nome}</Text>
               </TouchableOpacity>
 
 
@@ -50,26 +50,33 @@ export default Destaques
 const styles = StyleSheet.create({
   
      container: {
-        width: 350,
+        width: '100%',
         borderRadius:15,
         marginTop:10,
+       
       },
       serviceCard:{
         height: 190,
+        maxHeight: 210,
         minWidth: 170,
         maxWidth: 170,
         flexDirection: 'column',
         alignItems:'center',
         justifyContent:'center',
         margin: 5,
+        
       },
       serviceImage:{
          width: 170,
+         maxWidth:170,
+         maxHeight: 170,
          height: 170,
+         borderRadius: 15,
       },
       serviceText:{
         fontSize: 14,
         fontWeight: 'bold',
+        textAlign: 'center',
       },
   
   });

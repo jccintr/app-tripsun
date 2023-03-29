@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, SafeAreaView,View,ScrollView,StatusBar} from 'react-native';
+import { StyleSheet, SafeAreaView,View,ScrollView,StatusBar,Dimensions,Text} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
      },
     body:{
       flex:1,
+      width:  Dimensions.get('window').width,
       alignItems:'center',
       justifyContent: 'flex-start',
     },

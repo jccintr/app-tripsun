@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import Header2 from '../components/Header2';
 import Banner from '../components/Banner';
-import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View,ScrollView} from 'react-native';
+import { StyleSheet,Dimensions, SafeAreaView,View,ScrollView} from 'react-native';
 import { cores } from '../style/globalStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../Api';
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     },
     body:{
       flex:1,
+      width:  Dimensions.get('window').width,
       alignItems:'center',
       justifyContent: 'flex-start',
    

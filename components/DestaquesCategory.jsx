@@ -26,11 +26,11 @@ const DestaquesCategory = ({servicos,categoria}) => {
 
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
      
-       {servicos.filter(servico=>servico.destaque===true&servico.categoria_id===categoria.id).map((servico) => (
+       {servicos.filter(servico=>servico.destaque===1&servico.categoria_id===categoria.id).map((servico) => (
       
               <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
                       <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
-                      <Text style={styles.serviceText}>{servico.nome}</Text>
+                      <Text style={styles.serviceText}>{servico.nome.length>20 ? servico.nome.substring(0,20)+'...':servico.nome}</Text>
               </TouchableOpacity>
 
 
@@ -49,12 +49,12 @@ export default DestaquesCategory
 const styles = StyleSheet.create({
   
     container: {
-       width: 350,
+      height: 210,
        borderRadius:15,
        marginTop:10,
      },
      serviceCard:{
-       height: 190,
+       height: 210,
        minWidth: 170,
        maxWidth: 170,
        flexDirection: 'column',
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
      serviceImage:{
         width: 170,
         height: 170,
+        borderRadius: 15,
      },
      serviceText:{
        fontSize: 14,

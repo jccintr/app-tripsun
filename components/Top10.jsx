@@ -29,7 +29,7 @@ const Top10 = ({servicos}) => {
           servicos.sort((a,b)=>{return b.stars - a.stars}).slice(0,10).map((servico)=>(
             <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
                 <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
-                <Text style={styles.serviceText}>{servico.nome}</Text>
+                <Text style={styles.serviceText}>{servico.nome.length>20 ? servico.nome.substring(0,20)+'...':servico.nome}</Text>
                 <View style={styles.starArea}>
                   <FontAwesome name="star" size={16} color={cores.dourado} />
                   <Text style={styles.starText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
@@ -49,7 +49,7 @@ export default Top10
 const styles = StyleSheet.create({
   
   container: {
-     width: 350,
+    height: 140,
      borderRadius:15,
      marginTop:10,
   },
@@ -63,12 +63,14 @@ const styles = StyleSheet.create({
      margin: 5,
    },
    serviceImage:{
-      width: 110,
-      height: 110,
+      width: 100,
+      height: 100,
+      borderRadius: 10,
    },
    serviceText:{
      fontSize: 10,
      fontWeight: 'bold',
+     textAlign: 'center',
    },
    starArea:{
      flexDirection: 'row',

@@ -48,8 +48,8 @@ const Servicos = ({servicos}) => {
               <View style={styles.serviceDetailsArea}>
                  <Text style={styles.serviceName}>{servico.nome}</Text>
                  <View style={styles.secondLine}>
-                      <FontAwesome name="star" size={16} color={cores.dourado} />
-                      <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
+                      <FontAwesome name="star" style={{marginRight:5}} size={16} color={cores.dourado} />
+                      <Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>
                       <Entypo name="dot-single" size={14} color="black" />
                       <Text style={styles.serviceCategory}>{servico.categoria}</Text>
                       <Entypo name="dot-single" size={14} color="black" />
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     
   container: {
     backgroundColor: cores.cinzaClaro,
-    width: 350,
+   
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -95,12 +95,14 @@ const styles = StyleSheet.create({
   serviceImage:{
      width: 60,
      height: 60,
+     borderRadius: 10,
   },
   serviceDetailsArea:{
     flexDirection: 'column',
     paddingLeft:10,
     height: 65,
     justifyContent:'space-around',
+    alignItems: 'flex-start',
   },
   serviceName:{
     fontSize: 14,
@@ -108,16 +110,16 @@ const styles = StyleSheet.create({
   },
   secondLine:{
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   serviceStarText:{
     fontSize: 12,
-    marginHorizontal:5,
+   
  },
   serviceCategory:{
     fontSize: 12,
-    marginRight:5,
+    
   },
   categoryText:{
     fontSize: 12,
