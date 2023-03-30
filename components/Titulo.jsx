@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text,Image,FlatList, SafeAreaView,TouchableOpacity,View,ScrollView} from 'react-native';
+import { StyleSheet,Text,View} from 'react-native';
 import { cores } from '../style/globalStyle';
 
 const Titulo = ({titleText}) => {
@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
       },
     sectionTitle:{
       fontWeight:'bold',
-      fontSize: 24,
+      fontSize: 20,
     },
     linha:{
-        marginTop: 5,
-      width: 100,
-      height: 3,
+      marginTop: 5,
+      width: 80,
+      height: 2,
       backgroundColor: cores.vermelho,
     }
    

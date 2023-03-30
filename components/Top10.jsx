@@ -32,7 +32,7 @@ const Top10 = ({servicos}) => {
                 <Text style={styles.serviceText}>{servico.nome.length>20 ? servico.nome.substring(0,20)+'...':servico.nome}</Text>
                 <View style={styles.starArea}>
                   <FontAwesome name="star" size={16} color={cores.dourado} />
-                  <Text style={styles.starText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
+                  <Text style={styles.starText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>
                 </View>
             </TouchableOpacity>
 
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
   
   container: {
     height: 140,
-     borderRadius:15,
      marginTop:10,
+     marginBottom:5,
   },
    serviceCard:{
      height: 140,

@@ -12,6 +12,7 @@ import ModalReviews from '../components/ModalReviews';
 import ModalSucesso from '../components/ModalSucesso';
 import ModalFalhaAgendamento from '../components/ModalFalhaAgendamento';
 import { useNavigation } from '@react-navigation/native';
+import Novo from '../components/Novo';
 
 
 const SwipeDot = () =>{
@@ -46,6 +47,12 @@ const ReviewArea = ({servico,reviews,setModalReviewsVisible}) => {
             </View>
         </TouchableOpacity>
      )
+}
+
+const Spacer = () => {
+    return (
+        <View style={{height:20}}></View>
+    )
 }
 
 const DescricaoArea = ({servico}) => {
@@ -189,7 +196,7 @@ const toggleFavorito = async () =>{
                  </TouchableOpacity>}
                 <View style={styles.body}>
                     <NomeAtividade servico={servico}/>
-                    <ReviewArea reviews={reviews} servico={servico} setModalReviewsVisible={setModalReviewsVisible}/>
+                    {reviews.length>0?<ReviewArea reviews={reviews} servico={servico} setModalReviewsVisible={setModalReviewsVisible}/>:<Spacer/>}
                     <DescricaoArea servico={servico}/>
                     <PrestadorArea prestador={servico.prestador}/>
                     <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} />
@@ -263,10 +270,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems:'center',
         justifyContent:'center',
-        
-     },
+    },
     serviceName:{
-        fontSize:20,
+        fontSize:18,
         fontWeight: 'bold',
         width: '100%',
         paddingLeft: 10,
@@ -282,7 +288,7 @@ const styles = StyleSheet.create({
     },
     titleText:{
       fontWeight: 'bold',
-      fontSize: 18,
+      fontSize: 14,
     },
     descriptionText:{
         fontSize: 14,
@@ -295,8 +301,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         paddingRight: 10,
         paddingLeft: 10,
-
-    },
+   },
     prestadorDetailArea:{
         flexDirection: 'row',
         alignItems:'center',

@@ -17,7 +17,7 @@ const Stars = ({stars}) => {
 
   return (
     <View style={styles.starArea}>
-         <Text style={styles.starText}>{stars.length === 1 ? stars+'.0':stars}</Text>
+         <Text style={styles.starText}>{String(stars).length === 1 ? stars+'.0':stars}</Text>
         {s.map((i, k)=>(
             <View key={k}>
                 {i === 0 && <FontAwesome name="star-o" size={16} color={cores.dourado} />}

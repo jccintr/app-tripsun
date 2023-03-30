@@ -6,6 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 import DataContext from '../context/DataContext';
+import Novo from './Novo';
 
 const SortSelect = ({sortField,setSortField}) => {
   //console.log('sortfield==='+sortField);
@@ -80,8 +81,8 @@ const ServicosCategory = ({servicos,categoria,idSubcategoriaSelecionada}) => {
                   <View style={styles.serviceDetailsArea}>
                     <Text style={styles.serviceName}>{servico.nome}</Text>
                     <View style={styles.secondLine}>
-                          <FontAwesome name="star" style={{marginRight:5}} size={16} color={cores.dourado} />
-                          <Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>
+                          {servico.stars>0&&<FontAwesome name="star" style={{marginRight:5}} size={16} color={cores.dourado}/>}
+                          {servico.stars>0?<Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>:<Novo />}
                           <Entypo name="dot-single" size={14} color="black" />
                           <Text style={styles.serviceCategory}>{servico.subcategoria}</Text>
                           <Entypo name="dot-single" size={14} color="black" />

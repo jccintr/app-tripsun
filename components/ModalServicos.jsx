@@ -34,7 +34,7 @@ const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
                             <Text style={styles.serviceName}>{servico.nome}</Text>
                             <Entypo name="dot-single" size={14} color="black" />
                             <FontAwesome name="star" size={16} color={cores.dourado} />
-                            <Text style={styles.serviceStarText}>{servico.stars.length === 1 ? servico.stars+'.0': servico.stars}</Text>
+                            <Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>
                       </View>
                       <View style={styles.bottomArea}>
                         <View>

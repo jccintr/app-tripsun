@@ -6,6 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 import DataContext from '../context/DataContext';
+import Novo from './Novo';
 
 {/* 
 {isFavorited?<FontAwesome name="heart" size={20} color={cores.vermelho}/>:<FontAwesome name="heart-o" size={20} color={cores.vermelho} />}  
@@ -48,8 +49,8 @@ const Servicos = ({servicos}) => {
               <View style={styles.serviceDetailsArea}>
                  <Text style={styles.serviceName}>{servico.nome}</Text>
                  <View style={styles.secondLine}>
-                      <FontAwesome name="star" style={{marginRight:5}} size={16} color={cores.dourado} />
-                      <Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>
+                     {servico.stars>0&&<FontAwesome name="star" style={{marginRight:5}} size={16} color={cores.dourado} />}
+                     {servico.stars>0?<Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>:<Novo />}
                       <Entypo name="dot-single" size={14} color="black" />
                       <Text style={styles.serviceCategory}>{servico.categoria}</Text>
                       <Entypo name="dot-single" size={14} color="black" />
@@ -74,17 +75,19 @@ export default Servicos
 const styles = StyleSheet.create({
     
   container: {
-    backgroundColor: cores.cinzaClaro,
+    
    
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    borderRadius:15,
+   
     marginTop:10,
     marginBottom:10,
     paddingTop:5,
+    width: '100%',
     },
   serviceCard:{
+    
     marginHorizontal:10,
     flexDirection: 'row',
     alignItems:'center',

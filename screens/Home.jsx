@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
       width:  Dimensions.get('window').width,
       alignItems:'center',
       justifyContent: 'flex-start',
+    
     },
     sectionTitle:{
       fontWeight:'bold',

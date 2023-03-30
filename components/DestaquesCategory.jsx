@@ -30,7 +30,7 @@ const DestaquesCategory = ({servicos,categoria}) => {
       
               <TouchableOpacity style={styles.serviceCard} key={servico.id} onPress={()=>handleServicePress(servico)}>
                       <Image style={styles.serviceImage} source={{uri:`${Api.base_storage}/${servico.imagem}`,}}/>
-                      <Text style={styles.serviceText}>{servico.nome.length>20 ? servico.nome.substring(0,20)+'...':servico.nome}</Text>
+                      <Text style={styles.serviceText}>{servico.nome.length>20 ? servico.nome.substring(0,20).trim()+'...':servico.nome}</Text>
               </TouchableOpacity>
 
 
