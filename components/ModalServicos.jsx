@@ -6,6 +6,7 @@ import { cores } from '../style/globalStyle';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Api from '../Api';
+import Novo from './Novo';
 
 const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
   const navigation = useNavigation();
@@ -33,8 +34,8 @@ const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
                       <View style={styles.nameLine}>  
                             <Text style={styles.serviceName}>{servico.nome}</Text>
                             <Entypo name="dot-single" size={14} color="black" />
-                            <FontAwesome name="star" size={16} color={cores.dourado} />
-                            <Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>
+                            {servico.stars>0&&<FontAwesome name="star" size={16} color={cores.dourado} />}
+                            {servico.stars>0?<Text style={styles.serviceStarText}>{String(servico.stars).length === 1 ? servico.stars+'.0': servico.stars}</Text>:<Novo/>}
                       </View>
                       <View style={styles.bottomArea}>
                         <View>
