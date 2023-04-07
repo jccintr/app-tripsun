@@ -28,7 +28,7 @@ const Search = () => {
         const id = await AsyncStorage.getItem('@cityId');
         const lat = await AsyncStorage.getItem('@userLat');
         const lng  = await AsyncStorage.getItem('@userLng');
-        console.log("id="+id+" lat="+lat+" lng="+lng);
+        ///console.log("id="+id+" lat="+lat+" lng="+lng);
         setLatitude(parseFloat(lat));
         setLongitude(parseFloat(lng));
        

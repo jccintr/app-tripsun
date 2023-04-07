@@ -27,9 +27,9 @@ useEffect(()=>{
   if (cityFound){
    
     if(loggedUser!=null){
-      navigation.navigate('MainTab');
+      navigation.reset({routes:[{name:'MainTab'}]});
     }else {
-      navigation.navigate('SignIn2');
+      navigation.reset({routes:[{name:'SignIn2'}]});
     }
     
   }else {

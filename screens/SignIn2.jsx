@@ -82,13 +82,9 @@ setIsLoading(false);
           <Text style={styles.signUpMessageText}>Não tem uma conta?</Text>
           <Text style={styles.signUpMessageTextBold}> Cadastre-se!</Text>
         </TouchableOpacity>
-        
-          <Text style={{textAlign: 'center',marginTop:20}}>ou</Text>
-         
-        
-        <TouchableOpacity onPress={() => navigation.navigate('MainTab')} style={styles.signUpMessage}>
-          
-          <Text style={styles.signUpMessageTextBold} >Entre como convidado</Text>
+        <Text style={{textAlign: 'center',marginTop:20}}>ou</Text>
+        <TouchableOpacity onPress={() => navigation.reset({routes:[{name:'MainTab'}]})} style={styles.signUpMessage}>
+            <Text style={styles.signUpMessageTextBold} >Entre como convidado</Text>
         </TouchableOpacity>
      </View> 
    </SafeAreaView>

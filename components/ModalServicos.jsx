@@ -39,7 +39,7 @@ const ModalServicos = ({modalVisible,setModalVisible,servico}) => {
                       </View>
                       <View style={styles.bottomArea}>
                         <View>
-                            <Text style={styles.servicePriceText}>Paladino - Brasópolis,MG</Text>    
+                              
                             <Text style={styles.servicePriceText}>A partir de R$ {servico.preco}</Text>
                         </View>
                         <TouchableOpacity style={styles.button} onPress={()=>handleServicePress(servico)}>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingTop: 10,
         paddingBottom: 10,
-        borderRadius: 15,
+        borderRadius: 10,
     },
     buttonText:{
        color: '#fff',

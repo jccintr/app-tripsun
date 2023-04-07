@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View,Modal,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,Modal,TouchableOpacity,Linking } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
 
-const ModalSucesso = ({modalVisible,setModalVisible}) => {
+const ModalSucesso = ({modalVisible,setModalVisible,urlCobranca}) => {
     const navigation = useNavigation();
     return (
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
@@ -14,6 +14,9 @@ const ModalSucesso = ({modalVisible,setModalVisible}) => {
                <Text style={styles.agendamentoText}>Agendamento efetuado com sucesso !</Text>
                <Text style={styles.text}>Os detalhes do agendamento podem ser acessados pela opção Meus Agendamentos na tela Perfil.</Text>
                <Text style={styles.text}>Desejamos a você uma ótima experiência !</Text>
+               <TouchableOpacity onPress={()=>Linking.openURL(urlCobranca)}style={styles.buttonCobranca}>
+                  <Text style={styles.buttonText}>Realizar o Pagamento</Text>
+                </TouchableOpacity>
                <TouchableOpacity onPress={()=>navigation.navigate('MainTab')}style={styles.button}>
                   <Text style={styles.buttonText}>Retornar a Tela Principal</Text>
                 </TouchableOpacity>
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
         },
     modalBody:{
         width: '100%',
-        height: '50%',
+        height: '55%',
         backgroundColor: '#fff',
         borderTopLeftRadius:30,
         borderTopRightRadius: 30,
@@ -60,19 +63,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
+    buttonCobranca:{
+      backgroundColor: '#11823b',
+         justifyContent:'center',
+         alignItems: 'center',
+         borderRadius: 10,
+         height:50,
+         width: '100%',
+         marginBottom: 10,
+       },
     button:{
-        
-
-        backgroundColor: cores.vermelho,
+     backgroundColor: cores.vermelho,
         justifyContent:'center',
         alignItems: 'center',
         borderRadius: 10,
         height:50,
         width: '100%',
         marginBottom: 10,
-      
-
-
       },
       buttonText:{
         color: '#fff',

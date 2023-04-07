@@ -125,7 +125,8 @@ const PriceArea = ({servico,setModalVisible,loggedUser}) => {
 
 
 const Servico = ({route}) => {
-    const {cidade,servico} = route.params;
+    const {servico} = route.params;
+    const [urlCobranca,setUrlCobranca] = useState(null);
     const [modalVisible,setModalVisible] = useState(false);
     const [modalReviewsVisible,setModalReviewsVisible] = useState(false);
     const [modalSucessoVisible,setModalSucessoVisible] = useState(false);
@@ -202,9 +203,9 @@ const toggleFavorito = async () =>{
                     <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} />
                 </View>
            </ScrollView>
-         <ModalAgendamento servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} setModalSucessoVisible={setModalSucessoVisible} setModalFalhaAgendamentoVisible={setModalFalhaAgendamentoVisible} setErroAgendamento={setErroAgendamento}/>
+         <ModalAgendamento setUrlCobranca={setUrlCobranca} servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} setModalSucessoVisible={setModalSucessoVisible} setModalFalhaAgendamentoVisible={setModalFalhaAgendamentoVisible} setErroAgendamento={setErroAgendamento}/>
          {reviews.length>0&&<ModalReviews reviews={reviews} modalVisible={modalReviewsVisible} setModalVisible={setModalReviewsVisible} />}
-         <ModalSucesso modalVisible={modalSucessoVisible} setModalVisible={setModalSucessoVisible}/>
+         <ModalSucesso urlCobranca={urlCobranca} modalVisible={modalSucessoVisible} setModalVisible={setModalSucessoVisible}/>
          <ModalFalhaAgendamento modalVisible={modalFalhaAgendamentoVisible} setModalVisible={setModalFalhaAgendamentoVisible} erroAgendamento={erroAgendamento}/>
         </SafeAreaView>
   )
