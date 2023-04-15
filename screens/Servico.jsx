@@ -115,7 +115,7 @@ const PriceArea = ({servico,setModalVisible,loggedUser}) => {
             <View style={styles.priceDetailArea}>
             <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
                 <TouchableOpacity onPress={()=>{loggedUser===null?navigation.reset({routes:[{name:'SignIn2'}]}):setModalVisible(true)}} style={styles.botaoContratar}>
-                    <Text style={styles.buttonText}>{loggedUser===null?'ENTRE PARA AGENDAR':'AGENDAR'}</Text>
+                    <Text style={styles.buttonText}>{loggedUser===null?'ENTRE PARA CONTRATAR':'CONTRATAR'}</Text>
                 </TouchableOpacity>
             </View>
         </View>

@@ -16,7 +16,7 @@ const ModalFalhaAgendamento = ({modalVisible,setModalVisible,erroAgendamento}) =
                <Text style={styles.text}>{erroAgendamento}</Text>
                
                <TouchableOpacity onPress={()=>setModalVisible(false)}style={styles.button}>
-                  <Text style={styles.buttonText}>Tentar novamente</Text>
+                  <Text style={styles.buttonText}>Tentar Novamente</Text>
                 </TouchableOpacity>
             </View>
           </View>

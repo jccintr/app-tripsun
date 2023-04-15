@@ -133,9 +133,8 @@ setIsLoading(false);
             password={true}
         />
         <TouchableOpacity onPress={onSignIn} style={styles.button}>
-         {!isLoading?<Text style={styles.buttonText}>ENTRAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
-       
-       </TouchableOpacity>
+            {!isLoading?<Text style={styles.buttonText}>ENTRAR</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
+        </TouchableOpacity>
        <TouchableOpacity onPress={() => navigation.navigate('SignUp2')} style={styles.signUpMessage}>
           <Text style={styles.signUpMessageText}>Não tem uma conta?</Text>
           <Text style={styles.signUpMessageTextBold}> Cadastre-se!</Text>

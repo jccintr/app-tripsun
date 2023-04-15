@@ -11,12 +11,15 @@ const ModalSucesso = ({modalVisible,setModalVisible,urlCobranca}) => {
           <View style={styles.modalArea}>
             <View style={styles.modalBody}>
                <Ionicons name="md-cloud-done-sharp" size={80} color="#11823b" />
-               <Text style={styles.agendamentoText}>Agendamento efetuado com sucesso !</Text>
-               <Text style={styles.text}>Os detalhes do agendamento podem ser acessados pela opção Meus Agendamentos na tela Perfil.</Text>
+               <Text style={styles.agendamentoText}>Atividade contratada com sucesso !</Text>
+               <Text style={styles.text}>Os detalhes deste agendamento podem ser acessados pela opção Meus Agendamentos na tela Perfil.</Text>
                <Text style={styles.text}>Desejamos a você uma ótima experiência !</Text>
-               <TouchableOpacity onPress={()=>Linking.openURL(urlCobranca)}style={styles.buttonCobranca}>
+              {/*
+                <TouchableOpacity onPress={()=>Linking.openURL(urlCobranca)}style={styles.buttonCobranca}>
                   <Text style={styles.buttonText}>Realizar o Pagamento</Text>
                 </TouchableOpacity>
+             */}
+               
                <TouchableOpacity onPress={()=>navigation.navigate('MainTab')}style={styles.button}>
                   <Text style={styles.buttonText}>Retornar a Tela Principal</Text>
                 </TouchableOpacity>

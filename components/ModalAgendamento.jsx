@@ -1,18 +1,24 @@
-import { StyleSheet, Text, View,Modal,TouchableOpacity,ScrollView } from 'react-native'
+import { StyleSheet, Text, View,Modal,TouchableOpacity,ScrollView,Dimensions,ActivityIndicator } from 'react-native'
 import React, {useState,useEffect,useContext} from 'react';
 import DataContext from '../context/DataContext';
 import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
+import CreditCard from './CreditCard';
 
 
 const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
 
-
+const Pix = () => {
+    return (
+        <View><Text>Pix</Text></View>
+    )
+}
 
 const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoVisible,setModalFalhaAgendamentoVisible,setErroAgendamento,setUrlCobranca}) => {
     const {loggedUser} = useContext(DataContext);
+    const [isLoading,setIsLoading] = useState(false);
     const [selectedYear, setSelectedYear] = useState(0);
     const [selectedMonth, setSelectedMonth] = useState(0);
     const [selectedDay, setSelectedDay] = useState(0);
@@ -22,9 +28,14 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
     const [horarios,setHorarios] = useState([]);
     const [quantidade,setQuantidade] = useState(1);
     const [total,setTotal] = useState(servico.valor);
+    const [pagamentoPix,setPagamentoPix] = useState(false);
+    const [numeroCartao,setNumeroCartao] = useState('');
+    const [titularCartao,setTitularCartao] = useState('');
+    const [validadeCartao,setValidadeCartao] = useState('');
+    const [cvvCartao,setCvvCartao] = useState('');
+    const screenWidth = Dimensions.get('window').width;
 
-   
-    
+     
 
     useEffect(()=>{
         getHorarios();
@@ -62,9 +73,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
         setListHours([]);
         setSelectedHour(0);
     },[selectedMonth, selectedYear,horarios]);
-  
-
-
+ 
     useEffect(()=>{
         if(selectedDay > 0) {
             let d = new Date(selectedYear, selectedMonth, selectedDay);
@@ -91,7 +100,6 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
         let json = await Api.getHorariosDisponiveis(servico.id);
         setHorarios(json);
     }
-
    
     const onPlusPress = () => {
       setQuantidade(quantidade+1);
@@ -125,9 +133,17 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
         setSelectedDay(0);
     }
 
-    const onFinalizarAgendamento = async () => {
+    const onContratar = async () => {
+        setIsLoading(true);
         if(loggedUser===null){
             alert('usuario não logado');
+            setIsLoading(false);
+            return
+        }
+        console.log ('dia='+selectedHour);
+        if (selectedDay === 0 || selectedHour === null || numeroCartao.length === 0 || titularCartao.length === 0 || validadeCartao.length === 0 || cvvCartao.length === 0){
+            alert('Preencha todos os campos por favor.');
+            setIsLoading(false);
             return
         }
         if (selectedHour!=null) {
@@ -135,7 +151,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
             month = month < 10 ? '0'+month: month;
             let day = selectedDay < 10 ? '0'+selectedDay : selectedDay;
             let dataAgendamento = selectedYear+'-'+month+'-'+day+' '+selectedHour+':00';
-            let response = await Api.addAgendamento(loggedUser.id,servico.id,dataAgendamento,quantidade,total);
+            let response = await Api.addAgendamento(loggedUser.id,servico.id,dataAgendamento,quantidade,total,numeroCartao,titularCartao,validadeCartao,cvvCartao);
             
             if (response.status===201){
                // alert("Agendamento efetuado com sucesso !");
@@ -145,6 +161,8 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
                 setModalSucessoVisible(true);
             } else {
                 let json = await response.json();
+               // console.log(response.status);
+               // console.log(json.erro);
                 setModalVisible(false);
                 setErroAgendamento(json.erro);
                 setModalFalhaAgendamentoVisible(true);
@@ -153,7 +171,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
         } else {
           alert('Selecione o horário por favor.');
         }
-        
+        setIsLoading(false);
     }
 
   return (
@@ -163,10 +181,10 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
 
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
                   <Entypo name="chevron-down" size={34} color="black" />
-                  <Text style={styles.modalTitleText}>Agendamento de Atividade</Text>
+                  <Text style={styles.modalTitleText}>Contratação de Atividade</Text>
                 </TouchableOpacity>
-                
-                <Text style={styles.serviceNameText}>{servico.nome}</Text>    
+                <ScrollView style={{width: screenWidth}} contentContainerStyle={{alignItems:'center',padding:5,}} showsVerticalScrollIndicator={false}>
+                {/*<Text style={styles.serviceNameText}>{servico.nome}</Text> */}   
                 <Text style={styles.horariosTitle}>Quantidade</Text>
                 <View style={styles.quantArea}>
                     <View style={{flexDirection:'row'}}>
@@ -212,11 +230,25 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
                     </ScrollView>
             </View>
 }
-            <TouchableOpacity onPress={onFinalizarAgendamento} style={styles.botaoFinalizar}>
-                <Text style={styles.botaoFinalizarText}>Finalizar Agendamento</Text>
+         <Text style={styles.horariosTitle}>Forma de Pagamento</Text>
+                <View style={styles.pagamentoArea}>
+                    <TouchableOpacity onPress={()=>setPagamentoPix(false)} style={!pagamentoPix?styles.pagamentoTitleAreaSelected:''}>
+                            <Text style={!pagamentoPix?styles.pagamentoTextSelected:styles.pagamentoText}>Cartão de Crédito</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>setPagamentoPix(true)} style={pagamentoPix?styles.pagamentoTitleAreaSelected:''}>
+                            <Text style={pagamentoPix?styles.pagamentoTextSelected:styles.pagamentoText}>Pix</Text>
+                        </TouchableOpacity>
+                 </View>
+
+            {pagamentoPix?<Pix/>:<CreditCard numeroCartao={numeroCartao} titularCartao={titularCartao} validadeCartao={validadeCartao} cvvCartao={cvvCartao} setNumeroCartao={setNumeroCartao} setValidadeCartao={setValidadeCartao} setTitularCartao={setTitularCartao} setCvvCartao={setCvvCartao}/>}
+            <TouchableOpacity onPress={onContratar} style={styles.botaoFinalizar}>
+               {!isLoading?<Text style={styles.botaoFinalizarText}>Contratar Atividade</Text>:<ActivityIndicator  size="large" color={cores.branco}/>}
             </TouchableOpacity>
+            </ScrollView>
             </View>
+            
         </View>
+        
 </Modal>
 
   )
@@ -234,10 +266,10 @@ modalArea:{
  },
 modalBody:{
     width: '100%',
-    height: 450,
+    height: '60%',
     backgroundColor: '#fff',
-    borderTopLeftRadius:30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius:15,
+    borderTopRightRadius: 15,
     paddingTop: 5,
     paddingLeft: 10,
     paddingRight: 10,
@@ -348,8 +380,6 @@ dateTextDisabled:{
     fontWeight: 'bold',
     color: '#d1d1d1',
 },
-
-
 dateItemWeekDay:{
     fontSize: 16,
     fontWeight: 'bold',
@@ -398,12 +428,48 @@ botaoFinalizar:{
     height:50,
     width: '100%',
     marginTop: 20,
+    marginBottom: 10,
 },
 botaoFinalizarText:{
     color: '#fff',
     fontSize: 17,
     fontWeight:'bold',
- }
+ },
+ selectPagamentoArea:{
+    flexDirection:'row',
+    justifyContent: 'space-around',
+    alignItems:'center',
+    marginBottom: 20,
+ },
+
+pagamentoArea:{
+   width: '100%', 
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+},
+pagamentoTitleAreaSelected:{
+    borderRadius: 10,
+    backgroundColor: cores.vermelho,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+},
+pagamentoText:{
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize:16,
+},
+pagamentoTextSelected:{
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize:16,
+}
 
 
 
