@@ -1,6 +1,7 @@
 import { StyleSheet, TextInput, View } from 'react-native'
 import React, {useState} from 'react'
 import { FontAwesome,Entypo } from '@expo/vector-icons'; 
+import { TextInputMask } from 'react-native-masked-text'
 
 
 
@@ -35,12 +36,21 @@ const CreditCard = ({numeroCartao,titularCartao,validadeCartao,cvvCartao,setNume
 
    <View style={styles.InputColumn}>
         <View style={styles.inputArea2}>
+                  <TextInputMask
+                     type={'custom'}
+                     placeholder="mm/aaaa"
+                     placeholderTextColor="#c1c1c1" 
+                     options={{mask: '99/9999'}}
+                     value={validadeCartao}
+                     onChangeText={t=>setValidadeCartao(t)}
+                     style={styles.input}
+                />{/*
                 <TextInput style={styles.input}
-                    placeholder="Validade"
+                    placeholder="mm/aaaa"
                     value={validadeCartao}
                     onChangeText={t=>setValidadeCartao(t)}
                     placeholderTextColor="#c1c1c1" 
-                />
+                /> */}
                 <FontAwesome name="calendar" size={24} color="black" />
             </View>
             <View style={styles.inputArea2}>
