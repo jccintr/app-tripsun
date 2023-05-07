@@ -9,11 +9,14 @@ import { cores } from '../style/globalStyle';
 import MenuProfile from '../components/MenuProfile';
 import StringAvatar from '../components/StringAvatar';
 import ModalSenha from '../components/ModalSenha';
+import ModalCadastro from '../components/ModalCadastro';
+
 
 const Profile = () => {
   const {loggedUser,setLoggedUser,nomeCidade} = useContext(DataContext);
   const navigation = useNavigation();
   const [modalVisible,setModalVisible] = useState(false);
+  const [modalCadastroVisible,setModalCadastroVisible] = useState(false);
   
 
 
@@ -21,6 +24,10 @@ const onLogout = async () => {
   await AsyncStorage.removeItem('token');
   setLoggedUser(null);
   navigation.reset({routes:[{name:'SignIn2'}]});
+}
+
+const onMeuCadastro = () => {
+   setModalCadastroVisible(true);
 }
 
 const onAgendamentos = () => {
@@ -58,17 +65,19 @@ const onSenha = () =>{
           {loggedUser!=null && <>
             <StringAvatar text={loggedUser.name}/>
             <Text style={styles.userNameText}>{loggedUser.name}</Text>
+            <MenuProfile iconName="user-circle-o" iconProvider="FontAwesome" label="Meu Cadastro" onPress={onMeuCadastro}/>
            <MenuProfile iconName="calendar" iconProvider="AntDesign" label="Meus Agendamentos" onPress={onAgendamentos}/>
            <MenuProfile iconName="heart-o" iconProvider="FontAwesome" label="Meus Favoritos" onPress={onFavoritos}/>
            {/*<MenuProfile iconName="user-circle-o" iconProvider="FontAwesome" label="Meus Cadastro" onPress={()=>{}}/>*/}
            <MenuProfile iconName="lock1" iconProvider="AntDesign" label="Alterar minha senha" onPress={()=>setModalVisible(true)}/>
            <MenuProfile iconName="mail" iconProvider="AntDesign" label="Fale Conosco" onPress={()=>{}}/>
-           <MenuProfile iconName="checklist" iconProvider="Octicons" label="Termo de Uso" onPress={()=>{}}/>
-           <MenuProfile iconName="policy" iconProvider="MaterialIcons" label="Política de Privacidade" onPress={()=>{}}/>
+           {/*<MenuProfile iconName="checklist" iconProvider="Octicons" label="Termo de Uso" onPress={()=>{}}/>*/}
+           {/*<MenuProfile iconName="policy" iconProvider="MaterialIcons" label="Política de Privacidade" onPress={()=>{}}/>*/}
            <MenuProfile iconName="logout" iconProvider="MaterialIcons" label="Sair" onPress={onLogout}/> 
            </>
           }
          <ModalSenha modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+         <ModalCadastro modalVisible={modalCadastroVisible} setModalVisible={setModalCadastroVisible}/>
       </View>
     
  </SafeAreaView>
