@@ -4,25 +4,55 @@ import InputField2 from './InputField2';
 import { cores } from '../style/globalStyle';
 import { Entypo } from '@expo/vector-icons';
 import DataContext from '../context/DataContext';
+import Api from '../Api';
 
 
 
 
 const ModalCadastro = ({modalVisible,setModalVisible}) => {
-  const {loggedUser} = useContext(DataContext);
+  const {loggedUser,setLoggedUser} = useContext(DataContext);
+  const [data,setData] = useState({
+    nome:'',
+    telefone:'',
+    documento:'',
+    logradouro:'',
+    numero:'',
+    cep:'',
+    cidade:'',
+    estado:''
+  })
   const [isLoading,setIsLoading] = useState(false);
   const [nome,setNome] = useState(loggedUser.name);
   const [telefone,setTelefone] = useState(loggedUser.telefone);
   const [documento,setDocumento] = useState(loggedUser.documento);
   const [logradouro,setLogradouro] = useState(loggedUser.logradouro);
   const [numero,setNumero] = useState(loggedUser.numero);
-  const [cep,setCet] = useState(loggedUser.cep);
+  const [bairro,setBairro] = useState(loggedUser.bairro);
+  const [cep,setCep] = useState(loggedUser.cep);
   const [cidade,setCidade] = useState(loggedUser.cidade);
   const [estado,setEstado] = useState(loggedUser.estado);
   const screenWidth = Dimensions.get('window').width;
 
- const onSalvar = () => {
-  alert('salvar');
+  const handleData = (key,value)=> {
+
+    setData((currentData)=>({...currentData,[key]:value}));
+
+  }
+
+ const onSalvar = async () => {
+  setIsLoading(true);
+  let data = {nome,telefone,documento,logradouro,numero,cep,bairro,cidade,estado};
+  let response = await Api.userCadastro(loggedUser.id,data);
+  
+  if (response.status != 200){
+     alert('falha ao alterar dados:'+response.status);
+  } else {
+     const user = await response.json();
+     setLoggedUser(user);
+     alert('dados alterados com sucesso');
+  }
+  setIsLoading(false);
+  
  }
 
   return (
@@ -40,7 +70,7 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
                     password={false}
                     keyboard="default"
                     value={nome}
-                    onChangeText={t=>setDocumento(t)}
+                    onChangeText={t=>setNome(t)}
                 />  
                 <InputField2 
                     label="Telefone:"
@@ -48,7 +78,7 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
                     password={false}
                     keyboard="numeric"
                     value={telefone}
-                    onChangeText={t=>setDocumento(t)}
+                    onChangeText={t=>setTelefone(t)}
                 />  
                 <InputField2 
                     label="Número do CPF:"
@@ -64,7 +94,7 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
                     password={false}
                     keyboard="default"
                     value={logradouro}
-                    onChangeText={t=>setDocumento(t)}
+                    onChangeText={t=>setLogradouro(t)}
                 />  
                 <InputField2 
                     label="Número:"
@@ -72,7 +102,15 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
                     password={false}
                     keyboard="numeric"
                     value={numero}
-                    onChangeText={t=>setDocumento(t)}
+                    onChangeText={t=>setNumero(t)}
+                />  
+                <InputField2 
+                    label="Bairro:"
+                    placeholder="Digite o seu bairro"
+                    password={false}
+                    keyboard="default"
+                    value={bairro}
+                    onChangeText={t=>setBairro(t)}
                 />  
                 <InputField2 
                     label="CEP:"
@@ -80,7 +118,7 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
                     password={false}
                     keyboard="numeric"
                     value={cep}
-                    onChangeText={t=>setDocumento(t)}
+                    onChangeText={t=>setCep(t)}
                 />  
                 <InputField2 
                     label="Cidade:"
@@ -88,7 +126,7 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
                     password={false}
                     keyboard="default"
                     value={cidade}
-                    onChangeText={t=>setDocumento(t)}
+                    onChangeText={t=>setCidade(t)}
                 />  
                 <InputField2 
                     label="Estado:"
@@ -96,7 +134,7 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
                     password={false}
                     keyboard="default"
                     value={estado}
-                    onChangeText={t=>setDocumento(t)}
+                    onChangeText={t=>setEstado(t)}
                 />  
              
             <TouchableOpacity onPress={onSalvar} style={styles.botaoSalvar}>

@@ -77,7 +77,7 @@ const onSenha = () =>{
            </>
           }
          <ModalSenha modalVisible={modalVisible} setModalVisible={setModalVisible}/>
-         <ModalCadastro modalVisible={modalCadastroVisible} setModalVisible={setModalCadastroVisible}/>
+         {loggedUser&&<ModalCadastro modalVisible={modalCadastroVisible} setModalVisible={setModalCadastroVisible}/>}
       </View>
     
  </SafeAreaView>
