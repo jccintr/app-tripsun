@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 //import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MainStack from './stacks/MainStack'
 import { cores } from './style/globalStyle';
+import Toast from 'react-native-toast-message';
 
 
 
@@ -16,6 +17,7 @@ export default function App() {
     <DataProvider>
       <NavigationContainer>
        <MainStack />
+       <Toast />
       </NavigationContainer>
     </DataProvider>
     

@@ -5,6 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import CreditCard from './CreditCard';
+import Toast from 'react-native-toast-message';
 
 
 const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -142,7 +143,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
         }
         console.log ('dia='+selectedHour);
         if (selectedDay === 0 || selectedHour === null || numeroCartao.length === 0 || titularCartao.length === 0 || validadeCartao.length === 0 || cvvCartao.length === 0){
-            alert('Preencha todos os campos por favor.');
+            Toast.show({type: 'error', text1: 'Preencha todos os campos por favor.'});
             setIsLoading(false);
             return
         }
@@ -169,7 +170,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
               
             }
         } else {
-          alert('Selecione o horário por favor.');
+           Toast.show({type: 'error', text1: 'Selecione o horário por favor.'});
         }
         setIsLoading(false);
     }

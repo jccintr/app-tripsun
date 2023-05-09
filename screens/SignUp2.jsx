@@ -5,6 +5,7 @@ import logo from '../assets/logo-tripsun.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DataContext from '../context/DataContext';
 import Api from '../Api';
+import Toast from 'react-native-toast-message';
 
 
 import { useNavigation } from '@react-navigation/native';
@@ -28,7 +29,7 @@ const SignUp2 = () => {
       setIsLoading(true);
       if(email != '' && password != '' && name != '' && telefone != '' && passwordConfirm != ''){
          if(password != passwordConfirm){
-            alert('As senhas informadas são diferentes.');
+            Toast.show({type: 'error', text1: 'As senhas informadas são diferentes.'});
             return
          }
          let response = await Api.signUp(name, email,telefone,password);
@@ -36,12 +37,13 @@ const SignUp2 = () => {
             const jsonUser = await response.json();
             await AsyncStorage.setItem('token', jsonUser.token);
             setLoggedUser(jsonUser);
+            Toast.show({type: 'success', text1: 'Olá '+jsonUser.name+'! Seja bem-vindo ao TripSun.',text2: 'Não esqueça de completar o seu cadastro na aba Perfil.'});
             navigation.reset({routes:[{name:'MainTab'}]});
          } else {
-            alert('Falha ao cadastrar usuário.');
+            Toast.show({type: 'error', text1: 'Falha ao cadastrar usuário.'});
          }
       } else {
-        alert ('Informe todos os campos por favor.');
+        Toast.show({type: 'error', text1: 'Informe todos os campos por favor.'});
       }
 
       setIsLoading(false);

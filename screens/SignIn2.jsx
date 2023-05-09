@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DataContext from '../context/DataContext';
+import Toast from 'react-native-toast-message';
 //import * as Device from 'expo-device';
 //import * as Notifications from 'expo-notifications';
 
@@ -46,7 +47,7 @@ async function registerForPushNotificationsAsync() {
 
 
 const SignIn2 = () => {
-  const {setLoggedUser,setFavoritos,expoPushToken} = useContext(DataContext);
+  const {setLoggedUser,loggedUser,setFavoritos,expoPushToken} = useContext(DataContext);
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [isLoading,setIsLoading] = useState(false);
@@ -73,6 +74,16 @@ const SignIn2 = () => {
   }, []);
 */
 
+const CadastroCompleto = (json) => {
+   
+   if(json.documento !== null && json.logradouro !== null && json.numero !== null & json.bairro !== null && json.cep !== null && json.cidade !== null & json.estado !== null ){
+      return true;
+   } else {
+      return false;
+   }
+
+}
+
 
 
 
@@ -88,15 +99,21 @@ const onSignIn = async () => {
         let ret = await Api.savePushToken(json.id,expoPushToken);
         setLoggedUser(json);
         setFavoritos(json.favoritos);
+        if (CadastroCompleto(json)){
+           Toast.show({type: 'success', text1: 'Olá '+json.name+'! Seja bem-vindo ao TripSun.'});
+        } else {
+          Toast.show({type: 'success', text1: 'Olá '+json.name+'! Seja bem-vindo ao TripSun.',text2: 'Não esqueça de completar o seu cadastro na aba Perfil.'});
+        }
+        
         navigation.reset({routes:[{name:'MainTab'}]});
       } else {
         setEmail('');
         setPassword('');  
-        alert("Email e ou senha inválidos.");
+        Toast.show({type: 'error', text1: 'Email e ou usuário inválidos!'});
       }
 
     } else {
-      alert("Por favor, informe o seu email e a sua senha.");
+      Toast.show({type: 'error', text1: 'Informe o seu e-mail e a sua senha por favor!'});
     }
 setIsLoading(false);
 
@@ -141,7 +158,7 @@ setIsLoading(false);
         </TouchableOpacity>
         <Text style={{textAlign: 'center',marginTop:20}}>ou</Text>
         <TouchableOpacity onPress={() => navigation.reset({routes:[{name:'MainTab'}]})} style={styles.signUpMessage}>
-            <Text style={styles.signUpMessageTextBold} >Entre como convidado</Text>
+            <Text style={styles.guestMessage} >Entre como convidado</Text>
         </TouchableOpacity>
      </View> 
    </SafeAreaView>
@@ -215,6 +232,12 @@ const styles = StyleSheet.create({
     signUpMessageTextBold:{
       color: cores.vermelho,
       fontWeight: 'bold',
+    },
+    guestMessage:{
+      fontSize: 16,
+      color: cores.vermelho,
+      fontWeight: 'bold',
+      
     },
     
    

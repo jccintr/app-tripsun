@@ -5,7 +5,7 @@ import { cores } from '../style/globalStyle';
 import { Entypo } from '@expo/vector-icons';
 import DataContext from '../context/DataContext';
 import Api from '../Api';
-
+import Toast from 'react-native-toast-message';
 
 
 
@@ -45,13 +45,14 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
   let response = await Api.userCadastro(loggedUser.id,data);
   
   if (response.status != 200){
-     alert('falha ao alterar dados:'+response.status);
+     Toast.show({type: 'error', text1: 'Falha ao alterar dados: '+response.status});
   } else {
      const user = await response.json();
      setLoggedUser(user);
-     alert('dados alterados com sucesso');
+     Toast.show({type: 'success', text1: 'Dados alterados com sucesso!'});
   }
   setIsLoading(false);
+  setModalVisible(false);
   
  }
 

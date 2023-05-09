@@ -154,7 +154,6 @@ export default {
        return response;
     },
     userCadastro: async (id,data) => {
-        console.log(JSON.stringify(data));
         const response = await fetch(`${BASE_API}/usuario/dados/${id}`, {
             method: 'POST',
             headers: {

@@ -11,8 +11,10 @@ import ModalAgendamento from '../components/ModalAgendamento';
 import ModalReviews from '../components/ModalReviews';
 import ModalSucesso from '../components/ModalSucesso';
 import ModalFalhaAgendamento from '../components/ModalFalhaAgendamento';
+import ModalCadastro from '../components/ModalCadastro';
 import { useNavigation } from '@react-navigation/native';
 import Novo from '../components/Novo';
+import Toast from 'react-native-toast-message';
 
 
 const SwipeDot = () =>{
@@ -106,15 +108,43 @@ const PrestadorArea = ({prestador}) => {
 
 
 
-const PriceArea = ({servico,setModalVisible,loggedUser}) => {
+const PriceArea = ({servico,setModalVisible,loggedUser,setModalCadastroVisible}) => {
     const navigation = useNavigation();
+
+    const CadastroCompleto = (json) => {
+   
+        if(json.documento !== null && json.logradouro !== null && json.numero !== null & json.bairro !== null && json.cep !== null && json.cidade !== null & json.estado !== null ){
+           return true;
+        } else {
+           return false;
+        }
+     
+     }
+
+
+    const onContratar = () => {
+
+         if (loggedUser===null){
+            navigation.reset({routes:[{name:'SignIn2'}]});
+         } else {
+
+            if(!CadastroCompleto(loggedUser)){
+                Toast.show({type: 'info', text1: 'Antes de contratar, complete o seu cadastro por favor.'});
+                setModalCadastroVisible(true);
+            } else {
+                setModalVisible(true);
+            }
+            
+            
+         }
+    }
 
     return (
         <View style={styles.priceContainer}>
             <Text style={styles.titleText}>Preço</Text>
             <View style={styles.priceDetailArea}>
             <Text style={styles.descriptionText}>A partir de R$ {servico.valor}</Text>
-                <TouchableOpacity onPress={()=>{loggedUser===null?navigation.reset({routes:[{name:'SignIn2'}]}):setModalVisible(true)}} style={styles.botaoContratar}>
+                <TouchableOpacity onPress={onContratar} style={styles.botaoContratar}>
                     <Text style={styles.buttonText}>{loggedUser===null?'ENTRE PARA CONTRATAR':'CONTRATAR'}</Text>
                 </TouchableOpacity>
             </View>
@@ -135,6 +165,7 @@ const Servico = ({route}) => {
     const {loggedUser,favoritos,setFavoritos} = useContext(DataContext);
     const [erroAgendamento,setErroAgendamento] = useState('');
     const [isFavorited,setIsFavorited] = useState(false);
+    const [modalCadastroVisible,setModalCadastroVisible] = useState(false);
     
   
 
@@ -170,6 +201,17 @@ const toggleFavorito = async () =>{
     setIsFavorited(!isFavorited);
 }
 
+const CadastroCompleto = (json) => {
+   
+    if(json.documento !== null && json.logradouro !== null && json.numero !== null & json.bairro !== null && json.cep !== null && json.cidade !== null & json.estado !== null ){
+       return true;
+    } else {
+       return false;
+    }
+ 
+ }
+ 
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -200,13 +242,14 @@ const toggleFavorito = async () =>{
                     {reviews.length>0?<ReviewArea reviews={reviews} servico={servico} setModalReviewsVisible={setModalReviewsVisible}/>:<Spacer/>}
                     <DescricaoArea servico={servico}/>
                     <PrestadorArea prestador={servico.prestador}/>
-                    <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} />
+                    <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} setModalCadastroVisible={setModalCadastroVisible} />
                 </View>
            </ScrollView>
          <ModalAgendamento setUrlCobranca={setUrlCobranca} servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} setModalSucessoVisible={setModalSucessoVisible} setModalFalhaAgendamentoVisible={setModalFalhaAgendamentoVisible} setErroAgendamento={setErroAgendamento}/>
          {reviews.length>0&&<ModalReviews reviews={reviews} modalVisible={modalReviewsVisible} setModalVisible={setModalReviewsVisible} />}
          <ModalSucesso urlCobranca={urlCobranca} modalVisible={modalSucessoVisible} setModalVisible={setModalSucessoVisible}/>
          <ModalFalhaAgendamento modalVisible={modalFalhaAgendamentoVisible} setModalVisible={setModalFalhaAgendamentoVisible} erroAgendamento={erroAgendamento}/>
+         {loggedUser&&<ModalCadastro modalVisible={modalCadastroVisible} setModalVisible={setModalCadastroVisible}/>}
         </SafeAreaView>
   )
 }
