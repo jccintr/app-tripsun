@@ -6,6 +6,7 @@ import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import CreditCard from './CreditCard';
 import Toast from 'react-native-toast-message';
+import * as Clipboard from 'expo-clipboard';
 
 
 const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -171,6 +172,7 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
                 if (response.status===201){
                     const json = await response.json();
                     setPayloadPix(json.pix);
+                    await Clipboard.setStringAsync(json.pix);
                     setModalVisible(false);
                     setModalSucessoPixVisible(true);
                 } else {

@@ -3,9 +3,17 @@ import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import { useNavigation } from '@react-navigation/native';
+import * as Clipboard from 'expo-clipboard';
 
 const ModalSucessoPix = ({modalVisible,setModalVisible,payload}) => {
     const navigation = useNavigation();
+
+
+    const copyToClipboard = async () => {
+      await Clipboard.setStringAsync(payload);
+    };
+
+
     return (
         <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
           <View style={styles.modalArea}>
@@ -14,7 +22,10 @@ const ModalSucessoPix = ({modalVisible,setModalVisible,payload}) => {
                <Text style={styles.agendamentoText}>Atividade reservada com sucesso !</Text>
                <Text style={styles.text}>Para confirmar a contratação utilize o aplicativo do seu banco para realizar a transferência via Pix.</Text>
                <Text style={styles.text}>Escolha a opção Pix Copia e Cola e insira as informações abaixo:</Text>
-               <Text style={[styles.text,styles.payloadText]}>{payload}</Text>
+               <TouchableOpacity style={styles.copyTextButton} onPress={copyToClipboard}>
+                  <Text style={[styles.text,styles.payloadText]}>{payload}</Text>
+                  
+               </TouchableOpacity>
                <Text style={styles.text}>Os dados para pagamento foram copiados para a área de transferência.</Text>
                <Text style={styles.text}>Você receberá uma notificação assim que o seu pagamento for confirmado.</Text>
                
@@ -73,6 +84,13 @@ const styles = StyleSheet.create({
     payloadText:{
         fontWeight: 'bold',
         fontSize: 14,
+    },
+    copyTextButton:{
+      paddingHorizontal: 6,
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     buttonCobranca:{
          backgroundColor: '#11823b',

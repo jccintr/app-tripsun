@@ -124,7 +124,7 @@ const PriceArea = ({servico,setModalVisible,loggedUser,setModalCadastroVisible})
 
 
     const onContratar =  () => {
-          console.log(CadastroCompleto(loggedUser));
+         // console.log(CadastroCompleto(loggedUser));
          if (loggedUser===null){
             navigation.reset({routes:[{name:'SignIn2'}]});
          } else {
