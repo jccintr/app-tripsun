@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,Modal,TouchableOpacity,ActivityIndicator } from 
 import React, {useState,useContext} from 'react'
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo,EvilIcons } from '@expo/vector-icons';
 import InputField from './InputField';
 import DataContext from '../context/DataContext';
 
@@ -49,8 +49,8 @@ const ModalSenha = ({modalVisible,setModalVisible}) => {
       <View style={styles.modalArea}>
         <View style={styles.modalBody}>
                <TouchableOpacity style={styles.headerArea} onPress={OnFecharModal}>
-                  <Entypo name="chevron-down" size={34} color="black" />
                   <Text style={styles.modalTitleText}>Alteração de Senha de Acesso</Text>
+                  <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <InputField 
                   iconProvider="AntDesign"
@@ -92,8 +92,8 @@ modalBody:{
     width: '100%',
     height: 300,
     backgroundColor: '#fff',
-    borderTopLeftRadius:30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius:15,
+    borderTopRightRadius: 15,
     paddingTop: 5,
     paddingLeft: 10,
     paddingRight: 10,
@@ -105,7 +105,7 @@ headerArea:{
   width: '100%',
   flexDirection: 'row',
   alignItems: 'center',
-  justifyContent: 'flex-start',
+  justifyContent: 'space-between',
   marginBottom: 10,
 },
 modalTitleText:{

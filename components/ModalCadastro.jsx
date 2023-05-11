@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,Modal,TouchableOpacity, ScrollView,ActivityIndic
 import React, {useState,useContext} from 'react'
 import InputField2 from './InputField2';
 import { cores } from '../style/globalStyle';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo,EvilIcons } from '@expo/vector-icons';
 import DataContext from '../context/DataContext';
 import Api from '../Api';
 import Toast from 'react-native-toast-message';
@@ -58,11 +58,12 @@ const ModalCadastro = ({modalVisible,setModalVisible}) => {
 
   return (
     <Modal visible={modalVisible} animationType="slide" transparent={true} onRequestClose={()=>setModalVisible(false)}>
+      <Toast />
       <View style={styles.modalArea}>
         <View style={styles.modalBody}>
                <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                  <Entypo name="chevron-down" size={34} color="black" />
                   <Text style={styles.modalTitleText}>Meu Cadastro</Text>
+                  <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <ScrollView style={{width: screenWidth}} contentContainerStyle={{alignItems:'center',padding:5,}} showsVerticalScrollIndicator={false}>
                 <InputField2 
@@ -174,7 +175,7 @@ headerArea:{
   width: '100%',
   flexDirection: 'row',
   alignItems: 'center',
-  justifyContent: 'flex-start',
+  justifyContent: 'space-between',
   marginBottom: 10,
 },
 modalTitleText:{

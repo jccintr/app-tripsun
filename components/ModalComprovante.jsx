@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Modal,TouchableOpacity,Image } from 'react-native'
 import React from 'react'
-import { Entypo } from '@expo/vector-icons';
+import { Entypo,EvilIcons } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 
 
@@ -25,8 +25,7 @@ const ModalComprovante = ({agendamento,modalVisible,setModalVisible}) => {
           <View style={styles.modalArea}>
             <View style={styles.modalBody}>
                <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                  <Entypo name="chevron-down" size={34} color="black" />
-                  
+                   <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                
                 <Text style={{fontWeight:'bold',}}>COMPROVANTE DE AGENDAMENTO DE ATIVIDADE</Text>
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
       width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'flex-start',
+      justifyContent: 'flex-end',
      
     },
     modalTitleText:{

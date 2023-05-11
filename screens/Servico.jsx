@@ -10,6 +10,7 @@ import Swiper from 'react-native-swiper';
 import ModalAgendamento from '../components/ModalAgendamento';
 import ModalReviews from '../components/ModalReviews';
 import ModalSucesso from '../components/ModalSucesso';
+import ModalSucessoPix from '../components/ModalSucessoPix';
 import ModalFalhaAgendamento from '../components/ModalFalhaAgendamento';
 import ModalCadastro from '../components/ModalCadastro';
 import { useNavigation } from '@react-navigation/native';
@@ -122,14 +123,14 @@ const PriceArea = ({servico,setModalVisible,loggedUser,setModalCadastroVisible})
      }
 
 
-    const onContratar = () => {
-
+    const onContratar =  () => {
+          console.log(CadastroCompleto(loggedUser));
          if (loggedUser===null){
             navigation.reset({routes:[{name:'SignIn2'}]});
          } else {
 
             if(!CadastroCompleto(loggedUser)){
-                Toast.show({type: 'info', text1: 'Antes de contratar, complete o seu cadastro por favor.'});
+                Toast.show({type: 'info', text1: 'Antes de contratar, complete o seu cadastro.'});
                 setModalCadastroVisible(true);
             } else {
                 setModalVisible(true);
@@ -157,9 +158,11 @@ const PriceArea = ({servico,setModalVisible,loggedUser,setModalCadastroVisible})
 const Servico = ({route}) => {
     const {servico} = route.params;
     const [urlCobranca,setUrlCobranca] = useState(null);
+    const [payloadPix,setPayloadPix] = useState('');
     const [modalVisible,setModalVisible] = useState(false);
     const [modalReviewsVisible,setModalReviewsVisible] = useState(false);
     const [modalSucessoVisible,setModalSucessoVisible] = useState(false);
+    const [modalSucessoPixVisible,setModalSucessoPixVisible] = useState(false);
     const [modalFalhaAgendamentoVisible,setModalFalhaAgendamentoVisible] = useState(false);
     const [reviews,setReviews] = useState([]);
     const {loggedUser,favoritos,setFavoritos} = useContext(DataContext);
@@ -245,10 +248,21 @@ const CadastroCompleto = (json) => {
                     <PriceArea loggedUser={loggedUser} servico={servico} setModalVisible={setModalVisible} setModalCadastroVisible={setModalCadastroVisible} />
                 </View>
            </ScrollView>
-         <ModalAgendamento setUrlCobranca={setUrlCobranca} servico={servico} modalVisible={modalVisible} setModalVisible={setModalVisible} setModalSucessoVisible={setModalSucessoVisible} setModalFalhaAgendamentoVisible={setModalFalhaAgendamentoVisible} setErroAgendamento={setErroAgendamento}/>
+         <ModalAgendamento 
+            setUrlCobranca={setUrlCobranca} 
+            servico={servico}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            setModalSucessoVisible={setModalSucessoVisible}
+            setModalSucessoPixVisible={setModalSucessoPixVisible}
+            setModalFalhaAgendamentoVisible={setModalFalhaAgendamentoVisible}
+            setPayloadPix={setPayloadPix}
+            setErroAgendamento={setErroAgendamento}
+            />
          {reviews.length>0&&<ModalReviews reviews={reviews} modalVisible={modalReviewsVisible} setModalVisible={setModalReviewsVisible} />}
          <ModalSucesso urlCobranca={urlCobranca} modalVisible={modalSucessoVisible} setModalVisible={setModalSucessoVisible}/>
-         <ModalFalhaAgendamento modalVisible={modalFalhaAgendamentoVisible} setModalVisible={setModalFalhaAgendamentoVisible} erroAgendamento={erroAgendamento}/>
+         <ModalSucessoPix  modalVisible={modalSucessoPixVisible} setModalVisible={setModalSucessoPixVisible} payload={payloadPix}/>
+         <ModalFalhaAgendamento modalVisible={modalFalhaAgendamentoVisible} setModalVisible={setModalFalhaAgendamentoVisible} erroAgendamento={erroAgendamento} />
          {loggedUser&&<ModalCadastro modalVisible={modalCadastroVisible} setModalVisible={setModalCadastroVisible}/>}
         </SafeAreaView>
   )

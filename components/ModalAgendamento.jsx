@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,Modal,TouchableOpacity,ScrollView,Dimensions,ActivityIndicator } from 'react-native'
 import React, {useState,useEffect,useContext} from 'react';
 import DataContext from '../context/DataContext';
-import { Entypo } from '@expo/vector-icons';
+import { EvilIcons,Entypo } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import CreditCard from './CreditCard';
@@ -13,11 +13,11 @@ const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];
 
 const Pix = () => {
     return (
-        <View><Text>Pix</Text></View>
+        <View><Text></Text></View>
     )
 }
 
-const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoVisible,setModalFalhaAgendamentoVisible,setErroAgendamento,setUrlCobranca}) => {
+const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoVisible,setModalSucessoPixVisible,setModalFalhaAgendamentoVisible,setErroAgendamento,setUrlCobranca,setPayloadPix}) => {
     const {loggedUser} = useContext(DataContext);
     const [isLoading,setIsLoading] = useState(false);
     const [selectedYear, setSelectedYear] = useState(0);
@@ -141,8 +141,8 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
             setIsLoading(false);
             return
         }
-        console.log ('dia='+selectedHour);
-        if (selectedDay === 0 || selectedHour === null || numeroCartao.length === 0 || titularCartao.length === 0 || validadeCartao.length === 0 || cvvCartao.length === 0){
+        
+        if (!pagamentoPix && (selectedDay === 0 || selectedHour === null || numeroCartao.length === 0 || titularCartao.length === 0 || validadeCartao.length === 0 || cvvCartao.length === 0)){
             Toast.show({type: 'error', text1: 'Preencha todos os campos por favor.'});
             setIsLoading(false);
             return
@@ -152,23 +152,37 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
             month = month < 10 ? '0'+month: month;
             let day = selectedDay < 10 ? '0'+selectedDay : selectedDay;
             let dataAgendamento = selectedYear+'-'+month+'-'+day+' '+selectedHour+':00';
-            let response = await Api.addAgendamento(loggedUser.id,servico.id,dataAgendamento,quantidade,total,numeroCartao,titularCartao,validadeCartao,cvvCartao);
-            
-            if (response.status===201){
-               // alert("Agendamento efetuado com sucesso !");
-                const json = await response.json();
-                setUrlCobranca(json.cobranca_url);
-                setModalVisible(false);
-                setModalSucessoVisible(true);
+
+            if (!pagamentoPix){
+                let response = await Api.addAgendamento(loggedUser.id,servico.id,dataAgendamento,quantidade,total,numeroCartao,titularCartao,validadeCartao,cvvCartao);
+                if (response.status===201){
+                    const json = await response.json();
+                     setUrlCobranca(json.cobranca_url);
+                     setModalVisible(false);
+                     setModalSucessoVisible(true);
+                 } else {
+                     let json = await response.json();
+                     setModalVisible(false);
+                     setErroAgendamento(json.erro);
+                     setModalFalhaAgendamentoVisible(true);
+                 }
             } else {
-                let json = await response.json();
-               // console.log(response.status);
-               // console.log(json.erro);
-                setModalVisible(false);
-                setErroAgendamento(json.erro);
-                setModalFalhaAgendamentoVisible(true);
-              
+                let response = await Api.addAgendamentoPix(loggedUser.id,servico.id,dataAgendamento,quantidade,total);
+                if (response.status===201){
+                    const json = await response.json();
+                    setPayloadPix(json.pix);
+                    setModalVisible(false);
+                    setModalSucessoPixVisible(true);
+                } else {
+                    let json = await response.json();
+                    setModalVisible(false);
+                    setErroAgendamento(json.erro);
+                    setModalFalhaAgendamentoVisible(true);
+                }
             }
+            
+            
+            
         } else {
            Toast.show({type: 'error', text1: 'Selecione o horário por favor.'});
         }
@@ -181,8 +195,8 @@ const ModalAgendamento = ({servico,modalVisible,setModalVisible,setModalSucessoV
             <View style={styles.modalBody}>
 
                 <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                  <Entypo name="chevron-down" size={34} color="black" />
                   <Text style={styles.modalTitleText}>Contratação de Atividade</Text>
+                  <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <ScrollView style={{width: screenWidth}} contentContainerStyle={{alignItems:'center',padding:5,}} showsVerticalScrollIndicator={false}>
                 {/*<Text style={styles.serviceNameText}>{servico.nome}</Text> */}   
@@ -281,7 +295,7 @@ headerArea:{
   width: '100%',
   flexDirection: 'row',
   alignItems: 'center',
-  justifyContent: 'flex-start',
+  justifyContent: 'space-between',
   marginBottom: 10,
 },
 modalTitleText:{

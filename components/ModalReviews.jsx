@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Modal,TouchableOpacity, ScrollView} from 'react-native'
 import React from 'react'
-import { Entypo } from '@expo/vector-icons';
+import { Entypo,EvilIcons } from '@expo/vector-icons';
 import { cores } from '../style/globalStyle';
 import Api from '../Api';
 import ReviewCard from './ReviewCard';
@@ -13,8 +13,8 @@ const ModalReviews = ({reviews,modalVisible,setModalVisible}) => {
       <View style={styles.modalArea}>
         <View style={styles.modalBody}>
                <TouchableOpacity style={styles.headerArea} onPress={()=>setModalVisible(false)}>
-                  <Entypo name="chevron-down" size={34} color="black" />
                   <Text style={styles.modalTitleText}>Avaliações desta Atividade</Text>
+                  <EvilIcons name="close" size={24} color="black" />
                 </TouchableOpacity>
                 <ScrollView showsVerticalScrollIndicator={false}>
                   {reviews.map((review)=>(<ReviewCard key={review.id} review={review}/>))}
@@ -52,7 +52,7 @@ headerArea:{
   width: '100%',
   flexDirection: 'row',
   alignItems: 'center',
-  justifyContent: 'flex-start',
+  justifyContent: 'space-between',
   marginBottom: 10,
 },
 modalTitleText:{
