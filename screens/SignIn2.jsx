@@ -97,6 +97,9 @@ const onSignIn = async () => {
         const json = await response.json();
         await AsyncStorage.setItem('token', json.token);
         let ret = await Api.savePushToken(json.id,expoPushToken);
+        //if (ret.status !== 200){
+        //  alert('Falha ao criar push token');
+       //}
         setLoggedUser(json);
         setFavoritos(json.favoritos);
         if (CadastroCompleto(json)){

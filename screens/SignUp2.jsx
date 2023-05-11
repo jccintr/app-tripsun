@@ -20,7 +20,7 @@ const SignUp2 = () => {
     const [passwordConfirm,setPasswordConfirm] = useState('');
     const navigation = useNavigation();
     const [isLoading,setIsLoading] = useState(false);
-    const {setLoggedUser} = useContext(DataContext);
+    const {setLoggedUser,expoPushToken} = useContext(DataContext);
 
     
 
@@ -35,6 +35,7 @@ const SignUp2 = () => {
          let response = await Api.signUp(name, email,telefone,password);
          if (response.status===201){
             const jsonUser = await response.json();
+            let ret = await Api.savePushToken(jsonUser.id,expoPushToken);
             await AsyncStorage.setItem('token', jsonUser.token);
             setLoggedUser(jsonUser);
             Toast.show({type: 'success', text1: 'Olá '+jsonUser.name+'! Seja bem-vindo ao TripSun.',text2: 'Não esqueça de completar o seu cadastro na aba Perfil.'});
